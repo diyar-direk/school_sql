@@ -19,6 +19,7 @@ const Classes = () => {
   const [selectedId, setSelectedId] = useState(false);
   const divsCount = 10;
   const [overlay, setOverlay] = useState(false);
+  const language = context && context.selectedLang;
 
   window.addEventListener("click", () => {
     const overlayDiv = document.querySelector(".overlay");
@@ -208,14 +209,15 @@ const Classes = () => {
                 }}
                 className="flex delete"
               >
-                <i className="fa-solid fa-trash"></i> delete
+                <i className="fa-solid fa-trash"></i>{" "}
+                {language.class && language.class.delete}
               </div>
               <Link
                 onClick={() => setSelectedId(e._id)}
                 className="flex update"
               >
                 <i className="fa-regular fa-pen-to-square"></i>
-                update
+                {language.class && language.class.update}
               </Link>
             </div>
           </td>
@@ -402,7 +404,9 @@ const Classes = () => {
           {overlay && (
             <div className="overlay">
               <div className="change-status">
-                <h1>{`confirm delete (${selectedItems.length}) students`}</h1>
+                <h1>{`${language.class && language.class.confirm_delete} : (${
+                  selectedItems.length
+                })`}</h1>
                 <div className="flex gap-20">
                   <div
                     onClick={() => {
@@ -411,7 +415,7 @@ const Classes = () => {
                     }}
                     className="false center"
                   >
-                    <h2>delete</h2>
+                    <h2>{language.class && language.class.delete}</h2>
                     <i className="fa-solid fa-trash"></i>
                   </div>
                   <div
@@ -421,20 +425,25 @@ const Classes = () => {
                     }}
                     className="none center"
                   >
-                    <h2>cancel</h2>
+                    <h2>{language.class && language.class.cancel_btn}</h2>
                     <i className="fa-solid fa-ban"></i>
                   </div>
                 </div>
               </div>
             </div>
           )}
-          <h1 className="title">classes</h1>
+          <h1 className="title">
+            {language.class && language.class.all_classes}
+          </h1>
           <div className="flex align-start wrap subjects">
             {isAdmin && (
               <form onSubmit={handelSubmit} className="dashboard-form ">
                 {formLoading && <FormLoading />}
-                <h1> add new class</h1>
-                <label htmlFor="name"> name </label>
+                <h1> {language.class && language.class.add_new_class}</h1>
+                <label htmlFor="name">
+                  {" "}
+                  {language.class && language.class.name}{" "}
+                </label>
                 <input
                   value={form.name}
                   onInput={(e) => setForm({ ...form, name: e.target.value })}
@@ -442,36 +451,48 @@ const Classes = () => {
                   type="text"
                   id="name"
                   className="inp"
-                  placeholder="write a subject name"
+                  placeholder={
+                    language.class && language.class.name_placeholder
+                  }
                 />
 
-                <label> year Level </label>
+                <label> {language.class && language.class.year_level} </label>
                 <div className="selecte">
                   <div onClick={handleClick} className="inp">
-                    {form.yearLevel ? form.yearLevel : "select year level"}
+                    {form.yearLevel
+                      ? form.yearLevel
+                      : `${
+                          language.class &&
+                          language.class.year_level_placeholder
+                        }`}
                   </div>
                   <article className="grid-3">{createYearLeve()}</article>
                 </div>
                 {DataError && <p className="error">{DataError}</p>}
                 <button className="btn">
-                  {selectedId ? "save" : "create"}
+                  {selectedId
+                    ? `${language.class && language.class.update}`
+                    : `${language.class && language.class.create_btn}`}
                 </button>
               </form>
             )}
             <div className="tabel-container">
               <div className="table">
-                <h2>all classes</h2>
+                <h2>{language.class && language.class.all_classes}</h2>
                 <div className="flex search gap-20">
                   <div className="flex flex-direction">
                     <div className="selecte">
                       <div onClick={handleClick} className="inp">
                         {yearLevel
-                          ? "yearl level: " + yearLevel
-                          : "yearl level: all level"}
+                          ? `${language.class && language.class.year_level}: ` +
+                            yearLevel
+                          : `${
+                              language.class && language.class.year_level
+                            } : ${language.class && language.class.all_years}`}
                       </div>
                       <article className="grid-3">
                         <h2 data-level={false} onClick={selectFilterYears}>
-                          all level
+                          {language.class && language.class.all_years}
                         </h2>
                         {createYearLeveFltr()}
                       </article>
@@ -489,9 +510,9 @@ const Classes = () => {
                           ></div>
                         </th>
                       )}
-                      <th>year Level</th>
-                      <th>name</th>
-                      <th>students count</th>
+                      <th>{language.class && language.class.year_level}</th>
+                      <th>{language.class && language.class.name}</th>
+                      <th>{language.class && language.class.student_count}</th>
                       {isAdmin && <th></th>}
                     </tr>
                   </thead>
@@ -501,9 +522,15 @@ const Classes = () => {
                     {tableData.length > 0
                       ? tableData
                       : !loading && (
-                          <div className="table-loading">no data to show</div>
+                          <div className="table-loading">
+                            {language.class && language.class.no_data}
+                          </div>
                         )}
-                    {loading && <div className="table-loading">loading</div>}
+                    {loading && (
+                      <div className="table-loading">
+                        {language.class && language.class.loading}
+                      </div>
+                    )}
                   </tbody>
                 </table>
                 {isAdmin && selectedItems.length > 1 && (
@@ -514,7 +541,8 @@ const Classes = () => {
                     }}
                     className="delete-all"
                   >
-                    <i className="fa-solid fa-trash"></i>delete all (
+                    <i className="fa-solid fa-trash"></i>
+                    {language.class && language.class.delete_all_btn} (
                     {selectedItems.length})
                   </div>
                 )}

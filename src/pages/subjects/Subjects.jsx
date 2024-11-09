@@ -19,6 +19,7 @@ const Subjects = () => {
   const [yearLevel, setYearLevel] = useState(false);
   const [loading, setLoading] = useState(true);
   const divsCount = 10;
+  const language = context && context.selectedLang;
 
   window.addEventListener("click", () => {
     const overlayDiv = document.querySelector(".overlay");
@@ -210,7 +211,8 @@ const Subjects = () => {
                   }}
                   className="flex delete"
                 >
-                  <i className="fa-solid fa-trash"></i> delete
+                  <i className="fa-solid fa-trash"></i>{" "}
+                  {language.subject && language.subject.delete}
                 </div>
                 <Link
                   onClick={() => {
@@ -219,7 +221,7 @@ const Subjects = () => {
                   className="flex update"
                 >
                   <i className="fa-regular fa-pen-to-square"></i>
-                  update
+                  {language.subject && language.subject.update}
                 </Link>
               </div>
             </td>
@@ -387,7 +389,9 @@ const Subjects = () => {
           {overlay && (
             <div className="overlay">
               <div className="change-status">
-                <h1>{`confirm delete (${selectedItems.length}) students`}</h1>
+                <h1>{`${
+                  language.subject && language.subject.confirm_delete
+                } : (${selectedItems.length})`}</h1>
                 <div className="flex gap-20">
                   <div
                     onClick={() => {
@@ -396,7 +400,7 @@ const Subjects = () => {
                     }}
                     className="false center"
                   >
-                    <h2>delete</h2>
+                    <h2>{language.subject && language.subject.delete}</h2>
                     <i className="fa-solid fa-trash"></i>
                   </div>
                   <div
@@ -406,20 +410,25 @@ const Subjects = () => {
                     }}
                     className="none center"
                   >
-                    <h2>cancel</h2>
+                    <h2>{language.subject && language.subject.cancel_btn}</h2>
                     <i className="fa-solid fa-ban"></i>
                   </div>
                 </div>
               </div>
             </div>
           )}
-          <h1 className="title">subjects</h1>
+          <h1 className="title">
+            {language.subject && language.subject.all_subjects}
+          </h1>
           <div className="flex align-start wrap subjects">
             {isAdmin && (
               <form onSubmit={handelSubmit} className="dashboard-form">
                 {formLoading && <FormLoading />}
-                <h1> add new subject</h1>
-                <label htmlFor="name"> name </label>
+                <h1> {language.subject && language.subject.add_new_subject}</h1>
+                <label htmlFor="name">
+                  {" "}
+                  {language.subject && language.subject.name}{" "}
+                </label>
                 <input
                   value={form.name}
                   onInput={(e) => setForm({ ...form, name: e.target.value })}
@@ -427,9 +436,13 @@ const Subjects = () => {
                   type="text"
                   id="name"
                   className="inp"
-                  placeholder="write a subject name"
+                  placeholder={
+                    language.subject && language.subject.name_placeholder
+                  }
                 />
-                <label htmlFor="code">code</label>
+                <label htmlFor="code">
+                  {language.subject && language.subject.code}
+                </label>
                 <input
                   value={form.code}
                   onInput={(e) => setForm({ ...form, code: e.target.value })}
@@ -437,35 +450,53 @@ const Subjects = () => {
                   type="text"
                   id="code"
                   className="inp"
-                  placeholder="write a subject code"
+                  placeholder={
+                    language.subject && language.subject.code_placeholder
+                  }
                 />
-                <label> yearLevel </label>
+                <label>
+                  {" "}
+                  {language.subject && language.subject.year_level}{" "}
+                </label>
                 <div className="selecte">
                   <div onClick={handleClick} className="inp">
-                    {form.yearLevel ? form.yearLevel : " select a year level"}
+                    {form.yearLevel
+                      ? form.yearLevel
+                      : `${
+                          language.subject &&
+                          language.subject.year_level_placeholder
+                        }`}
                   </div>
                   <article className="grid-3">{createYearLeve()}</article>
                 </div>
                 {DataError && <p className="error">{DataError}</p>}
                 <button className="btn">
-                  {selectedId ? "save" : "create"}
+                  {selectedId
+                    ? `${language.subject && language.subject.update}`
+                    : `${language.subject && language.subject.create_btn}`}
                 </button>
               </form>
             )}
             <div className="tabel-container">
               <div className="table">
-                <h2> all subjects </h2>
+                <h2> {language.subject && language.subject.all_subjects} </h2>
                 <div className="flex search gap-20">
                   <div className="flex flex-direction">
                     <div className="selecte">
                       <div onClick={handleClick} className="inp">
                         {yearLevel
-                          ? "yearl level: " + yearLevel
-                          : "yearl level: all level"}
+                          ? `${
+                              language.subject && language.subject.year_level
+                            } : ` + yearLevel
+                          : `${
+                              language.subject && language.subject.year_level
+                            }: ${
+                              language.subject && language.subject.all_years
+                            }`}
                       </div>
                       <article className="grid-3">
                         <h2 data-level={false} onClick={selectFilterYears}>
-                          all level
+                          {language.subject && language.subject.all_years}
                         </h2>
                         {createYearLeveFltr()}
                       </article>
@@ -483,9 +514,9 @@ const Subjects = () => {
                           ></div>
                         </th>
                       )}
-                      <th>code</th>
-                      <th>name</th>
-                      <th>year level</th>
+                      <th>{language.subject && language.subject.code}</th>
+                      <th>{language.subject && language.subject.name}</th>
+                      <th>{language.subject && language.subject.year_level}</th>
                       {isAdmin && <th></th>}
                     </tr>
                   </thead>
@@ -495,9 +526,15 @@ const Subjects = () => {
                     {tableData.length > 0
                       ? tableData
                       : !loading && (
-                          <div className="table-loading">no data to show</div>
+                          <div className="table-loading">
+                            {language.subject && language.subject.no_data}
+                          </div>
                         )}
-                    {loading && <div className="table-loading">loading</div>}
+                    {loading && (
+                      <div className="table-loading">
+                        {language.subject && language.subject.loading}
+                      </div>
+                    )}
                   </tbody>
                 </table>
                 {isAdmin && selectedItems.length > 1 && (
@@ -508,7 +545,8 @@ const Subjects = () => {
                     }}
                     className="delete-all"
                   >
-                    <i className="fa-solid fa-trash"></i>delete all (
+                    <i className="fa-solid fa-trash"></i>
+                    {language.subject && language.subject.delete_all_btn} (
                     {selectedItems.length})
                   </div>
                 )}

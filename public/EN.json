@@ -225,18 +225,35 @@
     "year_level_placeholder": "Select year level",
     "create_btn": "Create",
     "all_subjects": "All Subjects",
+    "delete": "Delete",
+    "update": "Update",
+    "all_years": "all years",
     "search_by_name": "Search by Name",
-    "search_by_yearLevel": "Search by Year Level"
+    "search_by_yearLevel": "Search by Year Level",
+    "no_data": "No data available",
+    "loading": "loading...",
+    "confirm_delete": "Confirm Delete",
+    "cancel_btn": "Cancel",
+    "delete_all_btn": "Delete All"
   },
   "class": {
     "add_new_class": "Add New Class",
+    "student_count": "Student Count",
     "name": "Name",
     "name_placeholder": "Enter class name",
     "year_level": "Year Level",
     "year_level_placeholder": "Select year level",
+    "delete": "Delete",
+    "no_data": "No data available",
+    "loading": "loading...",
+    "confirm_delete": "Confirm Delete",
+    "cancel_btn": "Cancel",
+    "update": "Update",
     "create_btn": "Create",
+    "all_years": "all years",
     "all_classes": "All Classes",
     "search_by_name": "Search by Name",
-    "search_by_yearLevel": "Search by Year Level"
+    "search_by_yearLevel": "Search by Year Level",
+    "delete_all_btn": "Delete All"
   }
 }
