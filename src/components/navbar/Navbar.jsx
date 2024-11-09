@@ -153,19 +153,21 @@ const Navbar = () => {
   };
   const nav = useNavigate();
   const searchClick = () => {
-    const matchedPage = pages.find(
-      (e) =>
-        e.name.includes(form.toLowerCase()) ||
-        e.path.includes(form.toLowerCase())
-    );
+    if (form.length > 1) {
+      const matchedPage = pages.find(
+        (e) =>
+          e.name.includes(form.toLowerCase()) ||
+          e.path.includes(form.toLowerCase())
+      );
 
-    if (matchedPage) {
-      nav(matchedPage.path);
-    } else {
-      const path = form.replaceAll(" ", "_");
-      nav(`/dashboard/${path}`);
+      if (matchedPage) {
+        nav(matchedPage.path);
+      } else {
+        const path = form.replaceAll(" ", "_");
+        nav(`/dashboard/${path}`);
+      }
+      setForm("");
     }
-    setForm("");
   };
   return (
     <>

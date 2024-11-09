@@ -55,6 +55,7 @@ nav .search > button {
   margin-right: 15px;
   cursor: pointer;
   border: none;
+  background: transparent;
 }
 nav .setting {
   gap: 20px;
