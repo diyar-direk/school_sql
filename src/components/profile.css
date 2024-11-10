@@ -1,3 +1,57 @@
+.admin-page {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+  margin-bottom: 30px;
+}
+.admin-page > article {
+  padding: 20px;
+  background: var(--body-color);
+  border-radius: 6px;
+  box-shadow: var(--box-shadow);
+  gap: 30px;
+  display: flex;
+}
+.admin-page > article i {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.admin-page > article i.teacher {
+  background-color: #3f7bfc27;
+  color: #3f7afc;
+}
+.admin-page > article i.student {
+  background-color: #3cb87833;
+  color: #3cb878;
+}
+.admin-page > article i.classes {
+  background-color: #ffa0012b;
+  color: #ffa001;
+}
+
+.admin-page > article > div h2 {
+  text-transform: capitalize;
+  color: var(--font-color);
+  font-weight: 400;
+}
+.admin-page > article > div p {
+  display: inline-block;
+  font-weight: 400;
+  color: var(--font-color);
+}
+.admin-page > article > div div {
+  margin: 0 20px;
+}
+.admin-page > article > div div h3 {
+  margin-top: 5px;
+  text-transform: capitalize;
+  font-weight: 400;
+  color: var(--font-color);
+}
 div.profile {
   padding: 40px 20px;
   background-color: var(--body-color);
@@ -20,6 +74,11 @@ div.profile .image .photo {
   align-items: center;
   justify-content: center;
   font-size: 80px;
+}
+div.profile.admin .image .photo {
+  font-size: 60px;
+  width: 180px;
+  height: 180px;
 }
 
 div.profile .image .center {
@@ -84,6 +143,7 @@ div.profile .info > .flex h2 {
   width: 160px;
   color: var(--font-color);
 }
+
 div.profile .info > .flex p {
   font-size: 18px;
   color: var(--font-color);
