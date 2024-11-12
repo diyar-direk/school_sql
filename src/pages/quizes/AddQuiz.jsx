@@ -8,15 +8,20 @@ import { Context } from "../../context/Context";
 const AddQuiz = () => {
   const context = useContext(Context);
   const token = context && context.userDetails.token;
+  const [multiQuestionsCount, setMultiQuestionsCount] = useState(0);
+  const [multiQuestions, setMultiQuestions] = useState([]);
+  const [T_RQuestions, setT_RQuestions] = useState([]);
   const [form, setForm] = useState({
     classId: "",
     subjectId: "",
     yearLevel: "",
     date: "",
     duration: "",
-    totalMarks: "",
     type: "Quize",
+    title: "",
+    description: "",
   });
+
   const language = context && context.selectedLang;
   const [loading, setLoading] = useState(false);
   const [DataError, setDataError] = useState(false);
@@ -46,21 +51,10 @@ const AddQuiz = () => {
   const handleForm = (e) => {
     const { id, value } = e.target;
 
-    if (id.includes(".")) {
-      const [parentKey, childKey] = id.split(".");
-      setForm((prevForm) => ({
-        ...prevForm,
-        [parentKey]: {
-          ...prevForm[parentKey],
-          [childKey]: value,
-        },
-      }));
-    } else {
-      setForm((prevForm) => ({
-        ...prevForm,
-        [id]: value,
-      }));
-    }
+    setForm((prevForm) => ({
+      ...prevForm,
+      [id]: value,
+    }));
   };
 
   const handleClick = (e) => {
@@ -173,16 +167,79 @@ const AddQuiz = () => {
     }
   };
 
+  const handleInputChange = (e, index) => {
+    const updatedQuestions = [...multiQuestions];
+    updatedQuestions[index].name = e.target.value;
+    setMultiQuestions(updatedQuestions);
+  };
+
+  const createInp = (length) => {
+    let inp = [];
+
+    for (let i = 0; i < length; i++) {
+      inp.push(
+        <div className="flex flex-direction">
+          <label htmlFor={`answor-${i + 1}`}>answor {i + 1}</label>
+          <div className="center gap-10 justify-start">
+            <input
+              required
+              onInput={(e) => handleInputChange(e, i)}
+              value={multiQuestions[i].name}
+              type="text"
+              id={`answor-${i + 1}`}
+              className="inp"
+              placeholder="write exam ansowr"
+            />
+            <i
+              data-icon={`answor-${i + 1}`}
+              className="fa-solid fa-check true"
+            ></i>
+            <i
+              data-icon={`answor-${i + 1}`}
+              className="false fa-solid fa-xmark"
+            ></i>
+          </div>
+        </div>
+      );
+    }
+
+    return inp;
+  };
+
   return (
     <main>
       <div className="dashboard-container">
         <div className="container relative">
           {overlay && <SendData data="exam" response={response} />}
           <h1 className="title">add quiz</h1>
-          <form onSubmit={handelSubmit} className=" relative dashboard-form">
+          <form onSubmit={handelSubmit} className="relative dashboard-form">
             {loading && <FormLoading />}
             <h1>{language.exams && language.exams.please_complete_form}</h1>
             <div className="flex wrap ">
+              <div className="flex flex-direction">
+                <label htmlFor="title">exam title</label>
+                <input
+                  required
+                  onInput={handleForm}
+                  value={form.title}
+                  type="text"
+                  id="title"
+                  className="inp"
+                  placeholder="write exam title"
+                />
+              </div>
+              <div className="flex flex-direction">
+                <label htmlFor="description">exam description</label>
+                <input
+                  required
+                  onInput={handleForm}
+                  value={form.description}
+                  type="text"
+                  id="description"
+                  className="inp"
+                  placeholder="write exam description"
+                />
+              </div>
               <div className="flex flex-direction">
                 <label>{language.exams && language.exams.year_level}</label>
                 <div className="selecte">
@@ -258,9 +315,7 @@ const AddQuiz = () => {
               )}
 
               <div className="flex flex-direction">
-                <label htmlFor="date">
-                  {language.exams && language.exams.exam_date}
-                </label>
+                <label htmlFor="date">quize date</label>
                 <input
                   required
                   onInput={handleForm}
@@ -281,34 +336,48 @@ const AddQuiz = () => {
                   value={form.duration}
                   type="number"
                   id="duration"
+                  min={0}
                   className="inp"
                   placeholder={
                     language.exams && language.exams.duration_palceholder
                   }
                 />
               </div>
-
+            </div>
+          </form>
+          <form className="relative quize dashboard-form">
+            <div className="flex wrap">
               <div className="flex flex-direction">
-                <label htmlFor="totalMarks">
-                  {language.exams && language.exams.total_marks}
-                </label>
+                <label htmlFor="title">exam title</label>
                 <input
                   required
-                  onInput={handleForm}
-                  value={form.totalMarks}
-                  type="number"
-                  id="totalMarks"
+                  type="text"
+                  id="title"
                   className="inp"
-                  placeholder={
-                    language.exams && language.exams.total_marks_placeholder
-                  }
+                  placeholder="write exam title"
                 />
               </div>
+              {createInp(multiQuestionsCount)}
             </div>
-            {DataError && <p className="error">{DataError}</p>}
-            <button className="btn">
-              {language.exams && language.exams.save_btn}{" "}
-            </button>
+            <span
+              onClick={() => {
+                setMultiQuestions((prev) => [
+                  ...prev,
+                  { name: "diyar", is: "" },
+                ]);
+                setMultiQuestionsCount((e) => e + 1);
+              }}
+              className="add-question"
+            >
+              + add answor
+            </span>
+
+            <div className="flex gap-20">
+              <span className="add-question">
+                + add multiple choice question
+              </span>
+              <span className="add-question">+ add true false question</span>
+            </div>
           </form>
         </div>
       </div>

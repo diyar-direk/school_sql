@@ -8,7 +8,6 @@ const AllQuizes = () => {
   const context = useContext(Context);
   const token = context && context.userDetails.token;
   const isAdmin = context && context.userDetails.isAdmin;
-
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,6 +72,7 @@ const AllQuizes = () => {
 
       setDataLength(data.data.numberOfQuizzes);
       setSearchData(data.data.data);
+      console.log(data.data.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -109,8 +109,13 @@ const AllQuizes = () => {
         <tr key={e._id}>
           <td>{e.title}</td>
           <td> {e.description} </td>
+          <td> {e.subjectId.name} </td>
+          <td>
+            {e.yearLevel} : {e.classId.name}
+          </td>
 
           <td dangerouslySetInnerHTML={date(e.date)} />
+          <td> {e.duration} </td>
           {isAdmin && (
             <td>
               <i
@@ -214,7 +219,10 @@ const AllQuizes = () => {
                   <tr>
                     <th>title</th>
                     <th>description</th>
+                    <th>subject</th>
+                    <th>class</th>
                     <th>date</th>
+                    <th>duration</th>
                     {isAdmin && <th></th>}
                   </tr>
                 </thead>

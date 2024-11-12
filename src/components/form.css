@@ -93,6 +93,7 @@ form.dashboard-form .flex-direction .inp {
   font-size: 18px;
   background-color: var(--section-color);
   color: var(--font-color);
+  width: 100%;
 }
 
 .selecte {
@@ -242,6 +243,54 @@ form.login .error {
   margin-top: 0;
   margin-bottom: 10px;
 }
+form.quize {
+  margin-top: 30px;
+}
+
+.add-question {
+  display: block;
+  margin-top: 20px;
+  border-radius: 6px;
+  background: var(--section-color);
+  width: fit-content;
+  padding: 10px;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: var(--font-color);
+  cursor: pointer;
+}
+.add-question:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+form.quize i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  height: 100%;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px dashed;
+}
+form.quize i.true {
+  color: forestgreen;
+}
+form.quize i.false {
+  color: brown;
+}
+form.quize i.true.active,
+form.quize i.true:hover {
+  background-color: forestgreen;
+  color: white;
+}
+form.quize i.false.active,
+form.quize i.false:hover {
+  color: white;
+  background-color: brown;
+}
+
 @keyframes rotate {
   100% {
     rotate: 365deg;

@@ -396,7 +396,7 @@ const Navbar = () => {
               </div>
               <article>
                 <NavLink to={"all_quizes"}>all quizes</NavLink>
-                {isAdmin && <NavLink to={"add_quize"}>add quize</NavLink>}
+                {isAdmin && <NavLink to={"add_quiz"}>add quiz</NavLink>}
               </article>
             </div>
           </div>
