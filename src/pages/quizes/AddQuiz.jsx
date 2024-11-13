@@ -10,15 +10,21 @@ const AddQuiz = () => {
   const token = context && context.userDetails.token;
   const [multiQuestionsCount, setMultiQuestionsCount] = useState(1);
   const [multiQuestions, setMultiQuestions] = useState({
-    answers: [{ name: "", is: false }],
-    question: "",
+    choices: [{ text: "", isCorrect: false }],
+    text: "",
+    type: "multiple-choice",
   });
 
   const [arrayOfMultiQuestions, setArrayOfMultiQuestions] = useState([]);
+  const [arrayOfT_RQuestions, setArrayOfT_RQuestions] = useState([]);
 
   const [multiSelect, setMultiSelect] = useState(false);
   const [T_RSelect, setT_RSelect] = useState(false);
-  const [T_RQuestions, setT_RQuestions] = useState([]);
+  const [T_RQuestions, setT_RQuestions] = useState({
+    text: "",
+    correctAnswer: false,
+    choices: [],
+  });
   const [form, setForm] = useState({
     classId: "",
     subjectId: "",
@@ -176,10 +182,10 @@ const AddQuiz = () => {
   };
 
   const handleInputChange = (e, index) => {
-    const updatedQuestions = [...multiQuestions.answers];
-    updatedQuestions[index].name = e.target.value;
+    const updatedQuestions = [...multiQuestions.choices];
+    updatedQuestions[index].text = e.target.value;
 
-    setMultiQuestions({ ...multiQuestions, answers: updatedQuestions });
+    setMultiQuestions({ ...multiQuestions, choices: updatedQuestions });
   };
 
   const createInp = (length) => {
@@ -193,7 +199,7 @@ const AddQuiz = () => {
             <input
               required
               onInput={(e) => handleInputChange(e, i)}
-              value={multiQuestions.answers[i].name}
+              value={multiQuestions.choices[i].text}
               type="text"
               id={`answor-${i + 1}`}
               className="inp"
@@ -206,24 +212,24 @@ const AddQuiz = () => {
                   if (ele !== e.target) {
                     ele.classList.remove("active");
                     ele.nextElementSibling.classList.add("active");
-                    const updatedQuestions = [...multiQuestions.answers];
-                    updatedQuestions[i].is = false;
+                    const updatedQuestions = [...multiQuestions.choices];
+                    updatedQuestions[i].isCorrect = false;
 
                     setMultiQuestions({
                       ...multiQuestions,
-                      answers: updatedQuestions,
+                      choices: updatedQuestions,
                     });
                   }
                   setDataError(false);
                 });
                 e.target.classList.add("active");
                 e.target.nextSibling.classList.remove("active");
-                const updatedQuestions = [...multiQuestions.answers];
-                updatedQuestions[i].is = true;
+                const updatedQuestions = [...multiQuestions.choices];
+                updatedQuestions[i].isCorrect = true;
 
                 setMultiQuestions({
                   ...multiQuestions,
-                  answers: updatedQuestions,
+                  choices: updatedQuestions,
                 });
               }}
               className="fa-solid fa-check true"
@@ -232,15 +238,14 @@ const AddQuiz = () => {
               onClick={(e) => {
                 e.target.classList.add("active");
                 e.target.previousElementSibling.classList.remove("active");
-                const updatedQuestions = [...multiQuestions.answers];
-                updatedQuestions[i].is = false;
+                const updatedQuestions = [...multiQuestions.choices];
+                updatedQuestions[i].isCorrect = false;
 
                 setMultiQuestions({
                   ...multiQuestions,
-                  answers: updatedQuestions,
+                  choices: updatedQuestions,
                 });
               }}
-              data-icon={`answor-${i + 1}`}
               className="false active fa-solid fa-xmark"
             ></i>
           </div>
@@ -253,14 +258,28 @@ const AddQuiz = () => {
 
   const handleQuizForm = async (e) => {
     e.preventDefault();
-    const fltr = multiQuestions.answers.filter((e) => e.is);
-    if (fltr.length === 0) setDataError("you hsave to select right question");
-    else {
+    if (multiSelect) {
+      const fltr = multiQuestions.choices.filter((e) => e.isCorrect);
+      if (fltr.length === 0) setDataError("you hsave to select right question");
+      else {
+        setMultiSelect(false);
+        setT_RSelect(false);
+        setMultiQuestionsCount(1);
+        setMultiQuestions({
+          text: "",
+          choices: [{ text: "", isCorrect: false }],
+        });
+        setArrayOfMultiQuestions((prev) => [...prev, multiQuestions]);
+      }
+    } else if (T_RSelect) {
+      setArrayOfT_RQuestions([...arrayOfT_RQuestions, T_RQuestions]);
+      setT_RQuestions({
+        text: "",
+        correctAnswer: false,
+        choices: [],
+      });
       setMultiSelect(false);
       setT_RSelect(false);
-      setMultiQuestionsCount(1);
-      setMultiQuestions({ question: "", answers: [{ name: "", is: false }] });
-      setArrayOfMultiQuestions((prev) => [...prev, multiQuestions]);
     }
   };
 
@@ -407,7 +426,7 @@ const AddQuiz = () => {
             onSubmit={handleQuizForm}
             className="relative quize dashboard-form"
           >
-            {(multiSelect || T_RSelect) && (
+            {multiSelect && (
               <div className="flex wrap">
                 <div className="flex flex-direction">
                   <label htmlFor="question">question title</label>
@@ -416,7 +435,7 @@ const AddQuiz = () => {
                     onInput={(e) =>
                       setMultiQuestions({
                         ...multiQuestions,
-                        question: e.target.value,
+                        text: e.target.value,
                       })
                     }
                     value={multiQuestions.question}
@@ -429,14 +448,15 @@ const AddQuiz = () => {
                 {createInp(multiQuestionsCount)}
               </div>
             )}
+
             {multiSelect && (
               <span
                 onClick={() => {
                   setMultiQuestions({
                     ...multiQuestions,
-                    answers: [
-                      ...multiQuestions.answers,
-                      { name: "", is: false },
+                    choices: [
+                      ...multiQuestions.choices,
+                      { text: "", isCorrect: false },
                     ],
                   });
                   setMultiQuestionsCount((e) => e + 1);
@@ -445,6 +465,54 @@ const AddQuiz = () => {
               >
                 + add answor
               </span>
+            )}
+
+            {T_RSelect && (
+              <div className="flex wrap">
+                <div className="flex flex-direction">
+                  <label htmlFor={`answor-${1}`}>question title </label>
+                  <div className="center gap-10 justify-start">
+                    <input
+                      required
+                      value={T_RQuestions.text}
+                      onInput={(e) =>
+                        setT_RQuestions({
+                          ...T_RQuestions,
+                          text: e.target.value,
+                        })
+                      }
+                      type="text"
+                      id={`answor-${1}`}
+                      className="inp"
+                      placeholder="write exam ansowr"
+                    />
+                    <i
+                      onClick={(e) => {
+                        e.target.classList.add("active");
+                        e.target.nextSibling.classList.remove("active");
+                        setT_RQuestions({
+                          ...T_RQuestions,
+                          correctAnswer: true,
+                        });
+                      }}
+                      className="fa-solid fa-check true"
+                    ></i>
+                    <i
+                      onClick={(e) => {
+                        e.target.classList.add("active");
+                        e.target.previousElementSibling.classList.remove(
+                          "active"
+                        );
+                        setT_RQuestions({
+                          ...T_RQuestions,
+                          correctAnswer: false,
+                        });
+                      }}
+                      className="false active fa-solid fa-xmark"
+                    ></i>
+                  </div>
+                </div>
+              </div>
             )}
 
             {!multiSelect && !T_RSelect && (
@@ -458,7 +526,15 @@ const AddQuiz = () => {
                 >
                   + add multiple choice question
                 </span>
-                <span className="add-question">+ add true false question</span>
+                <span
+                  onClick={() => {
+                    setT_RSelect(true);
+                    setMultiSelect(false);
+                  }}
+                  className="add-question"
+                >
+                  + add true false question
+                </span>
               </div>
             )}
             {DataError && <p className="error"> {DataError} </p>}
@@ -466,6 +542,83 @@ const AddQuiz = () => {
               <button className="btn">save</button>
             )}
           </form>
+          {(arrayOfMultiQuestions.length > 0 ||
+            arrayOfT_RQuestions.length > 0) && (
+            <div className="tabel-container">
+              <div className="table">
+                {arrayOfMultiQuestions.length > 0 && (
+                  <>
+                    <h2>multiple choices</h2>
+                    <table className="mb-40">
+                      <thead>
+                        <tr>
+                          <th>question</th>
+                          <th>wrong answer</th>
+                          <th>correct Answer</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {arrayOfMultiQuestions.map((e) => {
+                          const correctAnswer = e.choices.filter(
+                            (ele) => ele.isCorrect
+                          );
+                          const wrongAnswer = e.choices.filter(
+                            (ele) => !ele.isCorrect
+                          );
+
+                          return (
+                            <tr>
+                              <td> {e.text} </td>
+                              <td>{nextJoin(wrongAnswer)}</td>
+                              <td> {correctAnswer[0].text} </td>
+                              <td>
+                                <div className="admin gap-10 flex">
+                                  <i className="fa-solid fa-trash delete"></i>
+                                  <i className="fa-regular fa-pen-to-square update"></i>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </>
+                )}
+
+                {arrayOfT_RQuestions.length > 0 && (
+                  <>
+                    <h2>true || false</h2>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>question</th>
+                          <th>answer</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {arrayOfT_RQuestions.map((e) => {
+                          return (
+                            <tr>
+                              <td> {e.text} </td>
+                              <td>{e.correctAnswer ? "true" : "false"}</td>
+                              <td>
+                                <div className="admin gap-10 flex">
+                                  <i className="fa-solid fa-trash delete"></i>
+                                  <i className="fa-regular fa-pen-to-square update"></i>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </main>
@@ -473,3 +626,12 @@ const AddQuiz = () => {
 };
 
 export default AddQuiz;
+
+export function nextJoin(array) {
+  let text = "";
+  for (let i = 0; i < array.length; i++) {
+    if (array[i + 1]) text += array[i].text + " , ";
+    else text += array[i].text;
+  }
+  return text;
+}

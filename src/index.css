@@ -262,6 +262,10 @@ body.arabic {
   color: var(--font-color);
 }
 
+.mb-40 {
+  margin-bottom: 40px !important;
+}
+
 @keyframes en-arrow {
   100% {
     transform: translateX(5px);
