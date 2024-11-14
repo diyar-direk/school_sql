@@ -149,6 +149,7 @@ aside {
   background-color: var(--body-color);
   width: 290px;
   overflow-y: auto;
+  z-index: 10;
 }
 aside.closed {
   width: 80px;
@@ -158,6 +159,10 @@ aside > article {
   padding: 20px;
   background-color: var(--main-color);
   height: 75px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 0 14px #000000b0;
 }
 aside > article a {
   color: white;

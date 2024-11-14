@@ -180,6 +180,9 @@ form.dashboard-form .flex-direction .inp {
 form.dashboard-form .btn {
   margin-top: 20px;
 }
+form.dashboard-form .btn.question {
+  width: auto;
+}
 form.dashboard-form button {
   margin-top: 30px;
   font-size: 23px;
@@ -192,7 +195,7 @@ i.password {
 /* form loading  */
 
 .form-loading {
-  position: absolute;
+  position: fixed;
   display: flex;
   align-items: center;
   top: 0;
@@ -274,7 +277,20 @@ form.quize i {
   cursor: pointer;
   border: 1px dashed;
 }
-
+form.quize i.delete {
+  position: absolute;
+  height: fit-content;
+  right: 0;
+  padding: 8px;
+  font-size: 11px;
+  color: brown;
+  border: dashed 1px brown;
+}
+form.quize i.delete:hover {
+  color: white;
+  background-color: brown;
+  border: dashed 1px var(--body-color);
+}
 form.quize i.true {
   color: forestgreen;
 }

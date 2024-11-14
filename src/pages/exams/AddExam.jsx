@@ -15,7 +15,6 @@ const AddExam = () => {
     date: "",
     duration: "",
     totalMarks: "",
-   
   });
   const language = context && context.selectedLang;
   const [loading, setLoading] = useState(false);
