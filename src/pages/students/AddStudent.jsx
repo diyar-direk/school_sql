@@ -440,17 +440,21 @@ const AddStudent = () => {
                             }`}
                       </div>
                       <article>
-                        {classes.map((e, i) => {
-                          return (
-                            <h2
-                              onClick={(event) => selectClasses(event, e._id)}
-                              data-classes={`${e.yearLevel} : ${e.name}`}
-                              key={i}
-                            >
-                              {`${e.yearLevel} : ${e.name}`}
-                            </h2>
-                          );
-                        })}
+                        {classes.length > 0 ? (
+                          classes.map((e, i) => {
+                            return (
+                              <h2
+                                onClick={(event) => selectClasses(event, e._id)}
+                                data-classes={`${e.yearLevel} : ${e.name}`}
+                                key={i}
+                              >
+                                {`${e.yearLevel} : ${e.name}`}
+                              </h2>
+                            );
+                          })
+                        ) : (
+                          <h2>loading</h2>
+                        )}
                       </article>
                     </div>
                   </div>

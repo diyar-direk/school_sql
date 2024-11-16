@@ -72,7 +72,6 @@ const AllQuizes = () => {
 
       setDataLength(data.data.numberOfQuizzes);
       setSearchData(data.data.data);
-      console.log(data.data.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -132,11 +131,11 @@ const AllQuizes = () => {
                   }}
                   className="flex delete"
                 >
-                  <i className="fa-solid fa-trash"></i>{" "}
+                  <i className="fa-solid fa-trash"></i>
                   {language.exams && language.exams.delete}
                 </div>
                 <Link
-                  to={`/dashboard/update_exam/${e._id}`}
+                  to={`/dashboard/update_quiz/${e._id}`}
                   className="flex update"
                 >
                   <i className="fa-regular fa-pen-to-square"></i>

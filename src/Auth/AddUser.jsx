@@ -16,7 +16,6 @@ const AddUser = () => {
     role: "",
     profileId: "",
   });
-
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const language = context && context.selectedLang;
   const [loading, setLoading] = useState(false);
@@ -58,7 +57,8 @@ const AddUser = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (passwordConfirmation !== form.password)
+    if (form.username.includes(" ")) setDataError("username cant have spaces");
+    else if (passwordConfirmation !== form.password)
       setDataError("the password most be same");
     else if (!form.role) setDataError("please choose a role");
     else if (!form.profileId) setDataError("please choose a user");

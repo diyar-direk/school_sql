@@ -362,17 +362,23 @@ const ExamResult = () => {
                               }`}
                         </div>
                         <article>
-                          {classes.map((e, i) => {
-                            return (
-                              <h2
-                                onClick={(event) => selectClasses(event, e._id)}
-                                data-classes={`${e.yearLevel} : ${e.name}`}
-                                key={i}
-                              >
-                                {`${e.yearLevel} : ${e.name}`}
-                              </h2>
-                            );
-                          })}
+                          {classes.length > 0 ? (
+                            classes.map((e, i) => {
+                              return (
+                                <h2
+                                  onClick={(event) =>
+                                    selectClasses(event, e._id)
+                                  }
+                                  data-classes={`${e.yearLevel} : ${e.name}`}
+                                  key={i}
+                                >
+                                  {`${e.yearLevel} : ${e.name}`}
+                                </h2>
+                              );
+                            })
+                          ) : (
+                            <h2>loading</h2>
+                          )}
                         </article>
                       </div>
                     </div>
@@ -395,17 +401,23 @@ const ExamResult = () => {
                               }`}
                         </div>
                         <article>
-                          {students.map((e, i) => {
-                            return (
-                              <h2
-                                onClick={(event) => selectStudent(event, e._id)}
-                                data-student={`${e.firstName} ${e.middleName} ${e.lastName}`}
-                                key={i}
-                              >
-                                {`${e.firstName} ${e.middleName} ${e.lastName}`}
-                              </h2>
-                            );
-                          })}
+                          {students.length > 0 ? (
+                            students.map((e, i) => {
+                              return (
+                                <h2
+                                  onClick={(event) =>
+                                    selectStudent(event, e._id)
+                                  }
+                                  data-student={`${e.firstName} ${e.middleName} ${e.lastName}`}
+                                  key={i}
+                                >
+                                  {`${e.firstName} ${e.middleName} ${e.lastName}`}
+                                </h2>
+                              );
+                            })
+                          ) : (
+                            <h2>loading</h2>
+                          )}
                         </article>
                       </div>
                     </div>

@@ -395,7 +395,7 @@ const Navbar = () => {
                 <i className="arrow fa-solid fa-chevron-right"></i>
               </div>
               <article>
-                <NavLink to={"all_quizes"}>all quizes</NavLink>
+                <NavLink to={"all_quizzes"}>all quizes</NavLink>
                 {isAdmin && <NavLink to={"add_quiz"}>add quiz</NavLink>}
               </article>
             </div>

@@ -28,38 +28,46 @@ const UpdateExamSchedule = () => {
   const [overlay, setOverlay] = useState(false);
   const [response, setResponse] = useState(false);
 
+  const getData = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/exams/${params.id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      const data = res.data.data;
+      const dateObject = new Date(data.date);
+      const formattedDateTime = dateObject.toISOString().slice(0, 16);
+
+      const updatedForm = {
+        ...form,
+        yearLevel: data.yearLevel,
+        date: formattedDateTime,
+        duration: data.duration,
+        totalMarks: data.totalMarks,
+      };
+
+      if (data.classId) {
+        setClassesName(data.classId.name);
+        updatedForm.classId = data.classId._id;
+      }
+
+      if (data.subjectId) {
+        setSubjectsName(data.subjectId.name);
+        updatedForm.subjectId = data.subjectId._id;
+      }
+
+      setForm(updatedForm);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/exams/${params.id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        const data = res.data.data;
-        const dateObject = new Date(data.date);
-        const formattedDateTime = dateObject.toISOString().slice(0, 16);
-
-        const updatedForm = {
-          ...form,
-          yearLevel: data.yearLevel,
-          date: formattedDateTime,
-          duration: data.duration,
-          totalMarks: data.totalMarks,
-        };
-
-        if (data.classId) {
-          setClassesName(data.classId.name);
-          updatedForm.classId = data.classId._id;
-        }
-
-        if (data.subjectId) {
-          setSubjectsName(data.subjectId.name);
-          updatedForm.subjectId = data.subjectId._id;
-        }
-
-        setForm(updatedForm);
-      });
+    getData();
   }, []);
 
   const responseFun = (complete = false) => {

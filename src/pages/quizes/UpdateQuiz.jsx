@@ -4,10 +4,13 @@ import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddQuiz = () => {
+const UpdateQuiz = () => {
   const context = useContext(Context);
   const token = context && context.userDetails.token;
+  const { id } = useParams();
+
   const [multiQuestionsCount, setMultiQuestionsCount] = useState(1);
   const [multiQuestions, setMultiQuestions] = useState({
     choices: [{ text: "", isCorrect: false }],
@@ -26,6 +29,8 @@ const AddQuiz = () => {
     choices: [],
     type: "true-false",
   });
+  const nav = useNavigate();
+
   const [form, setForm] = useState({
     classId: "",
     subjectId: "",
@@ -37,6 +42,39 @@ const AddQuiz = () => {
     description: "",
     questions: [],
   });
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/quizzes/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const data = res.data.data;
+        const dateObject = new Date(data.date);
+
+        const formattedDateTime = dateObject.toISOString().slice(0, 16);
+        setForm({
+          classId: data.classId,
+          subjectId: data.subjectId,
+          yearLevel: data.yearLevel,
+          date: formattedDateTime,
+          duration: data.duration,
+          type: "Quize",
+          title: data.title,
+          description: data.description,
+          questions: [],
+        });
+        const multi = data.questions.filter(
+          (e) => e.type === "multiple-choice"
+        );
+        const t_r = data.questions.filter((e) => e.type === "true-false");
+        setArrayOfMultiQuestions(multi);
+        setArrayOfT_RQuestions(t_r);
+        setAllowCreate(true);
+      });
+  }, []);
 
   const language = context && context.selectedLang;
   const [loading, setLoading] = useState(false);
@@ -317,8 +355,8 @@ const AddQuiz = () => {
       const allQuestions = [...arrayOfMultiQuestions, ...arrayOfT_RQuestions];
       setForm({ ...form, questions: allQuestions });
       try {
-        const data = await axios.post(
-          "http://localhost:8000/api/quizzes",
+        const data = await axios.patch(
+          `http://localhost:8000/api/quizzes/${id}`,
           form,
           {
             headers: {
@@ -328,22 +366,8 @@ const AddQuiz = () => {
         );
         console.log(data);
 
-        if (data.status === 201) {
-          responseFun(true);
-          setForm({
-            classId: "",
-            subjectId: "",
-            yearLevel: "",
-            date: "",
-            duration: "",
-            type: "Quize",
-            title: "",
-            description: "",
-            questions: [],
-          });
-          setArrayOfMultiQuestions([]);
-          setArrayOfT_RQuestions([]);
-          setAllowCreate(false);
+        if (data.status === 200) {
+          nav("/dashboard/all_quizzes");
         }
       } catch (error) {
         console.log(error);
@@ -417,21 +441,17 @@ const AddQuiz = () => {
                             }`}
                       </div>
                       <article>
-                        {classes.length > 0 ? (
-                          classes.map((e, i) => {
-                            return (
-                              <h2
-                                onClick={(event) => selectClasses(event, e._id)}
-                                data-classes={`${e.yearLevel} : ${e.name}`}
-                                key={i}
-                              >
-                                {`${e.yearLevel} : ${e.name}`}
-                              </h2>
-                            );
-                          })
-                        ) : (
-                          <h2>loading</h2>
-                        )}
+                        {classes.map((e, i) => {
+                          return (
+                            <h2
+                              onClick={(event) => selectClasses(event, e._id)}
+                              data-classes={`${e.yearLevel} : ${e.name}`}
+                              key={i}
+                            >
+                              {`${e.yearLevel} : ${e.name}`}
+                            </h2>
+                          );
+                        })}
                       </article>
                     </div>
                   </div>
@@ -450,23 +470,17 @@ const AddQuiz = () => {
                             }`}
                       </div>
                       <article>
-                        {subjects.length > 0 ? (
-                          subjects.map((e, i) => {
-                            return (
-                              <h2
-                                onClick={(event) =>
-                                  selectSubjects(event, e._id)
-                                }
-                                data-subject={`${e.name}`}
-                                key={i}
-                              >
-                                {`${e.name}`}
-                              </h2>
-                            );
-                          })
-                        ) : (
-                          <h2>loading</h2>
-                        )}
+                        {subjects.map((e, i) => {
+                          return (
+                            <h2
+                              onClick={(event) => selectSubjects(event, e._id)}
+                              data-subject={`${e.name}`}
+                              key={i}
+                            >
+                              {`${e.name}`}
+                            </h2>
+                          );
+                        })}
                       </article>
                     </div>
                   </div>
@@ -792,7 +806,7 @@ const AddQuiz = () => {
   );
 };
 
-export default AddQuiz;
+export default UpdateQuiz;
 
 export function nextJoin(array) {
   let text = "";

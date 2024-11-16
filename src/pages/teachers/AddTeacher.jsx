@@ -377,17 +377,21 @@ const AddTeacher = () => {
                             }`}
                       </div>
                       <article>
-                        {classes.map((e, i) => {
-                          return (
-                            <h2
-                              onClick={(event) => selectClasses(event, e._id)}
-                              data-classes={`${e.yearLevel} : ${e.name}`}
-                              key={i}
-                            >
-                              {`${e.yearLevel} : ${e.name}`}
-                            </h2>
-                          );
-                        })}
+                        {classes.length > 0 ? (
+                          classes.map((e, i) => {
+                            return (
+                              <h2
+                                onClick={(event) => selectClasses(event, e._id)}
+                                data-classes={`${e.yearLevel} : ${e.name}`}
+                                key={i}
+                              >
+                                {`${e.yearLevel} : ${e.name}`}
+                              </h2>
+                            );
+                          })
+                        ) : (
+                          <h2>loading</h2>
+                        )}
                       </article>
                       <div className="selected-value flex">
                         {classesName.map((e, i) => {
@@ -426,17 +430,23 @@ const AddTeacher = () => {
                             }`}
                       </div>
                       <article>
-                        {subject.map((e, i) => {
-                          return (
-                            <h2
-                              onClick={(event) => selectSubjects(event, e._id)}
-                              data-subject={e.name}
-                              key={i}
-                            >
-                              {e.name}
-                            </h2>
-                          );
-                        })}
+                        {subject.length > 0 ? (
+                          subject.map((e, i) => {
+                            return (
+                              <h2
+                                onClick={(event) =>
+                                  selectSubjects(event, e._id)
+                                }
+                                data-subject={e.name}
+                                key={i}
+                              >
+                                {e.name}
+                              </h2>
+                            );
+                          })
+                        ) : (
+                          <h2>loading</h2>
+                        )}
                       </article>
                       <div className="selected-value flex">
                         {subjectName.map((e, i) => {
