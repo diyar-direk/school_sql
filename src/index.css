@@ -54,7 +54,7 @@ main > div.dashboard-container.closed {
 main div.container {
   padding: 40px 0;
 }
-main div.container > h1.title {
+h1.title {
   position: relative;
   color: var(--font-color);
   text-transform: capitalize;
@@ -66,7 +66,7 @@ main div.container > h1.title {
   z-index: -1;
 }
 
-main div.container > h1.title::before {
+h1.title::before {
   content: "";
   position: absolute;
   width: 75%;
@@ -76,7 +76,7 @@ main div.container > h1.title::before {
   left: 0;
   border-radius: 20px;
 }
-main div.container > h1.title::after {
+h1.title::after {
   border-radius: 20px;
   content: "";
   position: absolute;
@@ -86,7 +86,9 @@ main div.container > h1.title::after {
   bottom: 0;
   left: 0;
 }
-
+.text-capitalize {
+  text-transform: capitalize;
+}
 .flex {
   display: flex;
 }
@@ -269,7 +271,9 @@ body.arabic {
 .c-pointer {
   cursor: pointer;
 }
-
+.c-green {
+  color: #0e9e32;
+}
 @keyframes en-arrow {
   100% {
     transform: translateX(5px);

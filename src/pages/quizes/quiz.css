@@ -1,0 +1,55 @@
+.quiz-title > div {
+  color: var(--font-color);
+}
+.questions-space {
+  margin: 25px 0;
+}
+.questions-space > h3 {
+  color: var(--font-color);
+  text-transform: capitalize;
+}
+.questions-space > div {
+  padding: 0 20px;
+  margin-bottom: 10px;
+}
+.questions-space > div h2 {
+  color: var(--font-color);
+}
+.questions-space > div i {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.questions-space > div i.true {
+  color: #0e9e32;
+  border: dashed 1.5px #0e9e32;
+}
+.questions-space > div i.false {
+  color: #e60404;
+  border: dashed 1.5px #e60404;
+}
+.questions-space > div i.false:hover,
+.questions-space > div i.false.active {
+  background-color: #e60404;
+  color: white;
+  border: dashed 1.5px var(--body-color);
+}
+.questions-space > div i.true:hover,
+.questions-space > div i.true.active {
+  border: dashed 1.5px var(--body-color);
+  background-color: #0e9e32;
+  color: white;
+}
+.questions-space > div article h4 {
+  font-size: 20px;
+  background-color: var(--body-color);
+  margin-bottom: 10px;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+}

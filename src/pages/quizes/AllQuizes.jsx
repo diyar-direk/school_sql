@@ -8,6 +8,8 @@ const AllQuizes = () => {
   const context = useContext(Context);
   const token = context && context.userDetails.token;
   const isAdmin = context && context.userDetails.isAdmin;
+  const isStudent = context && context.userDetails.isStudent;
+  const isTeacher = context && context.userDetails.isTeacher;
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +18,9 @@ const AllQuizes = () => {
   const [activePage, setActivePage] = useState(1);
   const divsCount = 10;
   const language = context && context.selectedLang;
+  const studentLevel = isStudent && context?.userDetails.userDetails.yearLevel;
+
+  const [yearLevel, setYearLevel] = useState(studentLevel);
 
   const createPags = (dataCount, dataLength) => {
     const pages = Math.ceil(dataLength / dataCount);
@@ -62,7 +67,11 @@ const AllQuizes = () => {
   });
 
   const fetchData = async () => {
+    setLoading(true);
+    setSearchData([]);
     let URL = `http://localhost:8000/api/quizzes?limit=${divsCount}&page=${activePage}&sort=-date&active=true`;
+    if (yearLevel) URL += `&yearLevel=${yearLevel}`;
+
     try {
       const data = await axios.get(URL, {
         headers: {
@@ -80,7 +89,7 @@ const AllQuizes = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [activePage]);
+  }, [activePage, yearLevel]);
 
   const openOptions = (e) => {
     e.stopPropagation();
@@ -144,6 +153,14 @@ const AllQuizes = () => {
               </div>
             </td>
           )}
+          {isStudent && (
+            <td>
+              <Link
+                to={`/dashboard/take_quiz/${e._id}`}
+                className="fa-solid fa-play c-pointer start c-green"
+              ></Link>
+            </td>
+          )}
         </tr>
       );
     });
@@ -168,6 +185,25 @@ const AllQuizes = () => {
       setOverlay(false);
     }
   };
+  function selectFilterYears(e) {
+    setYearLevel(parseInt(e.target.dataset.level));
+  }
+  const handleClick = (e) => {
+    e.stopPropagation();
+    e.target.classList.toggle("active");
+  };
+
+  function createYearLeveFltr() {
+    let h2 = [];
+    for (let index = 1; index < 13; index++) {
+      h2.push(
+        <h2 key={index} onClick={selectFilterYears} data-level={index}>
+          {index}
+        </h2>
+      );
+    }
+    return h2;
+  }
 
   return (
     <main>
@@ -206,13 +242,30 @@ const AllQuizes = () => {
           <h1 className="title">all quizes</h1>
           <div className="tabel-container">
             <div className="table">
-              <form className="flex search gap-20">
-                {isAdmin && (
-                  <Link className="btn" to={"/dashboard/add_quiz"}>
-                    <i className="fa-regular fa-square-plus"></i> add quize
-                  </Link>
-                )}
-              </form>
+              <div className="flex search gap-20">
+                <Link className="btn">
+                  <i class="fa-regular fa-square-plus"></i> add quiz
+                </Link>
+
+                <div className="flex flex-direction">
+                  <div className="selecte">
+                    <div onClick={handleClick} className="inp">
+                      {yearLevel
+                        ? `${language.class && language.class.year_level}: ` +
+                          yearLevel
+                        : `${language.class && language.class.year_level} : ${
+                            language.class && language.class.all_years
+                          }`}
+                    </div>
+                    <article className="grid-3">
+                      <h2 data-level={false} onClick={selectFilterYears}>
+                        {language.class && language.class.all_years}
+                      </h2>
+                      {createYearLeveFltr()}
+                    </article>
+                  </div>
+                </div>
+              </div>
               <table className={`${tableData.length === 0 ? "loading" : ""}`}>
                 <thead>
                   <tr>
@@ -222,7 +275,7 @@ const AllQuizes = () => {
                     <th>class</th>
                     <th>date</th>
                     <th>duration</th>
-                    {isAdmin && <th></th>}
+                    {!isTeacher && <th></th>}
                   </tr>
                 </thead>
                 <tbody

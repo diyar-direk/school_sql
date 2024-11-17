@@ -32,6 +32,8 @@ import AddUser from "./Auth/AddUser";
 import AllQuizes from "./pages/quizes/AllQuizes";
 import AddQuiz from "./pages/quizes/AddQuiz";
 import UpdateQuiz from "./pages/quizes/UpdateQuiz";
+import StudentAuth from "./Auth/StudentAuth";
+import TakeQuiz from "./pages/quizes/TakeQuiz";
 
 function App() {
   const location = useLocation();
@@ -85,6 +87,10 @@ function App() {
               <Route path="subjects" element={<Subjects />} />
               <Route path="exams_schedule" element={<ExamSchedule />} />
               <Route path="exams_result" element={<ExamResult />} />
+
+              <Route element={<StudentAuth />}>
+                <Route path="take_quiz/:id" element={<TakeQuiz />} />
+              </Route>
             </Route>
           </Route>
         </Route>

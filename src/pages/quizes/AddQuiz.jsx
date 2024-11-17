@@ -177,6 +177,7 @@ const AddQuiz = () => {
           <div className="center gap-10 justify-start">
             <input
               required
+              autoFocus={i > 0}
               onInput={(e) => handleInputChange(e, i)}
               value={multiQuestions.choices[i].text}
               type="text"

@@ -56,23 +56,24 @@ const UpdateQuiz = () => {
 
         const formattedDateTime = dateObject.toISOString().slice(0, 16);
         setForm({
-          classId: data.classId,
-          subjectId: data.subjectId,
+          classId: data.classId._id,
+          subjectId: data.subjectId._id,
           yearLevel: data.yearLevel,
           date: formattedDateTime,
           duration: data.duration,
           type: "Quize",
           title: data.title,
           description: data.description,
-          questions: [],
         });
+
+        setClassesName(data.classId.name);
+        setSubjectsName(data.subjectId.name);
         const multi = data.questions.filter(
           (e) => e.type === "multiple-choice"
         );
         const t_r = data.questions.filter((e) => e.type === "true-false");
         setArrayOfMultiQuestions(multi);
         setArrayOfT_RQuestions(t_r);
-        setAllowCreate(true);
       });
   }, []);
 
@@ -86,7 +87,6 @@ const UpdateQuiz = () => {
   const [subjectsName, setSubjectsName] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [response, setResponse] = useState(false);
-  const [allowCreate, setAllowCreate] = useState(false);
   const responseFun = (complete = false) => {
     setOverlay(true);
 
@@ -194,7 +194,6 @@ const UpdateQuiz = () => {
     if (!form.yearLevel) setTopFormError("please choose a year level");
     else if (!form.classId) setTopFormError("please choose a class");
     else if (!form.subjectId) setTopFormError("please choose a subject");
-    else setAllowCreate(true);
   };
 
   const handleInputChange = (e, index) => {
@@ -216,6 +215,7 @@ const UpdateQuiz = () => {
             <input
               required
               onInput={(e) => handleInputChange(e, i)}
+              autoFocus={i > 0}
               value={multiQuestions.choices[i].text}
               type="text"
               id={`answor-${i + 1}`}
@@ -343,6 +343,7 @@ const UpdateQuiz = () => {
         left: 0,
       });
       setTopFormError("please compleat the form");
+      return;
     } else if (T_RSelect || multiSelect) {
       setDataError("pleasse save first");
       const inp = document.querySelector("form.quize");
@@ -351,31 +352,30 @@ const UpdateQuiz = () => {
         behavior: "smooth",
         left: 0,
       });
-    } else {
-      const allQuestions = [...arrayOfMultiQuestions, ...arrayOfT_RQuestions];
-      setForm({ ...form, questions: allQuestions });
-      try {
-        const data = await axios.patch(
-          `http://localhost:8000/api/quizzes/${id}`,
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        console.log(data);
-
-        if (data.status === 200) {
-          nav("/dashboard/all_quizzes");
+      return;
+    }
+    const allQuestions = [...arrayOfMultiQuestions, ...arrayOfT_RQuestions];
+    const payload = { ...form, questions: allQuestions };
+    try {
+      const data = await axios.patch(
+        `http://localhost:8000/api/quizzes/${id}`,
+        payload,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         }
-      } catch (error) {
-        console.log(error);
-        if (error.status === 400) responseFun("reapeted data");
-        else responseFun(false);
-      } finally {
-        setLoading(false);
+      );
+
+      if (data.status === 200) {
+        nav("/dashboard/all_quizzes");
       }
+    } catch (error) {
+      console.log(error);
+      if (error.status === 400) responseFun("reapeted data");
+      else responseFun(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -518,143 +518,138 @@ const UpdateQuiz = () => {
               </div>
             </div>
             {topFormError && <p className="error">{topFormError}</p>}
-            {!allowCreate && (
-              <button className="btn question">create questions</button>
-            )}
           </form>
 
-          {allowCreate && (
-            <form
-              onSubmit={handleQuizForm}
-              className="relative quize dashboard-form"
-            >
-              {multiSelect && (
-                <div className="flex wrap">
-                  <div className="flex flex-direction">
-                    <label htmlFor="question">question title</label>
+          <form
+            onSubmit={handleQuizForm}
+            className="relative quize dashboard-form"
+          >
+            {multiSelect && (
+              <div className="flex wrap">
+                <div className="flex flex-direction">
+                  <label htmlFor="question">question title</label>
+                  <input
+                    autoFocus
+                    required
+                    onInput={(e) =>
+                      setMultiQuestions({
+                        ...multiQuestions,
+                        text: e.target.value,
+                      })
+                    }
+                    value={multiQuestions.text}
+                    type="text"
+                    id="question"
+                    className="inp"
+                    placeholder="write question title"
+                  />
+                </div>
+                {createInp(multiQuestionsCount)}
+              </div>
+            )}
+
+            {multiSelect && (
+              <span
+                onClick={() => {
+                  if (multiQuestionsCount > 3)
+                    setDataError("cant add more then 4");
+                  else {
+                    setMultiQuestions({
+                      ...multiQuestions,
+                      choices: [
+                        ...multiQuestions.choices,
+                        { text: "", isCorrect: false },
+                      ],
+                    });
+                    setMultiQuestionsCount((e) => e + 1);
+                  }
+                }}
+                className="add-question"
+              >
+                + add answor
+              </span>
+            )}
+
+            {T_RSelect && (
+              <div className="flex wrap">
+                <div className="flex flex-direction">
+                  <label htmlFor={`answor-${1}`}>question title </label>
+                  <div className="center gap-10 justify-start">
                     <input
                       autoFocus
                       required
+                      value={T_RQuestions.text}
                       onInput={(e) =>
-                        setMultiQuestions({
-                          ...multiQuestions,
+                        setT_RQuestions({
+                          ...T_RQuestions,
                           text: e.target.value,
                         })
                       }
-                      value={multiQuestions.text}
                       type="text"
-                      id="question"
+                      id={`answor-${1}`}
                       className="inp"
-                      placeholder="write question title"
+                      placeholder="write exam ansowr"
                     />
+                    <i
+                      onClick={(e) => {
+                        e.target.classList.add("active");
+                        e.target.nextSibling.classList.remove("active");
+                        setT_RQuestions({
+                          ...T_RQuestions,
+                          correctAnswer: true,
+                        });
+                      }}
+                      className={`${
+                        T_RQuestions.correctAnswer ? "active" : ""
+                      } fa-solid fa-check true`}
+                    ></i>
+                    <i
+                      onClick={(e) => {
+                        e.target.classList.add("active");
+                        e.target.previousElementSibling.classList.remove(
+                          "active"
+                        );
+                        setT_RQuestions({
+                          ...T_RQuestions,
+                          correctAnswer: false,
+                        });
+                      }}
+                      className={`false ${
+                        !T_RQuestions.correctAnswer ? "active" : ""
+                      } fa-solid fa-xmark`}
+                    ></i>
                   </div>
-                  {createInp(multiQuestionsCount)}
                 </div>
-              )}
+              </div>
+            )}
 
-              {multiSelect && (
+            {!multiSelect && !T_RSelect && (
+              <div className="flex gap-20">
+                <span
+                  className="add-question"
+                  onClick={() => {
+                    setT_RSelect(false);
+                    setMultiSelect(true);
+                  }}
+                >
+                  + add multiple choice question
+                </span>
                 <span
                   onClick={() => {
-                    if (multiQuestionsCount > 3)
-                      setDataError("cant add more then 4");
-                    else {
-                      setMultiQuestions({
-                        ...multiQuestions,
-                        choices: [
-                          ...multiQuestions.choices,
-                          { text: "", isCorrect: false },
-                        ],
-                      });
-                      setMultiQuestionsCount((e) => e + 1);
-                    }
+                    setT_RSelect(true);
+                    setMultiSelect(false);
                   }}
                   className="add-question"
                 >
-                  + add answor
+                  + add true false question
                 </span>
-              )}
-
-              {T_RSelect && (
-                <div className="flex wrap">
-                  <div className="flex flex-direction">
-                    <label htmlFor={`answor-${1}`}>question title </label>
-                    <div className="center gap-10 justify-start">
-                      <input
-                        autoFocus
-                        required
-                        value={T_RQuestions.text}
-                        onInput={(e) =>
-                          setT_RQuestions({
-                            ...T_RQuestions,
-                            text: e.target.value,
-                          })
-                        }
-                        type="text"
-                        id={`answor-${1}`}
-                        className="inp"
-                        placeholder="write exam ansowr"
-                      />
-                      <i
-                        onClick={(e) => {
-                          e.target.classList.add("active");
-                          e.target.nextSibling.classList.remove("active");
-                          setT_RQuestions({
-                            ...T_RQuestions,
-                            correctAnswer: true,
-                          });
-                        }}
-                        className={`${
-                          T_RQuestions.correctAnswer ? "active" : ""
-                        } fa-solid fa-check true`}
-                      ></i>
-                      <i
-                        onClick={(e) => {
-                          e.target.classList.add("active");
-                          e.target.previousElementSibling.classList.remove(
-                            "active"
-                          );
-                          setT_RQuestions({
-                            ...T_RQuestions,
-                            correctAnswer: false,
-                          });
-                        }}
-                        className={`false ${
-                          !T_RQuestions.correctAnswer ? "active" : ""
-                        } fa-solid fa-xmark`}
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {!multiSelect && !T_RSelect && (
-                <div className="flex gap-20">
-                  <span
-                    className="add-question"
-                    onClick={() => {
-                      setT_RSelect(false);
-                      setMultiSelect(true);
-                    }}
-                  >
-                    + add multiple choice question
-                  </span>
-                  <span
-                    onClick={() => {
-                      setT_RSelect(true);
-                      setMultiSelect(false);
-                    }}
-                    className="add-question"
-                  >
-                    + add true false question
-                  </span>
-                </div>
-              )}
-              {DataError && <p className="error"> {DataError} </p>}
-              {(multiSelect || T_RSelect) && (
-                <button className="btn">save</button>
-              )}
-            </form>
-          )}
+              </div>
+            )}
+            {DataError && <p className="error"> {DataError} </p>}
+            {(multiSelect || T_RSelect) && (
+              <button className="btn">save</button>
+            )}
+          </form>
 
           {(arrayOfMultiQuestions.length > 0 ||
             arrayOfT_RQuestions.length > 0) && (
