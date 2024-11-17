@@ -7,6 +7,7 @@
 .questions-space > h3 {
   color: var(--font-color);
   text-transform: capitalize;
+  margin-bottom: 10px;
 }
 .questions-space > div {
   padding: 0 20px;
@@ -14,6 +15,11 @@
 }
 .questions-space > div h2 {
   color: var(--font-color);
+}
+.questions-space > div h2.true-false {
+  background: var(--body-color);
+  border-radius: 6px;
+  padding: 10px 20px;
 }
 .questions-space > div i {
   width: 40px;
@@ -45,11 +51,25 @@
   background-color: #0e9e32;
   color: white;
 }
-.questions-space > div article h4 {
+.questions-space > div article > div {
   font-size: 20px;
   background-color: var(--body-color);
   margin-bottom: 10px;
   border-radius: 6px;
   padding: 10px;
   cursor: pointer;
+  color: var(--font-color);
+}
+.questions-space > div article > div:hover,
+.questions-space > div article > div.active {
+  background-color: #01f7ff17;
+}
+.questions-space > div article > div.active .radio,
+.questions-space > div article > div:hover .radio {
+  background-color: #00aeff;
+  outline: solid 2px #00aeff;
+}
+
+.questions-space > div article.multi > div h4 {
+  pointer-events: none;
 }

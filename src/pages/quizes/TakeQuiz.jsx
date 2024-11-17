@@ -13,12 +13,11 @@ const TakeQuiz = () => {
     userDetails &&
     `${userDetails.firstName} ${userDetails.middleName} ${userDetails.lastName}`;
   const [data, setData] = useState([]);
-  const [questions, setQuestions] = useState([]);
-  const [initialTime, setInitialTime] = useState(0); // Store the database value
-  const [time, setTime] = useState(0); // Countdown timer
+  const [initialTime, setInitialTime] = useState(0);
+  const [time, setTime] = useState(0);
   const [remainingTime, setRemainingTime] = useState("");
-  const timerStarted = useRef(false); // Ref to track if the timer has started
-
+  const timerStarted = useRef(false);
+  const [answers, setAnswers] = useState([]);
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/quizzes/${id}`, {
@@ -28,7 +27,7 @@ const TakeQuiz = () => {
       })
       .then((res) => {
         setData(res.data.data);
-        setQuestions(res.data.data.questions);
+        setAnswers(res.data.data.questions);
         const durationInSeconds = res.data.data.duration * 60;
         setInitialTime(durationInSeconds);
         if (!timerStarted.current) {
@@ -38,39 +37,94 @@ const TakeQuiz = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   if (timerStarted.current) {
-  //     const interval = setInterval(() => {
-  //       setTime((prevTime) => {
-  //         if (prevTime <= 1) {
-  //           clearInterval(interval);
-  //           return 0;
-  //         }
-  //         return prevTime - 1;
-  //       });
-  //     }, 1000);
+  useEffect(() => {
+    if (timerStarted.current) {
+      const interval = setInterval(() => {
+        setTime((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
 
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [time]);
+      return () => clearInterval(interval);
+    }
+  }, [time]);
 
-  // useEffect(() => {
-  //   const hours = Math.floor(time / 3600);
-  //   const minutes = Math.floor((time % 3600) / 60);
-  //   const seconds = time % 60;
-  //   setRemainingTime(
-  //     `${hours.toString().padStart(2, "0")}:${minutes
-  //       .toString()
-  //       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-  //   );
-  // }, [time]);
+  useEffect(() => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
+    setRemainingTime(
+      `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+    );
+  }, [time]);
 
-  console.log(data);
-
-  // const createQus =questions?.map(e=>{
-  //   return
-  // })
-
+  const questions = data?.questions?.map((e, i) => {
+    return (
+      <>
+        <h3 key={i - 10}> {`Q-${i + 1}`} </h3>
+        {e.type === "true-false" && (
+          <div key={i + 10} className="center wrap justify-start gap-10">
+            <h2 className="flex-1 true-false"> {e.text} </h2>
+            <div className="flex gap-10">
+              <i
+                onClick={(icon) => {
+                  icon.target.classList.add("active");
+                  icon.target.nextElementSibling.classList.remove("active");
+                  const fltr = answers.filter((ele) => ele !== e);
+                  setAnswers([...fltr, { ...e, studentAnswer: "true" }]);
+                }}
+                className="fa-solid fa-check true"
+              ></i>
+              <i
+                onClick={(icon) => {
+                  icon.target.classList.add("active");
+                  icon.target.previousElementSibling.classList.remove("active");
+                  const fltr = answers.filter((ele) => ele !== e);
+                  setAnswers([...fltr, { ...e, studentAnswer: "false" }]);
+                }}
+                className="fa-solid fa-xmark false"
+              ></i>
+            </div>
+          </div>
+        )}
+        {e.type === "multiple-choice" && (
+          <div key={i + 10} className="center wrap justify-start gap-10">
+            <h2 className="flex-1">{e.text}</h2>
+            <article className={`w-100 multi ans-${i}`}>
+              {e.choices?.map((ele, index) => (
+                <div
+                  onClick={(div) => {
+                    const allDivs = document.querySelectorAll(
+                      `.multi.ans-${i} > div`
+                    );
+                    allDivs.forEach((e) => e.classList.remove("active"));
+                    div.target.classList.add("active");
+                    const fltr = answers.filter(
+                      (q) => q !== e && q.quastionId !== e._id
+                    );
+                    setAnswers([
+                      ...fltr,
+                      { ...ele, studentAnswer: true, quastionId: e._id },
+                    ]);
+                  }}
+                  className="center gap-10"
+                >
+                  <div className="radio"></div>
+                  <h4 className="flex-1"> {`${index + 1}: ${ele.text}`} </h4>
+                </div>
+              ))}
+            </article>
+          </div>
+        )}
+      </>
+    );
+  });
   return (
     <main>
       <div className="dashboard-container">
@@ -86,25 +140,7 @@ const TakeQuiz = () => {
             remaining time : <span>{remainingTime}</span>
           </h2>
 
-          <div className="questions-space">
-            <h3>Q-1</h3>
-            <div className="center wrap justify-start gap-10">
-              <h2 className="flex-1">what is dasdsa?</h2>
-              <div className="flex gap-10">
-                <i className="fa-solid fa-check true"></i>
-                <i className="fa-solid fa-xmark false"></i>
-              </div>
-            </div>
-            <h3>Q-2</h3>
-            <div className="center wrap justify-start gap-10">
-              <h2 className="flex-1">what is dasdsa?</h2>
-              <article className="w-100">
-                <h4>1: ol</h4>
-                <h4>1: ol</h4>
-                <h4>1: ol</h4>
-              </article>
-            </div>
-          </div>
+          <div className="questions-space">{questions}</div>
 
           <button className="btn"> finish the quiz </button>
         </div>

@@ -458,7 +458,7 @@ const AddTeacher = () => {
                                 );
                                 setSubjectName(nameFltr);
                                 const idFltr = form.subjects.filter(
-                                  (e, index) => index !== i
+                                  (_, index) => index !== i
                                 );
                                 setForm({ ...form, subjects: idFltr });
                               }}
