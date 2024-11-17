@@ -213,7 +213,7 @@ const AddUser = () => {
       <div className="dashboard-container">
         <div className="container relative">
           {overlay && <SendData data="user" response={response} />}
-          <h1 className="title">add user</h1>
+          <h1 className="title">{language.users && language.users.add_users}</h1>
 
           <form
             onSubmit={handelSubmit}
@@ -223,7 +223,7 @@ const AddUser = () => {
             <h1>{language.exams && language.exams.please_complete_form}</h1>
             <div className="flex wrap ">
               <div className="flex flex-direction">
-                <label htmlFor="username">user name</label>
+                <label htmlFor="username">{language.users && language.users.user_name}</label>
                 <input
                   required
                   onInput={handleForm}
@@ -231,12 +231,12 @@ const AddUser = () => {
                   type="text"
                   id="username"
                   className="inp"
-                  placeholder="please enter user name"
+                  placeholder={language.users && language.users.user_name_placeholder}
                 />
               </div>
 
               <div className="flex flex-direction">
-                <label htmlFor="password">password</label>
+                <label htmlFor="password">{language.users && language.users.password}</label>
                 <input
                   required
                   onInput={handleForm}
@@ -244,12 +244,12 @@ const AddUser = () => {
                   type="password"
                   id="password"
                   className="inp"
-                  placeholder="please enter password"
+                  placeholder={language.users && language.users.password_placeholder}
                 />
               </div>
 
               <div className="flex flex-direction">
-                <label htmlFor="confPassword">conf password</label>
+                <label htmlFor="confPassword">{language.users && language.users.conf_password}</label>
                 <input
                   required
                   onInput={(e) => setPasswordConfirmation(e.target.value)}
@@ -257,15 +257,15 @@ const AddUser = () => {
                   value={passwordConfirmation}
                   id="confPassword"
                   className="inp"
-                  placeholder="conf your pass"
+                  placeholder={language.users && language.users.conf_password_placeholder}
                 />
               </div>
 
               <div className="flex flex-direction">
-                <label>role</label>
+                <label>{language.users && language.users.role}</label>
                 <div className="selecte">
                   <div onClick={handleClick} className="inp">
-                    {form.role ? form.role : `chose a role`}
+                    {form.role ? form.role : `${language.users && language.users.role_placeholder}`}
                   </div>
                   <article>
                     <h2
@@ -275,7 +275,7 @@ const AddUser = () => {
                         setForm({ ...form, role: e.target.dataset.role });
                       }}
                     >
-                      Admin
+                      {language.users && language.users.admin}
                     </h2>
                     <h2
                       data-role="Teacher"
@@ -284,7 +284,7 @@ const AddUser = () => {
                         setForm({ ...form, role: e.target.dataset.role });
                       }}
                     >
-                      teacher
+                      {language.users && language.users.teacher}
                     </h2>
                     <h2
                       data-role="Student"
@@ -293,27 +293,27 @@ const AddUser = () => {
                         setForm({ ...form, role: e.target.dataset.role });
                       }}
                     >
-                      student
+                      {language.users && language.users.student}
                     </h2>
                   </article>
                 </div>
               </div>
             </div>
             {DataError && <p className="error">{DataError}</p>}
-            <button className="btn">create</button>
+            <button className="btn">{language.users && language.users.create_btn}</button>
           </form>
 
           {form.role && (
             <div className="tabel-container">
               <div className="table">
-                <h2>please select a user to creat</h2>
+                <h2>{language.users && language.users.please_select}</h2>
                 {form.role !== "Admin" && (
                   <form className="flex search gap-20">
                     <div className="flex flex-direction">
                       <div className="selecte">
                         <div onClick={handleClick} className="inp">
                           {yearLevel
-                            ? "yearl level: " + yearLevel
+                            ? `${language.users && language.users.year_level}: ` + yearLevel
                             : `${
                                 language.teachers &&
                                 language.teachers.year_level
@@ -371,9 +371,9 @@ const AddUser = () => {
                       {form.role !== "Admin" && (
                         <th>{language.teachers && language.teachers.gender}</th>
                       )}
-                      {form.role !== "Admin" && <th>year level</th>}
-                      <th>email</th>
-                      <th>role</th>
+                      {form.role !== "Admin" && <th>{language.users && language.users.year_level}</th>}
+                      <th>{language.users && language.users.email}</th>
+                      <th>{language.users && language.users.role}</th>
                     </tr>
                   </thead>
                   <tbody

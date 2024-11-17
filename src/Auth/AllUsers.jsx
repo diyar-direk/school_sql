@@ -126,20 +126,22 @@ const AllUsers = () => {
           </div>
         )}
         <div className="container">
-          <h1 className="title">all users</h1>
+          <h1 className="title">
+            {language.users && language.users.all_users}
+          </h1>
           <div className="tabel-container">
             <div className="table">
               <form className="flex search gap-20">
                 <Link className="btn" to={"/dashboard/add_user"}>
-                  <i className="fa-regular fa-square-plus"></i> add user
+                  <i className="fa-regular fa-square-plus"></i> {language.users && language.users.add_users}
                 </Link>
               </form>
               <table className={`${tableData.length === 0 ? "loading" : ""}`}>
                 <thead>
                   <tr>
-                    <th>name</th>
-                    <th>role</th>
-                    <th>create at</th>
+                    <th>{language.users && language.users.name}</th>
+                    <th>{language.users && language.users.role}</th>
+                    <th>{language.users && language.users.created_at}</th>
                     <th></th>
                   </tr>
                 </thead>

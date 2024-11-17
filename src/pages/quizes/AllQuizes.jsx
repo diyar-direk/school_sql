@@ -203,25 +203,25 @@ const AllQuizes = () => {
           </div>
         )}
         <div className="container">
-          <h1 className="title">all quizes</h1>
+          <h1 className="title">{language.quizzes && language.quizzes.all_quizzes}</h1>
           <div className="tabel-container">
             <div className="table">
               <form className="flex search gap-20">
                 {isAdmin && (
                   <Link className="btn" to={"/dashboard/add_quiz"}>
-                    <i className="fa-regular fa-square-plus"></i> add quize
+                    <i className="fa-regular fa-square-plus"></i> {language.quizzes && language.quizzes.add_quizzes}
                   </Link>
                 )}
               </form>
               <table className={`${tableData.length === 0 ? "loading" : ""}`}>
                 <thead>
                   <tr>
-                    <th>title</th>
-                    <th>description</th>
-                    <th>subject</th>
-                    <th>class</th>
-                    <th>date</th>
-                    <th>duration</th>
+                    <th>{language.quizzes && language.quizzes.title}</th>
+                    <th>{language.quizzes && language.quizzes.discreption}</th>
+                    <th>{language.quizzes && language.quizzes.subject}</th>
+                    <th>{language.quizzes && language.quizzes.class}</th>
+                    <th>{language.quizzes && language.quizzes.date}</th>
+                    <th>{language.quizzes && language.quizzes.duration}</th>
                     {isAdmin && <th></th>}
                   </tr>
                 </thead>

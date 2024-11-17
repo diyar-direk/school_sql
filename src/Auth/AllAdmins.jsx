@@ -132,20 +132,20 @@ const AllAdmins = () => {
           </div>
         )}
         <div className="container">
-          <h1 className="title">all admins</h1>
+          <h1 className="title">{language.admins && language.admins.all_admins}</h1>
           <div className="tabel-container">
             <div className="table">
               <form className="flex search gap-20">
                 <Link className="btn" to={"/dashboard/add_admin"}>
-                  <i className="fa-regular fa-square-plus"></i> add admin
+                  <i className="fa-regular fa-square-plus"></i> {language.admins && language.admins.add_admins}
                 </Link>
               </form>
               <table className={`${tableData.length === 0 ? "loading" : ""}`}>
                 <thead>
                   <tr>
-                    <th>name</th>
-                    <th>role</th>
-                    <th>email</th>
+                    <th>{language.admins && language.admins.name}</th>
+                    <th>{language.admins && language.admins.role}</th>
+                    <th>{language.admins && language.admins.email}</th>
                     <th></th>
                   </tr>
                 </thead>

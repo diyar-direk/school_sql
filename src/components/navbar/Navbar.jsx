@@ -258,19 +258,19 @@ const Navbar = () => {
           <div className="flex-direction flex gap-10">
             <NavLink to={ProfilePath} className="w-100 justify-start center">
               <i className="fa-regular fa-circle-user"></i>
-              <h1>my profile</h1>
+              <h1>{language.navBar && language.navBar.my_profile}</h1>
             </NavLink>
 
             {isAdmin && (
               <div className="links">
                 <div onClick={openDiv} className="center">
                   <i className="fa-solid fa-users"></i>
-                  <h1 className="flex-1">users</h1>
+                  <h1 className="flex-1">{language.navBar && language.navBar.users}</h1>
                   <i className="arrow fa-solid fa-chevron-right"></i>
                 </div>
                 <article>
-                  <NavLink to={"all_users"}>all users</NavLink>
-                  <NavLink to={"add_user"}>add user</NavLink>
+                  <NavLink to={"all_users"}>{language.navBar && language.navBar.all_users}</NavLink>
+                  <NavLink to={"add_user"}>{language.navBar && language.navBar.add_users}</NavLink>
                 </article>
               </div>
             )}
@@ -279,12 +279,12 @@ const Navbar = () => {
               <div className="links">
                 <div onClick={openDiv} className="center">
                   <i className="fa-solid fa-user-group"></i>
-                  <h1 className="flex-1">admins</h1>
+                  <h1 className="flex-1">{language.navBar && language.navBar.admins}</h1>
                   <i className="arrow fa-solid fa-chevron-right"></i>
                 </div>
                 <article>
-                  <NavLink to={"all_admins"}>all admins</NavLink>
-                  <NavLink to={"add_admin"}>add admin</NavLink>
+                  <NavLink to={"all_admins"}>{language.navBar && language.navBar.all_admins}</NavLink>
+                  <NavLink to={"add_admin"}>{language.navBar && language.navBar.add_admins}</NavLink>
                 </article>
               </div>
             )}
@@ -391,12 +391,12 @@ const Navbar = () => {
             <div className="links">
               <div onClick={openDiv} className="center">
                 <i className="fa-solid fa-pencil"></i>
-                <h1 className="flex-1">quiz</h1>
+                <h1 className="flex-1">{language.navBar && language.navBar.quiz}</h1>
                 <i className="arrow fa-solid fa-chevron-right"></i>
               </div>
               <article>
-                <NavLink to={"all_quizzes"}>all quizes</NavLink>
-                {isAdmin && <NavLink to={"add_quiz"}>add quiz</NavLink>}
+                <NavLink to={"all_quizzes"}>{language.navBar && language.navBar.all_quiz}</NavLink>
+                {isAdmin && <NavLink to={"add_quiz"}>{language.navBar && language.navBar.add_quiz}</NavLink>}
               </article>
             </div>
           </div>
@@ -406,7 +406,7 @@ const Navbar = () => {
             to={"/"}
             className="log-out center aside"
           >
-            <i className="fa-solid fa-right-from-bracket"></i> <h3>log out</h3>
+            <i className="fa-solid fa-right-from-bracket"></i> <h3>{language.navBar && language.navBar.log_out}</h3>
           </Link>
         </div>
       </aside>

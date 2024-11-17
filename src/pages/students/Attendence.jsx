@@ -32,7 +32,7 @@ const Attendence = () => {
   // Fetch classes
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/classes", {
+      .get("http://localhost:8000/api/classes?active=true", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -237,7 +237,7 @@ const Attendence = () => {
       const attendanceEntry = studen?.attendance?.data.find((entry) => {
         const date = new Date(entry.date);
 
-        return date.getUTCDate() === index;
+        return date.getDate() === index;
       });
 
       if (attendanceEntry) {

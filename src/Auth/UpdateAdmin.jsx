@@ -90,7 +90,7 @@ const UpdateAdmin = () => {
       <div className="dashboard-container">
         <div className="container relative">
           {overlay && <SendData data="admin" response={response} />}
-          <h1 className="title">add admin</h1>
+          <h1 className="title">{language.admins && language.admins.add_admins}</h1>
 
           <form onSubmit={handelSubmit} className="relative dashboard-form">
             {loading && <FormLoading />}
@@ -98,7 +98,7 @@ const UpdateAdmin = () => {
             <div className="flex wrap ">
               <div className="flex flex-direction">
                 <label htmlFor="firstName">
-                  {language.exams && language.exams.exam_date}
+                {language.admins && language.admins.first_name}
                 </label>
                 <input
                   required
@@ -107,12 +107,12 @@ const UpdateAdmin = () => {
                   type="text"
                   id="firstName"
                   className="inp"
-                  placeholder="please enter your first name"
+                  placeholder={language.admins && language.admins.first_name_placeholder}
                 />
               </div>
 
               <div className="flex flex-direction">
-                <label htmlFor="lastName">last Name</label>
+                <label htmlFor="lastName">{language.admins && language.admins.last_name}</label>
                 <input
                   required
                   onInput={handleForm}
@@ -120,12 +120,12 @@ const UpdateAdmin = () => {
                   type="text"
                   id="lastName"
                   className="inp"
-                  placeholder="please enter your last name"
+                  placeholder={language.admins && language.admins.last_name_placeholder}
                 />
               </div>
 
               <div className="flex flex-direction">
-                <label htmlFor="email">email</label>
+                <label htmlFor="email">{language.admins && language.admins.email}</label>
                 <input
                   required
                   onInput={handleForm}
@@ -133,7 +133,7 @@ const UpdateAdmin = () => {
                   type="email"
                   id="email"
                   className="inp"
-                  placeholder="please enter your email"
+                  placeholder={language.admins && language.admins.email_placeholder}
                 />
               </div>
             </div>
