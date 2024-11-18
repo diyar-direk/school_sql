@@ -8,9 +8,15 @@ nav {
   z-index: 3;
   box-shadow: var(--box-shadow);
 }
+body.arabic nav {
+  right: 290px;
+}
 nav.closed {
   left: 80px;
   width: calc(100% - 80px);
+}
+body.arabic nav.closed {
+  right: 80px;
 }
 nav .search {
   width: 50%;
@@ -58,6 +64,10 @@ nav .search > button {
   border: none;
   background: transparent;
 }
+body.arabic nav .search > button {
+  margin-right: 0;
+  margin-left: 15px;
+}
 nav .setting {
   gap: 20px;
 }
@@ -71,6 +81,10 @@ nav .setting .info .photo {
   margin-right: 12px;
   object-fit: cover;
   font-size: 14px;
+}
+body.arabic nav .setting .info .photo {
+  margin-right: 0;
+  margin-left: 12px;
 }
 nav .setting .info h4,
 nav .setting .info p {
@@ -151,6 +165,9 @@ aside {
   overflow-y: auto;
   z-index: 10;
 }
+body.arabic aside {
+  right: 0;
+}
 aside.closed {
   width: 80px;
   overflow: visible;
@@ -214,7 +231,8 @@ aside > div > div > .links > a.center {
 aside.closed > div > div > .links > .center {
   justify-content: center;
 }
-aside.closed > div > div > a i {
+aside.closed > div > div > a i,
+body.arabic aside.closed > div > div > a i {
   margin: auto;
 }
 aside > div > div > .links > .center:hover,
@@ -249,8 +267,14 @@ aside > div > div > a i {
   font-size: 14px;
   color: var(--main-color);
 }
-aside.closed > div > div > .links > .center i:not(.arrow) {
+body.arabic aside > div > div > .links > .center i:not(.arrow),
+body.arabic aside > div > div > a i {
+  margin-left: 10px;
   margin-right: 0;
+}
+aside.closed > div > div > .links > .center i:not(.arrow),
+body.arabic aside.closed > div > div > .links > .center i:not(.arrow) {
+  margin: 0;
 }
 aside > div > div > .links > .center:hover i,
 aside > div > div > .links > .center.active i,

@@ -503,3 +503,14 @@ div.table tbody tr.active div.radio {
   background-color: #00aeff;
   outline: #00aeff solid 2px;
 }
+div.table tbody td.student-quiz {
+  font-size: 15px;
+}
+i.disabled.start {
+  color: #777;
+}
+.missed-quiz {
+  color: #e60404;
+  font-weight: bold;
+  text-transform: uppercase;
+}

@@ -4,6 +4,12 @@
 .questions-space {
   margin: 25px 0;
 }
+h2.time {
+  color: var(--font-color);
+}
+h2.time span {
+  color: var(--main-color);
+}
 .questions-space > h3 {
   color: var(--font-color);
   text-transform: capitalize;

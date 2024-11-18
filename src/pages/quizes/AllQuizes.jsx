@@ -159,15 +159,24 @@ const AllQuizes = () => {
               </div>
             </td>
           )}
-          <td>
-            {isStudent && canTake && (
-              <Link
-                to={`/dashboard/take_quiz/${e._id}`}
-                className="fa-solid fa-play c-pointer start c-green"
-              ></Link>
-            )}
-            {isStudent && currentDate > endDate && "missed quiz"}
-          </td>
+          {isStudent && (
+            <td className="student-quiz">
+              {isStudent && canTake && (
+                <Link
+                  to={`/dashboard/take_quiz/${e._id}`}
+                  className="fa-solid fa-play c-pointer start c-green"
+                >
+                  start
+                </Link>
+              )}
+              {isStudent && currentDate < startDate && (
+                <i className="fa-solid disabled  start">waiting...</i>
+              )}
+              {isStudent && currentDate > endDate && (
+                <span className="missed-quiz">missed quiz</span>
+              )}
+            </td>
+          )}
         </tr>
       );
     });

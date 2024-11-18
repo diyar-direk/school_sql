@@ -121,6 +121,16 @@ const TakeQuiz = () => {
 
   const submitQuiz = async (e) => {
     e.preventDefault();
+    let ans = 0;
+    answers.forEach((e) => {
+      if (e.studentAnswer)
+        if (
+          e.studentAnswer === e.correctAnswer ||
+          e.studentAnswer === e.isCorrect
+        )
+          ans++;
+    });
+    const score = parseFloat(((ans * 100) / answers.length).toFixed(2));
   };
 
   return (
@@ -141,8 +151,7 @@ const TakeQuiz = () => {
           <div className="questions-space">{questions}</div>
 
           <button onClick={submitQuiz} className="btn">
-            {" "}
-            finish the quiz{" "}
+            finish the quiz
           </button>
         </div>
       </div>

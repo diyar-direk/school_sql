@@ -35,6 +35,8 @@ const Provider = ({ children }) => {
         (e) => e.dataset.lang === language && e.classList.add("active")
       );
     }
+    if (language === "AR") document.body.classList.add("arabic");
+    else document.body.classList.remove("arabic");
   }, [language]);
   const getLang = async () => {
     try {
