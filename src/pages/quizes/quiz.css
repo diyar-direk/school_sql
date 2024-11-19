@@ -49,11 +49,11 @@ h2.time span {
 .questions-space > div i.false.active {
   background-color: #e60404;
   color: white;
-  border: dashed 1.5px var(--body-color);
+  border: dashed 1.5px var(--section-color);
 }
 .questions-space > div i.true:hover,
 .questions-space > div i.true.active {
-  border: dashed 1.5px var(--body-color);
+  border: dashed 1.5px var(--section-color);
   background-color: #0e9e32;
   color: white;
 }

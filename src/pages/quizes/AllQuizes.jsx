@@ -170,10 +170,10 @@ const AllQuizes = () => {
                 </Link>
               )}
               {isStudent && currentDate < startDate && (
-                <i className="fa-solid disabled  start">waiting...</i>
+                <i className="fa-solid disabled start">waiting for...</i>
               )}
               {isStudent && currentDate > endDate && (
-                <span className="missed-quiz">missed quiz</span>
+                <span className="missed-quiz">finished quiz</span>
               )}
             </td>
           )}
@@ -263,7 +263,7 @@ const AllQuizes = () => {
               {isAdmin && (
                 <div className="flex search gap-20">
                   <Link to={"/dashboard/add_quiz"} className="btn">
-                    <i class="fa-regular fa-square-plus"></i> add quiz
+                    <i className="fa-regular fa-square-plus"></i> add quiz
                   </Link>
                   <div className="flex flex-direction">
                     <div className="selecte">

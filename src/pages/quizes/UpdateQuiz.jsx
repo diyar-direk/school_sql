@@ -355,7 +355,13 @@ const UpdateQuiz = () => {
       return;
     }
     const allQuestions = [...arrayOfMultiQuestions, ...arrayOfT_RQuestions];
-    const payload = { ...form, questions: allQuestions };
+    const startDate = new Date(form.date);
+    const endDate = new Date(startDate.getTime() + form.duration * 60 * 1000);
+    const payload = {
+      ...form,
+      questions: allQuestions,
+      endDate: endDate.toISOString(),
+    };
     try {
       const data = await axios.patch(
         `http://localhost:8000/api/quizzes/${id}`,

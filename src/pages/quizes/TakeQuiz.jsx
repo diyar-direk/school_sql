@@ -152,7 +152,7 @@ const TakeQuiz = () => {
   });
 
   const submitQuiz = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     setEndTime(true);
     let ans = 0;
     answers.forEach((e) => {
