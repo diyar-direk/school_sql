@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import errorImg from "./error.png";
 import completeImg from "./complete.png";
 import "./overlay.css";
+import { Context } from "../../context/Context";
 const SendData = (props) => {
+  const context = useContext(Context);
+  const language = context && context.selectedLang;
   return (
     <div className="center response">
       <img
@@ -12,10 +15,10 @@ const SendData = (props) => {
       />
       <h1>
         {props.response === true
-          ? "send successfully"
+          ? `${language.error && language.error.sent_successfully}`
           : props.response === 400
-          ? `the ${props.data} already exists`
-          : "network error"}
+          ? `${props.data}${language.error && language.error.allready_exisits}`
+          : `$${language.error && language.error.network_error}`}
       </h1>
     </div>
   );

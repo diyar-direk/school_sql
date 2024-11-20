@@ -183,7 +183,7 @@ const TimeTable = () => {
   };
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (!form.subjectId) setDataError("please selecte subject");
+    if (!form.subjectId) setDataError(`${language.error && language.error.please_choose_subject}`);
     else {
       setFormLoading(true);
       try {

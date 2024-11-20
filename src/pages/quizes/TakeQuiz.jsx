@@ -23,6 +23,8 @@ const TakeQuiz = () => {
   const [takedScore, setTakedScore] = useState(0);
   const [overlay, setOverlay] = useState(false);
   const [endTime, setEndTime] = useState(false);
+  const language = context && context.selectedLang;
+
 
   window.addEventListener("click", () => {
     overlay && setOverlay(false);
@@ -207,10 +209,10 @@ const TakeQuiz = () => {
           {overlay && (
             <div className="overlay">
               <div className="change-status">
-                <h1>confirm send quiz?</h1>
+                <h1>{language.take_quiz && language.take_quiz.confirm_sending}</h1>
                 <div className="flex gap-20">
                   <div onClick={submitQuiz} className="send center">
-                    <h2>submit</h2>
+                    <h2>{language.take_quiz && language.take_quiz.submit}</h2>
                     <i className="fa-solid fa-share"></i>
                   </div>
                   <div
@@ -219,7 +221,7 @@ const TakeQuiz = () => {
                     }}
                     className="none center"
                   >
-                    <h2>cencel</h2>
+                    <h2>{language.take_quiz && language.take_quiz.cancel}</h2>
                     <i className="fa-solid fa-ban"></i>
                   </div>
                 </div>
@@ -233,11 +235,11 @@ const TakeQuiz = () => {
                 <h1 className="title">{data.subjectId?.name}</h1>
                 <div>
                   <h2 className="text-capitalize">{name}</h2>
-                  <h3 className="text-capitalize">{data.duration} minuets </h3>
+                  <h3 className="text-capitalize">{data.duration}{language.take_quiz && language.take_quiz.minutes} </h3>
                 </div>
               </div>
               <h2 className="time gap-10 center text-capitalize">
-                remaining time : <span> {remainingTime} </span>
+              {language.take_quiz && language.take_quiz.remainig_time} <span> {remainingTime} </span>
               </h2>
 
               <div className="questions-space">{questions}</div>
@@ -249,12 +251,12 @@ const TakeQuiz = () => {
                 }}
                 className="btn"
               >
-                finish the quiz
+                {language.take_quiz && language.take_quiz.finish_this_quiz}
               </button>
             </>
           ) : (
             <h1 className=" center text-capitalize font-color">
-              you taked this quiz and your score is {takedScore}
+              {language.take_quiz && language.take_quiz.you_allready_took_and_scored} {takedScore}
             </h1>
           )}
         </div>

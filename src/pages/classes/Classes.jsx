@@ -314,7 +314,10 @@ const Classes = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (!form.yearLevel) setDataError("please select a year");
+    if (!form.yearLevel)
+      setDataError(
+        `${language.error && language.error.please_choose_yearLevel}`
+      );
     else {
       try {
         if (!selectedId) {
@@ -403,7 +406,12 @@ const Classes = () => {
     <main>
       <div className="dashboard-container">
         <div className="container ">
-          {dataOverlay && <SendData response={response} data="class" />}
+          {dataOverlay && (
+            <SendData
+              response={response}
+              data={`${language.error && language.error.Class}`}
+            />
+          )}
           {overlay && (
             <div className="overlay">
               <div className="change-status">

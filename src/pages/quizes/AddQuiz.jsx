@@ -155,9 +155,18 @@ const AddQuiz = () => {
   const handelSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.yearLevel) setTopFormError("please choose a year level");
-    else if (!form.classId) setTopFormError("please choose a class");
-    else if (!form.subjectId) setTopFormError("please choose a subject");
+    if (!form.yearLevel)
+      setTopFormError(
+        `${language.error && language.error.please_choose_yearLevel}`
+      );
+    else if (!form.classId)
+      setTopFormError(
+        `${language.error && language.error.please_choose_class}`
+      );
+    else if (!form.subjectId)
+      setTopFormError(
+        `${language.error && language.error.please_choose_subject}`
+      );
     else setAllowCreate(true);
   };
 
@@ -263,12 +272,17 @@ const AddQuiz = () => {
     e.preventDefault();
     if (multiSelect) {
       const fltr = multiQuestions.choices.filter((e) => e.isCorrect);
-      if (fltr.length === 0) setDataError("you hsave to select right question");
+      if (fltr.length === 0)
+        setDataError(
+          `${language.error && language.error.must_select_right_answer}`
+        );
       else if (
         multiQuestions.choices.length <= 1 ||
         multiQuestions.choices.length > 4
       )
-        setDataError("choices have be between 2-4");
+        setDataError(
+          `${language.error && language.error.choices_must_between_2_4}`
+        );
       else {
         setMultiSelect(false);
         setT_RSelect(false);
@@ -313,7 +327,7 @@ const AddQuiz = () => {
       });
       setTopFormError("please compleat the form");
     } else if (T_RSelect || multiSelect) {
-      setDataError("pleasse save first");
+      setDataError(`${language.error && language.error.please_save_first}`);
       const inp = document.querySelector("form.quize");
       window.scrollTo({
         top: inp.offsetTop - 50,
@@ -374,7 +388,12 @@ const AddQuiz = () => {
       <div className="dashboard-container relative">
         {loading && <FormLoading />}
         <div className="container relative">
-          {overlay && <SendData data="quiz" response={response} />}
+          {overlay && (
+            <SendData
+              data={`${language.error && language.error.quiz}`}
+              response={response}
+            />
+          )}
           <h1 className="title">
             {language.quizzes && language.quizzes.add_a_quiz}
           </h1>
@@ -580,7 +599,11 @@ const AddQuiz = () => {
                 <span
                   onClick={() => {
                     if (multiQuestionsCount > 3)
-                      setDataError("cant add more then 4");
+                      setDataError(
+                        `${
+                          language.error && language.error.cant_add_more_then_4
+                        }`
+                      );
                     else {
                       setMultiQuestions({
                         ...multiQuestions,
@@ -741,7 +764,12 @@ const AddQuiz = () => {
                                   <i
                                     onClick={() => {
                                       if (T_RSelect || multiSelect) {
-                                        setDataError("pleasse save first");
+                                        setDataError(
+                                          `${
+                                            language.error &&
+                                            language.error.please_save_first
+                                          }`
+                                        );
                                       } else {
                                         setMultiQuestions(e);
                                         const fltr =
@@ -816,7 +844,12 @@ const AddQuiz = () => {
                                   <i
                                     onClick={() => {
                                       if (T_RSelect || multiSelect) {
-                                        setDataError("pleasse save first");
+                                        setDataError(
+                                          `${
+                                            language.error &&
+                                            language.error.please_save_first
+                                          }`
+                                        );
                                       } else {
                                         setT_RQuestions(e);
                                         const fltr = arrayOfT_RQuestions.filter(

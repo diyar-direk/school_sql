@@ -367,6 +367,55 @@
     "true": "صحيح",
     "false": "خطأ",
     "no_data": "لا توجد بيانات متوفرة",
-    "loading": "جارٍ التحميل..."
+    "loading": "جارٍ التحميل...",
+    "start": "ابدأ الأختبار",
+    "waiting": " انتظر ",
+    "allready_done": "انتهت مدة التقديم"
+  },
+  "login": {
+    "login": "تسجيل الدخول",
+    "user_name": "اسم المستخدم",
+    "user_name_placeholder": "أدخل اسم المستخدم الخاص بك",
+    "password": "كلمة المرور",
+    "password_placeholder": "أدخل كلمة المرور الخاصة بك",
+    "submit_btn": "إرسال"
+  },
+  "error": {
+    "worng_user_password": "اسم المستخدم أو كلمة المرور غير صحيحة.",
+    "network_error": "خطأ في الشبكة. يرجى المحاولة لاحقًا.",
+    "sent_successfully": "تم إرسال معلوماتك بنجاح.",
+    "allready_exisits": " موجود بالفعل",
+    "username_no_spaces": "اسم المستخدم لا يمكن أن يحتوي على مسافات.",
+    "passwords_must_match": "يجب أن تتطابق كلمات المرور.",
+    "please_choose_role": "يرجى اختيار الدور.",
+    "please_choose_user": "يرجى اختيار مستخدم.",
+    "please_choose_gender": "يرجى اختيار الجنس.",
+    "please_choose_yearLevel": "يرجى اختيار المستوى الدراسي.",
+    "please_choose_class": "يرجى اختيار الفصل.",
+    "please_choose_subject": "يرجى اختيار المادة.",
+    "please_choose_exam": "يرجى اختيار الامتحان.",
+    "please_choose_student": "يرجى اختيار الطالب.",
+    "must_select_right_answer": "يجب عليك اختيار الإجابة الصحيحة.",
+    "choices_must_between_2_4": "يجب أن يكون عدد الاختيارات بين 2 و 4.",
+    "please_save_first": "يرجى حفظ البيانات أولاً.",
+    "cant_add_more_then_4": "لا يمكنك إضافة أكثر من 4 اختيارات.",
+    "admin": "مشرف",
+    "user": "مستخدم",
+    "teacher": "معلم",
+    "student": "طالب",
+    "exam": "امتحان",
+    "Result": "نتيجة",
+    "Class": "فصل",
+    "Subject": "مادة",
+    "quiz": "اختبار"
+  },
+  "take_quiz": {
+    "you_allready_took_and_scored": "لقد أجريت الاختبار بالفعل وحصلت على :",
+    "remainig_time": "الوقت المتبقي :",
+    "minutes": "دقائق",
+    "finish_this_quiz": "إتمام هذا الامتحان",
+    "confirm_sending": "هل أنت متأكد أنك تريد إنهاء الاختبار؟",
+    "submit": "إرسال",
+    "cancel": "إلغاء"
   }
 }

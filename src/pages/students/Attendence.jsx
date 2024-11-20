@@ -54,7 +54,7 @@ const Attendence = () => {
     e.preventDefault();
 
     if (!form.classId) {
-      setDataError("please choose a class");
+      setDataError(`${language.error && language.error.please_choose_class}`);
     } else {
       try {
         const response = await axios.get(

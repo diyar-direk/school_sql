@@ -295,7 +295,10 @@ const Subjects = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (!form.yearLevel) setDataError("please select a year");
+    if (!form.yearLevel)
+      setDataError(
+        `${language.error && language.error.please_choose_yearLevel}`
+      );
     else {
       try {
         if (!selectedId) {
@@ -387,7 +390,12 @@ const Subjects = () => {
     <main>
       <div className="dashboard-container">
         <div className="container">
-          {dataOverlay && <SendData data="subject" response={response} />}
+          {dataOverlay && (
+            <SendData
+              data={`${language.error && language.error.Subject}`}
+              response={response}
+            />
+          )}
           {overlay && (
             <div className="overlay">
               <div className="change-status">

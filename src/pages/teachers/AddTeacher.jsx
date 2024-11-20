@@ -162,10 +162,16 @@ const AddTeacher = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (!form.gender) setDataError("please choose a gender");
-    else if (!form.yearLevel) setDataError("please choose a year level");
-    else if (!form.classes) setDataError("please choose a classes");
-    else if (!form.subjects) setDataError("please choose a subject");
+    if (!form.gender)
+      setDataError(`${language.error && language.error.please_choose_gender}`);
+    else if (!form.yearLevel)
+      setDataError(
+        `${language.error && language.error.please_choose_yearLevel}`
+      );
+    else if (!form.classes)
+      setDataError(`${language.error && language.error.please_choose_class}`);
+    else if (!form.subjects)
+      setDataError(`${language.error && language.error.please_choose_subject}`);
     else {
       try {
         const data = await axios.post(
@@ -204,7 +210,12 @@ const AddTeacher = () => {
     <main>
       <div className="dashboard-container">
         <div className="container relative">
-          {overlay && <SendData data="teacher" response={response} />}
+          {overlay && (
+            <SendData
+              data={`${language.error && language.error.teacher}`}
+              response={response}
+            />
+          )}
           <h1 className="title">
             {language.teachers && language.teachers.add_teacher_btn}
           </h1>

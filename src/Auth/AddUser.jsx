@@ -57,11 +57,11 @@ const AddUser = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (form.username.includes(" ")) setDataError("username cant have spaces");
+    if (form.username.includes(" ")) setDataError(`${language.error && language.error.username_no_spaces}`);
     else if (passwordConfirmation !== form.password)
-      setDataError("the password most be same");
-    else if (!form.role) setDataError("please choose a role");
-    else if (!form.profileId) setDataError("please choose a user");
+      setDataError(`${language.error && language.error.passwords_must_match}`);
+    else if (!form.role) setDataError(`${language.error && language.error.please_choose_role}`);
+    else if (!form.profileId) setDataError(`${language.error && language.error.please_choose_user}`);
     else {
       try {
         setFormLoading(true);
@@ -212,7 +212,7 @@ const AddUser = () => {
     <main>
       <div className="dashboard-container">
         <div className="container relative">
-          {overlay && <SendData data="user" response={response} />}
+          {overlay && <SendData  data={`${language.error && language.error.user}`} response={response} />}
           <h1 className="title">{language.users && language.users.add_users}</h1>
 
           <form

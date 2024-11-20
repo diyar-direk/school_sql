@@ -166,14 +166,14 @@ const AllQuizes = () => {
                   to={`/dashboard/take_quiz/${e._id}`}
                   className="fa-solid fa-play c-pointer start c-green"
                 >
-                  start
+                  {language.quizzes && language.quizzes.start}
                 </Link>
               )}
               {isStudent && currentDate < startDate && (
-                <i className="fa-solid disabled start">waiting for...</i>
+                <i className="fa-solid disabled start">{language.quizzes && language.quizzes.waiting}.</i>
               )}
               {isStudent && currentDate > endDate && (
-                <span className="missed-quiz">finished quiz</span>
+                <span className="missed-quiz">{language.quizzes && language.quizzes.allready_done}</span>
               )}
             </td>
           )}

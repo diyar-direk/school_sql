@@ -372,6 +372,56 @@
     "true": "True",
     "false": "False",
     "no_data": "No data available",
-    "loading": "loading..."
+    "loading": "loading...",
+
+    "start": "Start Quiz",
+    "waiting": "wait...",
+    "allready_done": " already completed"
+  },
+  "login": {
+    "login": "Login",
+    "user_name": "Username",
+    "user_name_placeholder": "Enter your username",
+    "password": "Password",
+    "password_placeholder": "Enter your password",
+    "submit_btn": "Submit"
+  },
+  "error": {
+    "worng_user_password": "Incorrect username or password.",
+    "network_error": "Network error. Please try again later.",
+    "sent_successfully": "Your information has been sent successfully.",
+    "allready_exisits": " already exists.",
+    "username_no_spaces": "Username cannot contain spaces.",
+    "passwords_must_match": "Passwords must match.",
+    "please_choose_role": "Please choose a role.",
+    "please_choose_user": "Please choose a user.",
+    "please_choose_gender": "Please choose a gender.",
+    "please_choose_yearLevel": "Please choose a year level.",
+    "please_choose_class": "Please choose a class.",
+    "please_choose_subject": "Please choose a subject.",
+    "please_choose_exam": "Please choose an exam.",
+    "please_choose_student": "Please choose a student.",
+    "must_select_right_answer": "You must select the correct answer.",
+    "choices_must_between_2_4": "Choices must be between 2 and 4.",
+    "please_save_first": "Please save your data first.",
+    "cant_add_more_then_4": "You cannot add more than 4 options.",
+    "admin": "admin",
+    "user": "user",
+    "teacher": "teacher",
+    "student": "student",
+    "exam": "exam",
+    "Result": "Result",
+    "Class": "Class",
+    "Subject": "Subject",
+    "quiz": "quiz"
+  },
+  "take_quiz": {
+    "you_allready_took_and_scored": "You already took the quiz and scored:",
+    "remainig_time": "Remaining time:",
+    "minutes": "minutes",
+    "finish_this_quiz": "Finish this quiz",
+    "confirm_sending": "Are you sure you want to finish this quiz?",
+    "submit": "Submit",
+    "cancel": "Cancel"
   }
 }

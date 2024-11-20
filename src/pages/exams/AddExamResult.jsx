@@ -156,13 +156,19 @@ const AddExamResult = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    if (!form.yearLevel) setDataError("please choose a year level");
-    else if (!form.classId) setDataError("please choose a class");
-    else if (!form.exam) setDataError("please choose a exam");
-    else if (!form.student) setDataError("please choose a student");
+    if (!form.yearLevel)
+      setDataError(
+        `${language.error && language.error.please_choose_yearLevel}`
+      );
+    else if (!form.classId)
+      setDataError(`${language.error && language.error.please_choose_class}`);
+    else if (!form.exam)
+      setDataError(`${language.error && language.error.please_choose_exam}`);
+    else if (!form.student)
+      setDataError(`${language.error && language.error.please_choose_student}`);
     else {
       console.log(form);
-      
+
       try {
         const data = await axios.post(
           "http://localhost:8000/api/exam-results",
@@ -198,7 +204,12 @@ const AddExamResult = () => {
     <main>
       <div className="dashboard-container">
         <div className="container relative">
-          {overlay && <SendData data="exam" response={response} />}
+          {overlay && (
+            <SendData
+              data={`${language.error && language.error.Result}`}
+              response={response}
+            />
+          )}
           <h1 className="title">
             {language.examResult && language.examResult.add_exam_result}{" "}
           </h1>

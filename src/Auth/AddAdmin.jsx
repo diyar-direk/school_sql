@@ -70,7 +70,7 @@ const AddAdmin = () => {
     <main>
       <div className="dashboard-container">
         <div className="container relative">
-          {overlay && <SendData data="admin" response={response} />}
+          {overlay && <SendData data={`${language.error && language.error.admin}`} response={response} />}
           <h1 className="title">
             {language.admins && language.admins.add_admins}
           </h1>

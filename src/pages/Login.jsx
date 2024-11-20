@@ -16,7 +16,7 @@ export const showPassword = (e) => {
 
 const Login = () => {
   const context = useContext(Context);
-
+  const language = context && context.selectedLang;
   const [error, setError] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [form, setForm] = useState({
@@ -66,8 +66,8 @@ const Login = () => {
       isAdmin && nav(`/dashboard/admin_profile`);
     } catch (error) {
       console.log(error);
-      if (error.status === 401) setError("wrong name or passowrd");
-      else setError("network error please try agin");
+      if (error.status === 401) setError(`${language.error && language.error.worng_user_password}`);
+      else setError(`${language.error && language.error.network_error}`);
     } finally {
       setFormLoading(false);
     }
@@ -79,8 +79,8 @@ const Login = () => {
         {formLoading && <FormLoading />}
         <div className="flex wrap">
           <div className="forms flex flex-direction">
-            <h1>login</h1>
-            <label htmlFor="username">user name</label>
+            <h1>{language.login && language.login.login}</h1>
+            <label htmlFor="username">{language.login && language.login.user_name}</label>
             <div className="center inp">
               <i className="fa-solid fa-user"></i>
               <input
@@ -88,12 +88,12 @@ const Login = () => {
                 value={form.username}
                 className="flex-1"
                 type="text"
-                placeholder="write your username"
+                placeholder={language.login && language.login.user_name_placeholder}
                 required
                 id="username"
               />
             </div>
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">{language.login && language.login.password}</label>
             <div className="center inp">
               <i className="fa-solid fa-key"></i>
               <input
@@ -101,7 +101,7 @@ const Login = () => {
                 onInput={handleForm}
                 className="password flex-1"
                 type="password"
-                placeholder="write your password"
+                placeholder={language.login && language.login.password_placeholder}
                 required
                 id="password"
               />
@@ -111,7 +111,7 @@ const Login = () => {
               ></i>
             </div>
             {error && <p className="error"> {error} </p>}
-            <button className="btn">submit</button>
+            <button className="btn">{language.login && language.login.submit_btn}</button>
           </div>
           <div className="image">
             <img src={require("./loginimage.jpg")} alt="" />
