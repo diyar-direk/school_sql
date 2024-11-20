@@ -32,6 +32,7 @@ const AllTeachers = () => {
       allSelectors.forEach((e) => e.classList.remove("active"));
     }
   });
+
   function updateData(e) {
     if (activePage !== +e.target.dataset.page) {
       setSearchData([]);
@@ -312,6 +313,7 @@ const AllTeachers = () => {
   const handelSubmit = (e) => {
     e.preventDefault();
     setSearch(true);
+    getSearchData();
   };
 
   return (

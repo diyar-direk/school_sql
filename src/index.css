@@ -66,6 +66,10 @@ h1.title {
   z-index: -1;
 }
 
+body.arabic {
+  letter-spacing: 1px;
+}
+
 h1.title::before {
   content: "";
   position: absolute;
@@ -215,9 +219,8 @@ body.arabic {
   justify-content: flex-start;
 }
 
-::-webkit-scrollbar {
-  width: 11px;
-  height: 10px;
+body::-webkit-scrollbar {
+  width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -231,6 +234,24 @@ body.arabic {
 ::-webkit-scrollbar-track {
   background-color: var(--border-color);
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5b5b5b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--main-color);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--border-color);
+}
+
 .gap-20 {
   gap: 20px;
 }
@@ -295,7 +316,10 @@ body.arabic {
   }
 
   .container {
-    width: 92%;
+    width: 95%;
+  }
+  main > div.dashboard-container {
+    width: calc(100% - 260px);
   }
 }
 

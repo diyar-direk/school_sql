@@ -96,7 +96,7 @@ const UpdateTeacher = () => {
   function selectYears(e) {
     setForm({
       ...form,
-      yearLevel: [...new Set([...form.yearLevel, e.target.dataset.level])],
+      yearLevel: [...new Set([...form.yearLevel, +e.target.dataset.level])],
     });
     setDataError(false);
   }

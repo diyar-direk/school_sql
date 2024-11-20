@@ -108,6 +108,9 @@ form.dashboard-form .flex-direction .inp {
   text-wrap: nowrap;
   padding-right: 20px;
 }
+.table .selecte .inp {
+  text-align: center;
+}
 body.arabic .selecte .inp {
   padding-left: 20px;
   padding-right: 10px;

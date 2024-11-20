@@ -283,6 +283,7 @@ const AllStudents = () => {
   const handelSubmit = (e) => {
     e.preventDefault();
     setSearch(true);
+    getSearchData();
   };
 
   const handleClick = (e) => {

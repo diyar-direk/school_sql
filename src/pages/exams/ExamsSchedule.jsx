@@ -296,6 +296,7 @@ const ExamSchedule = () => {
             </div>
           </div>
         )}
+        
         <div className="container">
           <h1 className="title">
             {language.exams && language.exams.exam_schedule}

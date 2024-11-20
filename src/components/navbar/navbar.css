@@ -19,9 +19,9 @@ body.arabic nav.closed {
   right: 80px;
 }
 nav .search {
-  width: 50%;
   background-color: var(--section-color);
   border-radius: 6px;
+  max-width: 700px;
 }
 nav .search input {
   padding: 10px;
@@ -335,6 +335,48 @@ aside > div > div > .links > article a:hover {
 .log-out:hover {
   color: var(--main-color);
 }
-aside.closed .log-out h3 {
+aside.closed .log-out span {
   display: none;
+}
+
+@media (max-width: 1000px) {
+  aside {
+    width: 260px;
+  }
+  nav {
+    width: calc(100% - 260px);
+    left: 260px;
+  }
+  nav .setting {
+    gap: 10px;
+  }
+  nav .setting .mode {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+  nav .setting .info .photo {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+  nav .log-out,
+  nav .setting .lang span {
+    font-size: 13px;
+  }
+  nav .setting .lang i {
+    font-size: 11px;
+  }
+  nav .setting .info h4,
+  nav .setting .info p {
+    font-size: 14px;
+  }
+  nav .search input {
+    padding: 8px 10px;
+  }
+  nav .search > button {
+    font-size: 15px;
+  }
+}
+@media (max-width: 800px) {
 }

@@ -125,7 +125,7 @@ const Navbar = () => {
   ];
   if (!isStudent) {
     pages.push(
-      { name: "all students", path: "all_students" },
+      { name: language?.navBar?.all_students, path: "all_students" },
       { name: "all teachers", path: "all_teachers" }
     );
   }
@@ -186,8 +186,8 @@ const Navbar = () => {
   return (
     <>
       <nav className={`${!isClosed === false ? "closed" : ""} center`}>
-        <div className="container between">
-          <form className="search center relative">
+        <div className="container between gap-20">
+          <form className="search flex-1 center relative">
             <input
               value={form}
               type="text"
@@ -431,10 +431,10 @@ const Navbar = () => {
               </article>
             </div>
           </div>
-          <h4 onClick={logOut} className="log-out center c-pointer aside">
+          <h3 onClick={logOut} className="log-out center c-pointer aside">
             <i className="fa-solid fa-right-from-bracket"></i>
-            <h3>{language.navBar && language.navBar.log_out}</h3>
-          </h4>
+            <span>{language.navBar && language.navBar.log_out}</span>
+          </h3>
         </div>
       </aside>
     </>

@@ -129,7 +129,9 @@ const AdminProfile = () => {
             </div>
             <div className="info">
               <h2 className="name">
-                <Link to={`dashboard/update_teacher/{id}`}>
+                <Link
+                  to={`/dashboard/update_admin/${context.userDetails.userDetails._id}`}
+                >
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
               </h2>

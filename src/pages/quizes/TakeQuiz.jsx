@@ -19,6 +19,7 @@ const TakeQuiz = () => {
   const [time, setTime] = useState(0);
   const [remainingTime, setRemainingTime] = useState("");
   const [answers, setAnswers] = useState([]);
+  const [studentAnswers, setStudentAnswers] = useState([]);
   const [takedScore, setTakedScore] = useState(0);
   const [overlay, setOverlay] = useState(false);
   const [endTime, setEndTime] = useState(false);
@@ -103,6 +104,7 @@ const TakeQuiz = () => {
                   icon.target.nextElementSibling.classList.remove("active");
                   const fltr = answers.filter((ele) => ele !== e);
                   setAnswers([...fltr, { ...e, studentAnswer: "true" }]);
+                  setStudentAnswers([...fltr, { ...e, studentAnswer: "true" }]);
                 }}
                 className="fa-solid fa-check true"
               ></i>
@@ -112,6 +114,10 @@ const TakeQuiz = () => {
                   icon.target.previousElementSibling.classList.remove("active");
                   const fltr = answers.filter((ele) => ele !== e);
                   setAnswers([...fltr, { ...e, studentAnswer: "false" }]);
+                  setStudentAnswers([
+                    ...fltr,
+                    { ...e, studentAnswer: "false" },
+                  ]);
                 }}
                 className="fa-solid fa-xmark false"
               ></i>
@@ -137,6 +143,10 @@ const TakeQuiz = () => {
                       ...fltr,
                       { ...ele, studentAnswer: true, quastionId: e._id },
                     ]);
+                    setStudentAnswers([
+                      ...fltr,
+                      { ...ele, studentAnswer: true, quastionId: e._id },
+                    ]);
                   }}
                   className="center gap-10"
                 >
@@ -155,7 +165,7 @@ const TakeQuiz = () => {
     e?.preventDefault();
     setEndTime(true);
     let ans = 0;
-    answers.forEach((e) => {
+    studentAnswers.forEach((e) => {
       if (e.studentAnswer)
         if (
           e.studentAnswer === e.correctAnswer ||
@@ -163,7 +173,10 @@ const TakeQuiz = () => {
         )
           ans++;
     });
-    const score = parseFloat(((ans * 100) / answers.length).toFixed(2));
+    const score =
+      studentAnswers.length > 0
+        ? parseFloat(((ans * 100) / studentAnswers.length).toFixed(2))
+        : 0;
     const form = {
       exam: id,
       student: studentId,

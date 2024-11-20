@@ -74,7 +74,6 @@ const Attendence = () => {
     }
   };
 
-  // Function to fetch attendance data for all students
   const fetchAttendanceData = async (students) => {
     const attendanceArray = []; // Array to hold attendance records for all students
 
@@ -96,14 +95,19 @@ const Attendence = () => {
           });
         })
       );
-      setAttendance(attendanceArray); // Set the attendance array in state
+
+      // Sort the attendance array to match the order of the students array
+      const sortedAttendance = students.map((student) =>
+        attendanceArray.find((record) => record.studentId === student._id)
+      );
+
+      setAttendance(sortedAttendance); // Set the sorted attendance array in state
     } catch (error) {
       console.error("Error fetching attendance", error);
     } finally {
       setLoading(false);
     }
   };
-
   const [overlay, setOverlay] = useState(false);
 
   let currentDate = new Date();

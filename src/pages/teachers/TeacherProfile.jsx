@@ -55,7 +55,10 @@ const TeacherProfile = () => {
             <div className="image">
               <i className=" photo fa-solid fa-user"></i>
               {isAdmin && (
-                <Link to={`/update_teacher/${id}`} className="center gap-10">
+                <Link
+                  to={`/dashboard/update_teacher/${id}`}
+                  className="center gap-10"
+                >
                   {language.teachers && language.teachers.edit_btn}
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
@@ -64,7 +67,7 @@ const TeacherProfile = () => {
             <div className="info">
               {isAdmin && (
                 <h2 className="name">
-                  <Link to={`/update_teacher/${id}`}>
+                  <Link to={`/dashboard/update_teacher/${id}`}>
                     <i className="fa-regular fa-pen-to-square"></i>
                   </Link>
                 </h2>

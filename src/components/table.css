@@ -21,6 +21,9 @@ div.table .search input,
   color: var(--font-color);
   border: solid 1px var(--border-color);
 }
+.table .selecte {
+  min-width: 180px;
+}
 div.table .delete-all {
   margin: 10px 0;
   background-color: #e60404;

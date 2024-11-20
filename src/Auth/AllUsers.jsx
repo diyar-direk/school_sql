@@ -9,10 +9,12 @@ const AllUsers = () => {
 
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
-
+  const [dataLength, setDataLength] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+  const divsCount = 10;
   const [loading, setLoading] = useState(true);
   const [overlay, setOverlay] = useState(false);
-
+  const [role, setRole] = useState("");
   const language = context && context.selectedLang;
 
   window.addEventListener("click", () => {
@@ -21,11 +23,45 @@ const AllUsers = () => {
       setOverlay(false);
       setSelectedItems({});
     }
+    const div = document.querySelector(".selecte .inp.active");
+    div && div.classList.remove("active");
   });
 
-  const fetchData = async () => {
-    let URL = `http://localhost:8000/api/users`;
+  function updateData(e) {
+    if (activePage !== +e.target.dataset.page) {
+      setSearchData([]);
+      setSelectedItems([]);
+      setLoading(true);
+      const pages = document.querySelectorAll("div.table .pagination h3");
+      pages.forEach((e) => e.classList.remove("active"));
+      e.target.classList.add("active");
+      setActivePage(+e.target.dataset.page);
+    }
+  }
 
+  const createPags = (dataCount, dataLength) => {
+    const pages = Math.ceil(dataLength / dataCount);
+    let h3Pages = [];
+
+    for (let i = 0; i < pages; i++) {
+      h3Pages.push(
+        <h3
+          onClick={updateData}
+          data-page={i + 1}
+          key={i}
+          className={`${i === 0 ? "active" : ""}`}
+        >
+          {i + 1}
+        </h3>
+      );
+    }
+
+    return h3Pages;
+  };
+
+  const fetchData = async () => {
+    let URL = `http://localhost:8000/api/users?page=${activePage}&limit=${divsCount}`;
+    if (role) URL += `&role=${role}`;
     try {
       const data = await axios.get(URL, {
         headers: {
@@ -34,6 +70,7 @@ const AllUsers = () => {
       });
 
       setSearchData(data.data.data);
+      setDataLength(data.data.numverOfAcriveUsers);
     } catch (error) {
       console.log(error);
     } finally {
@@ -43,7 +80,7 @@ const AllUsers = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [role]);
 
   const tableData =
     searchData &&
@@ -78,9 +115,8 @@ const AllUsers = () => {
 
   const deleteOne = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/users/deactivate/${selectedItems._id}`,
-        [],
+      const data = await axios.delete(
+        `http://localhost:8000/api/users/${selectedItems._id}`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -94,6 +130,20 @@ const AllUsers = () => {
       console.log(error);
     } finally {
       setOverlay(false);
+    }
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    e.target.classList.toggle("active");
+  };
+
+  const selcetRoles = (e) => {
+    if (role !== e.target.dataset.role) {
+      e.target.dataset.role !== "false" && setRole(e.target.dataset.role);
+      e.target.dataset.role === "false" && setRole(false);
+      setSearchData([]);
+      setLoading(true);
     }
   };
 
@@ -114,7 +164,7 @@ const AllUsers = () => {
                 <div
                   onClick={() => {
                     setOverlay(false);
-                    setSelectedItems({});
+                    setSelectedItems([]);
                   }}
                   className="none center"
                 >
@@ -132,10 +182,33 @@ const AllUsers = () => {
           <div className="tabel-container">
             <div className="table">
               <form className="flex search gap-20">
+                <div className="flex flex-direction">
+                  <div className="selecte">
+                    <div onClick={handleClick} className="inp">
+                      {role ? role : "all roles"}
+                    </div>
+                    <article>
+                      <h2 onClick={selcetRoles} data-role={false}>
+                        all roles
+                      </h2>
+                      <h2 onClick={selcetRoles} data-role={"Admin"}>
+                        Admin
+                      </h2>
+                      <h2 onClick={selcetRoles} data-role={"Teacher"}>
+                        Teacher
+                      </h2>
+                      <h2 onClick={selcetRoles} data-role={"Student"}>
+                        Student
+                      </h2>
+                    </article>
+                  </div>
+                </div>
                 <Link className="btn" to={"/dashboard/add_user"}>
-                  <i className="fa-regular fa-square-plus"></i> {language.users && language.users.add_users}
+                  <i className="fa-regular fa-square-plus"></i>{" "}
+                  {language.users && language.users.add_users}
                 </Link>
               </form>
+
               <table className={`${tableData.length === 0 ? "loading" : ""}`}>
                 <thead>
                   <tr>
@@ -162,6 +235,9 @@ const AllUsers = () => {
                   )}
                 </tbody>
               </table>
+              <div className="pagination flex">
+                {createPags(divsCount, dataLength)}
+              </div>
             </div>
           </div>
         </div>
