@@ -27,8 +27,11 @@
     "attendance": "Attendance",
     "time_table": "Time Table",
     "subjects": "Subjects",
+    "add_subjects": "Add Subjects",
     "classes": "Classes",
-    "log_out": "Log Out"
+    "add_classes": "add Classes",
+    "log_out": "Log Out",
+    "no_results": "No Results Found"
   },
   "teachers": {
     "all_teachers": "All Teachers",

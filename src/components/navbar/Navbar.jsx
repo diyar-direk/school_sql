@@ -114,34 +114,34 @@ const Navbar = () => {
   };
 
   let pages = [
-    { name: "exams schedule", path: "exams_schedule" },
-    { name: "exams result", path: "exams_result" },
-    { name: "attendence", path: "attendence" },
-    { name: "time table", path: "time_table" },
-    { name: "all subjects", path: "subjects" },
-    { name: "all classes", path: "classes" },
-    { name: "my profile", path: ProfilePath },
-    { name: "all quizzes", path: "all_quizzes" },
+    { name: language?.navBar?.exam_schedule, path: "exams_schedule" },
+    { name: language?.navBar?.exam_results, path: "exams_result" },
+    { name: language?.navBar?.attendance, path: "attendence" },
+    { name: language?.navBar?.time_table, path: "time_table" },
+    { name: language?.navBar?.subjects, path: "subjects" },
+    { name: language?.navBar?.classes, path: "classes" },
+    { name: language?.navBar?.my_profile, path: ProfilePath },
+    { name: language?.navBar?.all_quiz, path: "all_quizzes" },
   ];
   if (!isStudent) {
     pages.push(
       { name: language?.navBar?.all_students, path: "all_students" },
-      { name: "all teachers", path: "all_teachers" }
+      { name: language?.navBar?.all_teachers, path: "all_teachers" }
     );
   }
   if (isAdmin) {
     pages.push(
-      { name: "all admins", path: "all_admins" },
-      { name: "all users", path: "all_users" },
-      { name: "add users", path: "add_user" },
-      { name: "add admins", path: "add_admin" },
-      { name: "add teacher", path: "add_teacher" },
-      { name: "add student", path: "add_student" },
-      { name: "add exam", path: "add_exam" },
-      { name: "add subjects", path: "subjects" },
-      { name: "add classes", path: "classes" },
-      { name: "add exam result", path: "add_exam_result" },
-      { name: "add quizzes", path: "add_quiz" }
+      { name: language?.navBar?.all_admins, path: "all_admins" },
+      { name: language?.navBar?.all_users, path: "all_users" },
+      { name: language?.navBar?.add_users, path: "add_user" },
+      { name: language?.navBar?.add_admins, path: "add_admin" },
+      { name: language?.navBar?.add_teacher, path: "add_teacher" },
+      { name: language?.navBar?.add_student, path: "add_student" },
+      { name: language?.navBar?.add_exam, path: "add_exam" },
+      { name: language?.navBar?.add_subjects, path: "subjects" },
+      { name: language?.navBar?.add_classes, path: "classes" },
+      { name: language?.navBar?.add_exam_results, path: "add_exam_result" },
+      { name: language?.navBar?.add_quiz, path: "add_quiz" }
     );
   }
 
@@ -150,22 +150,23 @@ const Navbar = () => {
     if (form.length > 1) {
       pages.forEach((e, i) => {
         if (
-          e.name.includes(form.toLowerCase()) ||
-          e.path.includes(form.toLowerCase())
+          e.name?.toLowerCase().includes(form.toLowerCase()) ||
+          e.path.toLowerCase().includes(form.toLowerCase())
         ) {
           reasult.push(
             <Link key={i} onClick={() => setForm("")} to={e.path}>
-              {e.name}
+              {e.name || "Unnamed"}
             </Link>
           );
         }
       });
     }
     if (reasult.length === 0) {
-      reasult.push(<p>no results found</p>);
+      reasult.push(<p key={1}>{language?.navBar?.no_results}</p>);
     }
     return reasult;
   };
+
   const searchClick = () => {
     if (form.length > 1) {
       const matchedPage = pages.find(
@@ -206,7 +207,7 @@ const Navbar = () => {
             {form.length > 1 && <div className="results">{search()}</div>}
           </form>
           <div className="setting center">
-            <Link to={ProfilePath} className="info center">
+            <Link to={ProfilePath} className="info gap-10 center">
               <i className="center photo fa-solid fa-user"></i>
               <article>
                 <h4>{name}</h4>

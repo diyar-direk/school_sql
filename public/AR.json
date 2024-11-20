@@ -23,11 +23,14 @@
     "exam_results": "نتائج الامتحانات",
     "add_exam_results": "إضافة نتائج الامتحانات",
     "activities": "الأنشطة",
+    "add_subjects": "اضافة مواد",
     "attendance": "الحضور",
     "time_table": "الجدول الدراسي",
     "subjects": "المواد",
+    "add_classes": "اضافة فصل",
     "classes": "الفصول",
-    "log_out": "تسجيل الخروج"
+    "log_out": "تسجيل الخروج",
+    "no_results": "لا توجد نتائج مطابقة"
   },
   "teachers": {
     "all_teachers": "جميع المعلمين",

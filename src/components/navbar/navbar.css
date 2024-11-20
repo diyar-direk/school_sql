@@ -78,14 +78,10 @@ nav .setting .info .photo {
   height: 40px;
   display: flex;
   border-radius: 50%;
-  margin-right: 12px;
   object-fit: cover;
   font-size: 14px;
 }
-body.arabic nav .setting .info .photo {
-  margin-right: 0;
-  margin-left: 12px;
-}
+
 nav .setting .info h4,
 nav .setting .info p {
   text-transform: capitalize;
@@ -143,7 +139,6 @@ nav .setting .mode {
   color: var(--font-color);
   font-size: 17px;
   cursor: pointer;
-  margin: 0 10px;
   border: solid 1px var(--border-color);
   display: flex;
   align-items: center;
@@ -164,6 +159,7 @@ aside {
   width: 290px;
   overflow-y: auto;
   z-index: 10;
+  overflow-x: hidden;
 }
 body.arabic aside {
   right: 0;
@@ -224,6 +220,9 @@ aside > div > div > a {
   background-color: var(--section-color);
   border-radius: 6px;
   color: var(--font-color);
+  white-space: nowrap;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
 }
 aside > div > div > .links > a.center {
   margin-top: 10px;
@@ -331,6 +330,9 @@ aside > div > div > .links > article a:hover {
 }
 .log-out.aside {
   padding-bottom: 20px;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
 }
 .log-out:hover {
   color: var(--main-color);
@@ -341,11 +343,18 @@ aside.closed .log-out span {
 
 @media (max-width: 1000px) {
   aside {
-    width: 260px;
+    width: 240px;
+  }
+  aside > article,
+  nav {
+    height: 60px;
   }
   nav {
-    width: calc(100% - 260px);
-    left: 260px;
+    width: calc(100% - 240px);
+    left: 240px;
+  }
+  body.arabic nav {
+    right: 240px;
   }
   nav .setting {
     gap: 10px;
@@ -372,11 +381,251 @@ aside.closed .log-out span {
     font-size: 14px;
   }
   nav .search input {
-    padding: 8px 10px;
+    padding: 6px 10px;
   }
   nav .search > button {
     font-size: 15px;
   }
+  aside > article a h1,
+  aside > article i {
+    font-size: 14px;
+  }
+  aside > div {
+    padding: 10px;
+  }
+  aside > div > div > .links > .center i:not(.arrow),
+  aside > div > div > a i {
+    font-size: 13px;
+  }
+  aside > div > div > .links > .center h1,
+  aside > div > div > a h1 {
+    font-size: 17px;
+  }
+  aside > div > div > .links > .center i {
+    font-size: 10px;
+  }
+  aside > div > div > .links > article a {
+    font-size: 15px;
+  }
+  .log-out.aside {
+    font-size: 15px;
+  }
+  aside.closed {
+    width: 65px;
+  }
+  nav.closed {
+    left: 65px;
+    width: calc(100% - 65px);
+  }
+  body.arabic nav.closed {
+    right: 65px;
+  }
+  nav .setting .lang + div.languages.active-div {
+    bottom: -105px;
+  }
+  nav .setting .lang + div.languages {
+    left: -100%;
+  }
+  body.arabic nav .setting .lang + div.languages {
+    right: -100%;
+  }
 }
 @media (max-width: 800px) {
+  nav .setting .info,
+  nav .log-out {
+    display: none;
+  }
+  nav .setting .lang + div.languages h2 {
+    font-size: 15px;
+    padding: 8px;
+  }
+  nav .setting .lang + div.languages.active-div {
+    bottom: -95px;
+  }
+  nav .setting .lang + div.languages {
+    width: 95px;
+    bottom: -110px;
+  }
+  nav .setting .mode {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+  }
+  nav .search > button {
+    font-size: 13px;
+    margin-right: 10px;
+  }
+  body.arabic nav .search > button {
+    margin-left: 10px;
+  }
+  aside {
+    width: 210px;
+  }
+  nav {
+    width: calc(100% - 210px);
+    left: 210px;
+  }
+  body.arabic nav {
+    right: 210px;
+  }
+  aside > article a h1,
+  aside > article i {
+    font-size: 12px;
+  }
+  aside > article,
+  nav {
+    height: 55px;
+  }
+  aside > div > div > .links > .center,
+  aside > div > div > a {
+    padding: 10px;
+  }
+  aside > div > div > .links > .center h1,
+  aside > div > div > a h1 {
+    font-size: 15px;
+  }
+  aside > div > div > .links > article a {
+    font-size: 14px;
+    padding: 10px;
+  }
+  aside > div > div > .links > .center i:not(.arrow),
+  aside > div > div > a i {
+    font-size: 12px;
+    margin-right: 6px;
+  }
+  body.arabic aside > div > div > .links > .center i:not(.arrow),
+  body.arabic aside > div > div > a i {
+    font-size: 12px;
+    margin-right: 6px;
+  }
+  aside > div > div > .links > .center i {
+    font-size: 9px;
+  }
+  nav .search .results a,
+  nav .search .results p {
+    font-size: 15px;
+  }
+}
+@media (max-width: 600px) {
+  aside {
+    width: 180px;
+  }
+  nav {
+    width: calc(100% - 180px);
+    left: 180px;
+  }
+  body.arabic nav {
+    right: 180px;
+  }
+  nav .container {
+    gap: 10px;
+  }
+  aside > article a h1,
+  aside > article i {
+    font-size: 11px;
+  }
+  aside > article {
+    padding: 10px;
+  }
+  aside > div > div > .links > .center i:not(.arrow),
+  aside > div > div > a i {
+    font-size: 11px;
+    margin-right: 5px;
+  }
+  body.arabic aside > div > div > .links > .center i:not(.arrow),
+  body.arabic aside > div > div > a i {
+    margin-left: 5px;
+  }
+  aside > div > div > .links > .center h1,
+  aside > div > div > a h1 {
+    font-size: 13px;
+  }
+  aside > div > div > .links > article a {
+    font-size: 13px;
+  }
+  aside.closed {
+    width: 55px;
+  }
+  nav.closed {
+    left: 55px;
+    width: calc(100% - 55px);
+  }
+  body.arabic nav.closed {
+    right: 55px;
+  }
+  nav .setting .lang i {
+    font-size: 10px;
+  }
+  nav .setting .mode {
+    width: 23px;
+    height: 23px;
+    font-size: 10px;
+  }
+  nav .search input {
+    font-size: 14px;
+  }
+  .log-out.aside {
+    font-size: 13px;
+  }
+  nav .setting .lang i.fa-earth-americas {
+    display: none;
+  }
+  nav .setting .lang + div.languages h2 {
+    font-size: 13px;
+  }
+  nav .setting .lang + div.languages.active-div {
+    bottom: -87px;
+  }
+  nav .setting .lang + div.languages {
+    width: 70px;
+    bottom: -100px;
+  }
+  nav .search .results {
+    padding: 10px;
+  }
+  nav .search .results a,
+  nav .search .results p {
+    font-size: 13px;
+  }
+}
+@media (max-width: 500px) {
+  aside {
+    width: 100%;
+  }
+  nav {
+    width: calc(100% - 55px);
+    left: 55px;
+  }
+  body.arabic nav {
+    right: 55px;
+  }
+  nav .log-out,
+  nav .setting .lang span {
+    font-size: 11px;
+  }
+  nav .setting .lang i {
+    font-size: 9px;
+  }
+  nav .setting .mode {
+    font-size: 9px;
+  }
+  nav .setting {
+    gap: 5px;
+  }
+  nav .search input {
+    font-size: 13px;
+  }
+  nav .search > button {
+    font-size: 12px;
+    margin-right: 8px;
+  }
+  body.arabic nav .search > button {
+    margin-left: 8px;
+  }
+  nav .setting .lang + div.languages {
+    left: -40px;
+  }
+  body.arabic nav .setting .lang + div.languages {
+    right: -40px;
+  }
 }

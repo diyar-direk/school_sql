@@ -319,7 +319,28 @@ body::-webkit-scrollbar {
     width: 95%;
   }
   main > div.dashboard-container {
-    width: calc(100% - 260px);
+    width: calc(100% - 240px);
+  }
+  main > div.dashboard-container.closed {
+    width: calc(100% - 65px);
+  }
+}
+@media (max-width: 800px) {
+  main > div.dashboard-container {
+    width: calc(100% - 210px);
+  }
+}
+
+@media (max-width: 600px) {
+  main > div.dashboard-container {
+    width: calc(100% - 180px);
+  }
+  main > div.dashboard-container.closed {
+    width: calc(100% - 55px);
+  }
+
+  .container {
+    width: 96%;
   }
 }
 
@@ -327,15 +348,13 @@ body::-webkit-scrollbar {
   .grid-3 {
     grid-template-columns: 1fr;
   }
-  .container {
-    width: 94%;
-  }
+
   .btn {
     font-size: 12px;
   }
 }
 @media (max-width: 500px) {
-  .container {
-    width: 96%;
+  main > div.dashboard-container {
+    width: calc(100% - 55px);
   }
 }
