@@ -314,7 +314,9 @@ body::-webkit-scrollbar {
   .btn {
     padding: 8px 10px;
   }
-
+  main {
+    margin-top: 60px;
+  }
   .container {
     width: 95%;
   }
@@ -324,10 +326,24 @@ body::-webkit-scrollbar {
   main > div.dashboard-container.closed {
     width: calc(100% - 65px);
   }
+  h1.title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
 }
 @media (max-width: 800px) {
   main > div.dashboard-container {
     width: calc(100% - 210px);
+  }
+  h1.title {
+    font-size: 24px;
+  }
+  h1.title::after,
+  h1.title::before {
+    height: 3px;
+  }
+  main {
+    margin-top: 55px;
   }
 }
 
@@ -341,6 +357,9 @@ body::-webkit-scrollbar {
 
   .container {
     width: 96%;
+  }
+  h1.title {
+    font-size: 21px;
   }
 }
 

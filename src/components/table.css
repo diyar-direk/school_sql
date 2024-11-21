@@ -10,6 +10,10 @@ div.table {
   min-width: 600px;
   min-height: 400px;
   overflow-y: hidden;
+  white-space: nowrap;
+}
+div.table .search {
+  flex-wrap: wrap;
 }
 div.table .search input,
 .table .selecte {
@@ -538,4 +542,138 @@ i.disabled.start {
   color: #e60404;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+@media (max-width: 1000px) {
+  div.table {
+    min-width: auto;
+  }
+  div.table .search {
+    gap: 10px;
+  }
+  div.table .search input,
+  .table .selecte {
+    padding: 8px;
+  }
+
+  .selecte .inp {
+    font-size: 14px;
+  }
+  div.table tbody td div.options div.delete i,
+  div.table tbody td div.options .update i,
+  div.table tbody td div.options .visit i {
+    font-size: 14px;
+  }
+  div.table tbody td div.options div.delete,
+  div.table tbody td div.options .update,
+  div.table tbody td div.options .visit {
+    font-size: 15px;
+    padding: 8px;
+  }
+  div.table tbody tr:last-child td div.options.active-div.has-visit {
+    top: -125px;
+  }
+}
+@media (max-width: 900px) {
+  div.table .search .flex-direction {
+    flex: 1;
+  }
+  div.table .search input,
+  div.table .search button {
+    order: -1;
+  }
+  div.table .search button {
+    width: 35px;
+    height: 35px;
+  }
+  div.table .search input {
+    flex: calc(100% - 50px);
+  }
+  div.table .search a.btn {
+    text-align: center;
+    flex: 1;
+    font-size: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 100px;
+  }
+  div.table thead th {
+    font-size: 16px;
+  }
+  div.table tbody td {
+    font-size: 15px;
+  }
+  div.table .pagination h3 {
+    width: 30px;
+    font-size: 17px;
+    height: 30px;
+  }
+  div.table tbody td div.options {
+    left: -130px;
+  }
+  div.tabel-container {
+    position: relative;
+  }
+  div.table .search {
+    position: absolute;
+    width: 100%;
+    padding-right: 40px;
+  }
+  div.table table {
+    margin-top: 90px;
+  }
+}
+@media (max-width: 800px) {
+  div.table table {
+    margin-top: 90px;
+  }
+  div.table table {
+    margin-top: 135px;
+  }
+}
+@media (max-width: 700px) {
+  .selecte .inp {
+    font-size: 13px;
+  }
+  div.table .search button {
+    font-size: 12px;
+  }
+  div.table .search a.btn {
+    font-size: 14px;
+  }
+  table .checkbox {
+    width: 13px;
+    height: 13px;
+  }
+  table .checkbox::after {
+    font-size: 9px;
+  }
+  div.table thead th {
+    font-size: 15px;
+  }
+  div.table tbody td {
+    font-size: 13px;
+  }
+  div.table tbody td div.options div.delete i,
+  div.table tbody td div.options .update i,
+  div.table tbody td div.options .visit i {
+    font-size: 13px;
+  }
+  div.table tbody td div.options div.delete,
+  div.table tbody td div.options .update,
+  div.table tbody td div.options .visit {
+    font-size: 14px;
+    padding: 7px;
+  }
+  div.table tbody td div.options {
+    left: -140px;
+  }
+  div.table tbody tr:last-child td div.options.active-div.has-visit {
+    top: -115px;
+  }
+}
+@media (max-width: 550px) {
+  main > div.dashboard-container div.table table {
+    margin-top: 185px;
+  }
 }
