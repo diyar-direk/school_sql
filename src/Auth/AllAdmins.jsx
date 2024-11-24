@@ -52,7 +52,7 @@ const AllAdmins = () => {
       return (
         <tr key={e._id}>
           <td>
-            {e.firstName} {e.lastName} {e._id === id && "( me )"}
+            {e.firstName} {e.lastName} {e._id === id && `(${language.navBar && language.navBar.me} )`}
           </td>
 
           <td> admin </td>
