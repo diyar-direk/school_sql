@@ -75,7 +75,6 @@ const StudentProfile = () => {
       });
   }, []);
   const [isEditing, setIsEditing] = useState(false);
-  console.log(yearRepeated);
   const [title, setTitle] = useState(
     language.students && language.students.years_repeated
   );
@@ -90,7 +89,6 @@ const StudentProfile = () => {
           },
         }
       );
-      console.log(response);
 
       const updatedYearRepeated = response.data.data.yearRepeated;
       setYearRepeated(updatedYearRepeated);
