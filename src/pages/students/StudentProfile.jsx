@@ -29,6 +29,7 @@ const StudentProfile = () => {
   const language = context && context.selectedLang;
   const token = context && context.userDetails.token;
   const isAdmin = context && context.userDetails.isAdmin;
+  const [yearRepeated, setYearRepeated] = useState([]);
 
   const { id } = useParams();
 
@@ -70,9 +71,47 @@ const StudentProfile = () => {
           updateForm.classId = data.classId.name;
         }
         setData(updateForm);
+        setYearRepeated(data.yearRepeated);
       });
   }, []);
+  const [isEditing, setIsEditing] = useState(false);
+  console.log(yearRepeated);
+  const [title, setTitle] = useState(
+    language.students && language.students.years_repeated
+  );
+  const handleSave = async () => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/api/students/increment-year/${id}`,
+        { yearRepeated },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(response);
 
+      const updatedYearRepeated = response.data.data.yearRepeated;
+      setYearRepeated(updatedYearRepeated);
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Failed to update yearRepeated:", err);
+    }
+  };
+
+  const handleCancel = () => {
+    setYearRepeated(data.yearRepeated);
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (index, field, value) => {
+    setYearRepeated((prev) =>
+      prev.map((item, idx) =>
+        idx === index ? { ...item, [field]: value } : item
+      )
+    );
+  };
   return (
     <main>
       <div className="dashboard-container">
@@ -163,21 +202,66 @@ const StudentProfile = () => {
                 </p>
               </div>
               <div className="flex">
-                <h2>
-                  {language.students && language.students.years_repeated} :
-                </h2>
-                <p>
-                  {data.yearRepeated.map((e, index) => (
-                    <React.Fragment key={index}>
-                      {`${language.students?.year || "Year"} : ${
-                        e.yearLevel
-                      }; ${
-                        language.students?.repeated_count || "Repeated Count"
-                      }: ${e.yearCount}`}
-                      <br />
-                    </React.Fragment>
-                  ))}
-                </p>
+                {isEditing ? (
+                  <>
+                    {/* Editable Title */}
+                    <h2>{title}:</h2>
+                    <div>
+                      {/* Editable Year Data */}
+                      {yearRepeated?.map((e, index) => (
+                        <div className=" collumn" key={index}>
+                          <label>
+                            {language.students?.year || "Year"}:{" "}
+                            <span>{e.yearLevel} </span>
+                          </label>
+                          <label>
+                            {language.students?.repeated_count ||
+                              "Repeated Count"}
+                            :{" "}
+                            <input
+                              type="number"
+                              value={e.yearCount}
+                              onChange={(event) =>
+                                handleInputChange(
+                                  index,
+                                  "yearCount",
+                                  event.target.value
+                                )
+                              }
+                            />
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      {/* Buttons to Save or Cancel */}
+                      <button onClick={handleSave}>Save</button>
+                      <button onClick={handleCancel}>Cancel</button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Read Mode */}
+                    <h2>{title} :</h2>
+                    <p>
+                      {yearRepeated?.map((e, index) => (
+                        <React.Fragment key={index}>
+                          {`${language.students?.year || "Year"} : ${
+                            e.yearLevel
+                          }; ${
+                            language.students?.repeated_count ||
+                            "Repeated Count"
+                          }: ${e.yearCount}`}
+                          <br />
+                        </React.Fragment>
+                      ))}
+                    </p>
+                    <i
+                      className="fa-regular fa-pen-to-square"
+                      onClick={() => setIsEditing(true)}
+                    ></i>
+                  </>
+                )}
               </div>
             </div>
           </div>
