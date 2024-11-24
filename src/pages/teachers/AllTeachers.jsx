@@ -205,7 +205,8 @@ const AllTeachers = () => {
 
         <td>
           <Link className="name" to={`/dashboard/teacher_profile/${e._id}`}>
-            {`${e.firstName} ${e.lastName}`} {id === e._id && "(me)"}
+            {`${e.firstName} ${e.lastName}`}{" "}
+            {id === e._id && `( ${language.navBar && language.navBar.me} )`}
           </Link>
         </td>
         <td> {e.gender} </td>

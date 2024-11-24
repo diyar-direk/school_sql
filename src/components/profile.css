@@ -157,6 +157,32 @@ div.profile .info > .flex p:not(.email) {
   text-transform: capitalize;
 }
 
+.stu-btn {
+  padding: 8px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.student-save {
+  background-color: #248f58;
+}
+.student-cancel {
+  background-color: gray;
+}
+
+.student-inp {
+  border: solid 2px var(--border-color);
+  padding: 2px 5px;
+  margin-bottom: 4px;
+  background-color: var(--section-color);
+  color: var(--font-color);
+  font-size: 15px;
+}
+
 @media (max-width: 1200px) {
   .admin-page {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
