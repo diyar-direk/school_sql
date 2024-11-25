@@ -21,7 +21,6 @@ form.login > .flex > div.forms {
 }
 form.login > .flex > div.forms > h1 {
   color: var(--font-color);
-  margin-top: 20px;
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -32,6 +31,7 @@ form.login > .flex > div.forms label {
   text-transform: capitalize;
   font-weight: 500;
   font-size: 20px;
+  width: fit-content;
 }
 form.login > .flex > div.forms > .inp {
   background-color: var(--section-color);
@@ -39,7 +39,38 @@ form.login > .flex > div.forms > .inp {
   gap: 5px;
   padding: 5px 10px;
   margin: 20px 0;
+  position: relative;
+  overflow: hidden;
 }
+
+form.login > .flex > div.forms > .inp::before {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 1.5px;
+  left: 50%;
+  transform: translateY(-50%);
+  background: var(--main-color);
+  bottom: 0;
+  transition: 0.4s;
+}
+form.login > .flex > div.forms > .inp::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 1.5px;
+  right: 50%;
+  transform: translateY(-50%);
+  background: var(--main-color);
+  bottom: 0;
+  transition: 0.4s;
+}
+
+form.login > .flex > div.forms > .inp:focus-within:before,
+form.login > .flex > div.forms > .inp:focus-within:after {
+  width: 50%;
+}
+
 form.login > .flex > div.forms > .inp > i {
   color: var(--font-color);
 }
@@ -340,6 +371,33 @@ form.quize i.false:hover {
   }
 }
 
+@media (max-width: 1000px) {
+  form.login {
+    width: 85%;
+  }
+  form.login > .flex > div.forms {
+    padding: 30px;
+  }
+  form.login > .flex > div.forms > .inp input {
+    padding: 8px;
+    font-size: 16px;
+  }
+  form.login > .flex > div.forms > .inp {
+    padding: 3px 10px;
+    margin: 15px 0;
+  }
+  form.login > .flex > div.forms label,
+  form.login > .flex > div.forms .btn {
+    font-size: 17px;
+  }
+  form.login > .flex > div.forms > h1 {
+    font-size: 25px;
+  }
+  form.login > .flex > div.forms > .inp > i {
+    font-size: 13px;
+  }
+}
+
 @media (max-width: 800px) {
   form.dashboard-form > div {
     gap: 20px;
@@ -394,6 +452,12 @@ form.quize i.false:hover {
     padding: 12px;
     font-size: 15px;
   }
+  form.login {
+    width: 65%;
+  }
+  form.login > .flex > div.image {
+    display: none;
+  }
 }
 @media (max-width: 650px) {
   form.dashboard-form {
@@ -442,6 +506,9 @@ form.quize i.false:hover {
     padding: 10px;
     font-size: 14px;
   }
+  form.login {
+    width: 80%;
+  }
 }
 
 @media (max-width: 500px) {
@@ -485,5 +552,25 @@ form.quize i.false:hover {
   .error {
     padding: 9px;
     font-size: 13px;
+  }
+  form.login {
+    width: 90%;
+  }
+  form.login > .flex > div.forms {
+    padding: 40px 30px;
+  }
+  form.login > .flex > div.forms > h1 {
+    font-size: 22px;
+  }
+  form.login > .flex > div.forms label,
+  form.login > .flex > div.forms .btn {
+    font-size: 16px;
+  }
+  form.login > .flex > div.forms > .inp input {
+    padding: 7px;
+    font-size: 15px;
+  }
+  form.login > .flex > div.forms > .inp > i {
+    font-size: 11px;
   }
 }

@@ -141,6 +141,10 @@ div.profile .info > .flex {
   align-items: center;
   margin-bottom: 15px;
 }
+div.profile .info > .flex.student-reapet {
+  flex-direction: column;
+  align-items: flex-start;
+}
 div.profile .info > .flex h2 {
   font-weight: 500;
   text-transform: capitalize;
@@ -156,15 +160,17 @@ div.profile .info > .flex p {
 div.profile .info > .flex p:not(.email) {
   text-transform: capitalize;
 }
-
+.student-reapet .gap-10 {
+  margin-top: 10px;
+}
 .stu-btn {
-  padding: 8px 10px;
-  margin: 0 5px;
+  padding: 7px 9px;
   border: none;
   border-radius: 6px;
   color: white;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 16px;
+  min-width: 150px;
 }
 
 .student-save {
@@ -181,6 +187,7 @@ div.profile .info > .flex p:not(.email) {
   background-color: var(--section-color);
   color: var(--font-color);
   font-size: 15px;
+  width: 100%;
 }
 
 @media (max-width: 1200px) {
@@ -196,7 +203,8 @@ div.profile .info > .flex p:not(.email) {
     font-size: 17px;
     width: 150px;
   }
-  div.profile .info > .flex p {
+  div.profile .info > .flex p,
+  .collumn {
     font-size: 16px;
   }
 }
@@ -234,6 +242,13 @@ div.profile .info > .flex p:not(.email) {
   div.profile .image .center {
     display: none;
   }
+  .stu-btn {
+    padding: 7px 8px;
+    font-size: 15px;
+  }
+  .student-inp {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -268,11 +283,19 @@ div.profile .info > .flex p:not(.email) {
     font-size: 16px;
     width: 130px;
   }
-  div.profile .info > .flex p {
+  div.profile .info > .flex p,
+  .collumn {
     font-size: 14px;
   }
   div.profile {
     padding: 30px;
+  }
+  .stu-btn {
+    padding: 6px;
+    font-size: 14px;
+  }
+  .student-inp {
+    font-size: 13px;
   }
 }
 @media (max-width: 600px) {
@@ -307,7 +330,24 @@ div.profile .info > .flex p:not(.email) {
     font-size: 14px;
     width: 115px;
   }
-  div.profile .info > .flex p {
+  div.profile .info > .flex p,
+  .collumn {
     font-size: 13px;
+  }
+  div.profile .info > .flex.student-reapet {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  div.profile .info > .flex.student-reapet > div {
+    width: 100%;
+  }
+  .student-inp {
+    font-size: 13px;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .stu-btn {
+    flex: 1;
   }
 }

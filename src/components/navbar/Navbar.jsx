@@ -171,8 +171,8 @@ const Navbar = () => {
     if (form.length > 1) {
       const matchedPage = pages.find(
         (e) =>
-          e.name.includes(form.toLowerCase()) ||
-          e.path.includes(form.toLowerCase())
+          e.name.toLocaleLowerCase().includes(form.toLowerCase()) ||
+          e.path.toLocaleLowerCase().includes(form.toLowerCase())
       );
 
       if (matchedPage) {

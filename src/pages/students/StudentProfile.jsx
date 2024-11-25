@@ -199,7 +199,7 @@ const StudentProfile = () => {
                   {data.guardianContact.phone}
                 </p>
               </div>
-              <div className="flex">
+              <div className="flex student-reapet">
                 {isEditing ? (
                   <>
                     {/* Editable Title */}
@@ -232,7 +232,7 @@ const StudentProfile = () => {
                         </div>
                       ))}
                     </div>
-                    <div>
+                    <div className="flex wrap gap-10">
                       {/* Buttons to Save or Cancel */}
                       <button
                         className="student-save stu-btn"
