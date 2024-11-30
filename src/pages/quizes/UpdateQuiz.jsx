@@ -5,6 +5,7 @@ import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
 import { useNavigate, useParams } from "react-router-dom";
+import { nextJoin } from "./AddQuiz";
 
 const UpdateQuiz = () => {
   const context = useContext(Context);
@@ -709,7 +710,7 @@ const UpdateQuiz = () => {
                           return (
                             <tr key={i}>
                               <td> {e.text} </td>
-                              <td>{nextJoin(wrongAnswer)}</td>
+                              <td>{nextJoin(wrongAnswer, "text")}</td>
                               <td> {correctAnswer[0].text} </td>
                               <td>
                                 <div className="admin gap-10 center">
@@ -842,12 +843,3 @@ const UpdateQuiz = () => {
 };
 
 export default UpdateQuiz;
-
-export function nextJoin(array) {
-  let text = "";
-  for (let i = 0; i < array.length; i++) {
-    if (array[i + 1]) text += array[i].text + " , ";
-    else text += array[i].text;
-  }
-  return text;
-}

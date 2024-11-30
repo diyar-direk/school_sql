@@ -82,6 +82,7 @@ function App() {
                 <Route path="all_students" element={<AllStudents />} />
                 <Route path="attendence" element={<Attendence />} />
               </Route>
+
               <Route path="all_quizzes" element={<AllQuizes />} />
               <Route path="student_profile/:id" element={<StudentProfile />} />
               <Route path="time_table" element={<TimeTable />} />

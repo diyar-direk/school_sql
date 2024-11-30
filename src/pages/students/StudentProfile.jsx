@@ -75,9 +75,7 @@ const StudentProfile = () => {
       });
   }, []);
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState(
-    language.students && language.students.years_repeated
-  );
+  
   const handleSave = async () => {
     try {
       const response = await axios.patch(
@@ -203,7 +201,7 @@ const StudentProfile = () => {
                 {isEditing ? (
                   <>
                     {/* Editable Title */}
-                    <h2>{title}:</h2>
+                    <h2>{language.students.years_repeated}:</h2>
                     <div>
                       {/* Editable Year Data */}
                       {yearRepeated?.map((e, index) => (
@@ -238,20 +236,20 @@ const StudentProfile = () => {
                         className="student-save stu-btn"
                         onClick={handleSave}
                       >
-                        Save
+                        {language.students?.save_btn}
                       </button>
                       <button
                         className="student-cancel stu-btn"
                         onClick={handleCancel}
                       >
-                        Cancel
+                        {language.students?.cancel_btn}
                       </button>
                     </div>
                   </>
                 ) : (
                   <>
                     {/* Read Mode */}
-                    <h2>{title} :</h2>
+                    <h2>{language.students.years_repeated} :</h2>
                     <p>
                       {yearRepeated?.map((e, index) => (
                         <React.Fragment key={index}>

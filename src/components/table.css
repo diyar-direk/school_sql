@@ -166,6 +166,13 @@ div.table tbody tr:not(table.time-table tbody tr):last-child td {
 div.table tbody tr:last-child td div.options.active-div.has-visit {
   top: -130px;
 }
+div.table
+  tbody
+  tr:last-child
+  td
+  div.options.active-div.has-visit.teacher-visit {
+  top: -60px;
+}
 div.table tbody tr:last-child td div.options {
   top: -85px;
 }
@@ -582,6 +589,13 @@ table.quiz-table td {
   div.table tbody tr:last-child td div.options.active-div.has-visit {
     top: -125px;
   }
+  div.table
+    tbody
+    tr:last-child
+    td
+    div.options.active-div.has-visit.teacher-visit {
+    top: -53px;
+  }
   table.time-table tbody tr .update,
   table.time-table tbody tr .delete {
     font-size: 13px;
@@ -743,6 +757,13 @@ table.quiz-table td {
   }
   div.table tbody tr:last-child td div.options.active-div.has-visit {
     top: -115px;
+  }
+  div.table
+    tbody
+    tr:last-child
+    td
+    div.options.active-div.has-visit.teacher-visit {
+    top: -50px;
   }
   div.table .pagination h3 {
     width: 25px;

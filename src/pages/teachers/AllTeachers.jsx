@@ -227,7 +227,9 @@ const AllTeachers = () => {
             className="options fa-solid fa-ellipsis"
             data-index={i}
           ></i>
-          <div className="options has-visit">
+          <div
+            className={`options has-visit ${!isAdmin ? "teacher-visit" : ""}`}
+          >
             {isAdmin && (
               <div
                 onClick={(event) => {
@@ -255,7 +257,7 @@ const AllTeachers = () => {
             )}
             <Link
               to={`/dashboard/teacher_profile/${e._id}`}
-              className="flex visit"
+              className={`flex visit`}
             >
               <i className="fa-solid fa-circle-user"></i>
               {language.teachers && language.teachers.visit}

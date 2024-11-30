@@ -167,8 +167,6 @@ const AddExamResult = () => {
     else if (!form.student)
       setDataError(`${language.error && language.error.please_choose_student}`);
     else {
-      console.log(form);
-
       try {
         const data = await axios.post(
           "http://localhost:8000/api/exam-results",

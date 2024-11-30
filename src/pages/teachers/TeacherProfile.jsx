@@ -3,6 +3,7 @@ import "../../components/profile.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { nextJoin } from "../quizes/AddQuiz";
 const TeacherProfile = () => {
   const [data, setData] = useState({
     classes: [],
@@ -96,11 +97,11 @@ const TeacherProfile = () => {
               </div>
               <div className="flex">
                 <h2>{language.teachers && language.teachers.class}:</h2>
-                <p> {data.classes.join(" , ")} </p>
+                <p> {nextJoin(data.classes, "name")} </p>
               </div>
               <div className="flex">
                 <h2>{language.teachers && language.teachers.subject}:</h2>
-                <p>{data.subjects.join(" , ")}</p>
+                <p>{nextJoin(data.subjects, "name")}</p>
               </div>
               <div className="flex">
                 <h2>{language.teachers && language.teachers.year_level}:</h2>

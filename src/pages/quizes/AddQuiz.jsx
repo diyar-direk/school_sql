@@ -751,7 +751,7 @@ const AddQuiz = () => {
                           return (
                             <tr key={i}>
                               <td> {e.text} </td>
-                              <td>{nextJoin(wrongAnswer)}</td>
+                              <td>{nextJoin(wrongAnswer, "text")}</td>
                               <td> {correctAnswer[0].text} </td>
                               <td>
                                 <div className="admin gap-10 center">
@@ -895,11 +895,12 @@ const AddQuiz = () => {
 
 export default AddQuiz;
 
-export function nextJoin(array) {
+export function nextJoin(array, obj) {
   let text = "";
   for (let i = 0; i < array.length; i++) {
-    if (array[i + 1]) text += array[i].text + " , ";
-    else text += array[i].text;
+    if (array[i + 1]) text += array[i][obj] + " , ";
+    else text += array[i][obj];
   }
+
   return text;
 }

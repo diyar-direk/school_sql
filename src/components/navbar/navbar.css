@@ -88,6 +88,13 @@ nav .setting .info p {
   line-height: 1;
   color: var(--font-color);
 }
+nav .setting .info h4 {
+  max-width: 100px;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: ltr;
+}
 nav .setting .lang {
   cursor: pointer;
   color: var(--font-color);
@@ -133,7 +140,7 @@ nav .setting .lang + div.languages h2.active {
   font-weight: bold;
 }
 nav .setting .lang + div.languages.active-div {
-  bottom: -110px;
+  bottom: -150px;
 }
 nav .setting .mode {
   color: var(--font-color);
@@ -421,7 +428,7 @@ aside.closed .log-out span {
     right: 65px;
   }
   nav .setting .lang + div.languages.active-div {
-    bottom: -105px;
+    bottom: -145px;
   }
   nav .setting .lang + div.languages {
     left: -100%;
@@ -440,7 +447,7 @@ aside.closed .log-out span {
     padding: 8px;
   }
   nav .setting .lang + div.languages.active-div {
-    bottom: -95px;
+    bottom: -130px;
   }
   nav .setting .lang + div.languages {
     width: 95px;
@@ -574,7 +581,7 @@ aside.closed .log-out span {
     font-size: 13px;
   }
   nav .setting .lang + div.languages.active-div {
-    bottom: -87px;
+    bottom: -119px;
   }
   nav .setting .lang + div.languages {
     width: 70px;

@@ -11,7 +11,6 @@
     "quiz": "Quizzes",
     "all_quiz": "All Quizzes",
     "add_quiz": "Add Quizzes",
-
     "teachers": "Teachers",
     "all_teachers": "All Teachers",
     "add_teacher": "Add Teacher",
@@ -32,7 +31,6 @@
     "add_classes": "add Classes",
     "log_out": "Log Out",
     "me": "Me",
-
     "no_results": "No Results Found"
   },
   "teachers": {
@@ -138,7 +136,6 @@
     "years_repeated": "year repeated",
     "year": "year",
     "repeated_count": "repeated count",
-
     "edit_btn": "Edit"
   },
   "exams": {
@@ -176,7 +173,6 @@
   "examResult": {
     "subject_name": "Subject Name",
     "please_complete_form": "Please complete the form",
-
     "exam": "Exam",
     "score": "Score",
     "confirm_delete": "Confirm Delete",
@@ -193,7 +189,6 @@
     "exam_placeholder": "Select exam",
     "score_placeholder": "Enter score",
     "save_btn": "Save",
-
     "no_data": "No data available",
     "loading": "loading..."
   },
@@ -211,7 +206,6 @@
     "section_header": "Attendance of class ",
     "no_data": "No data available",
     "loading": "loading...",
-
     "student": "Student"
   },
   "timeTable": {
@@ -227,7 +221,6 @@
     "subject_placeholder": "Enter subject",
     "start_time": "Start Time",
     "loading": "loading...",
-
     "end_time": "End Time",
     "save_btn": "Save",
     "add_btn": "Add a new lesson"
@@ -382,7 +375,6 @@
     "false": "False",
     "no_data": "No data available",
     "loading": "loading...",
-
     "start": "Start Quiz",
     "waiting": "wait...",
     "allready_done": " already completed"

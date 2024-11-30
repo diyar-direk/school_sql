@@ -184,6 +184,7 @@ const Navbar = () => {
       setForm("");
     }
   };
+
   return (
     <>
       <nav className={`${!isClosed === false ? "closed" : ""} center`}>
@@ -247,6 +248,13 @@ const Navbar = () => {
                   data-lang="EN"
                 >
                   english
+                </h2>
+                <h2
+                  onClick={selectLang}
+                  className={`${context?.language === "KU" ? "active" : ""}`}
+                  data-lang="KU"
+                >
+                  kurdish
                 </h2>
               </div>
             </article>
