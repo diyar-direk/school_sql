@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../components/form.css";
 import axios from "axios";
 import FormLoading from "../../components/FormLoading";
@@ -37,6 +37,7 @@ const UpdateStudent = () => {
   const [DataError, setDataError] = useState(false);
   const [classes, setClasses] = useState([]);
   const [classesName, setClassesName] = useState(false);
+  const oldYear = useRef(null);
   const [overlay, setOverlay] = useState(false);
   const [response, setResponse] = useState(false);
 
@@ -80,6 +81,7 @@ const UpdateStudent = () => {
           dateOfBirth: dateOfBirth,
           enrollmentDate: enrollmentDate,
         };
+        oldYear.current = data.yearLevel;
 
         if (data.classId) {
           setClassesName(data.classId.name);
@@ -87,6 +89,10 @@ const UpdateStudent = () => {
         }
 
         setForm(updatedForm);
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/dashboard/err-400");
       });
   }, []);
 
@@ -166,8 +172,11 @@ const UpdateStudent = () => {
   }
 
   useEffect(() => {
-    setClassesName("");
-    setForm({ ...form, classId: "" });
+    if (oldYear.current !== form.yearLevel) {
+      setClassesName("");
+      setForm({ ...form, classId: "" });
+    }
+
     form.yearLevel &&
       axios
         .get(

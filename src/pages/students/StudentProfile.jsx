@@ -3,6 +3,7 @@ import "../../components/profile.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { useNavigate } from "react-router-dom/dist";
 
 const StudentProfile = () => {
   const [data, setData] = useState({
@@ -32,7 +33,7 @@ const StudentProfile = () => {
   const [yearRepeated, setYearRepeated] = useState([]);
 
   const { id } = useParams();
-
+  const nav = useNavigate();
   useEffect(() => {
     axios
       .get(`http://localhost:8000/api/students/${id}`, {
@@ -72,10 +73,14 @@ const StudentProfile = () => {
         }
         setData(updateForm);
         setYearRepeated(data.yearRepeated);
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/dashboard/err-400");
       });
   }, []);
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const handleSave = async () => {
     try {
       const response = await axios.patch(

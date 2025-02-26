@@ -45,7 +45,10 @@ const TakeQuiz = () => {
           setTakedScore(res.data.data[0].score);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        err.status === 400 && nav("/dashboard/err-400");
+      });
   }, []);
 
   useEffect(() => {
