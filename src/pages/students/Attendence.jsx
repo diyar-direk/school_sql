@@ -65,6 +65,7 @@ const Attendence = () => {
             },
           }
         );
+        
 
         setData(response.data.data);
         fetchAttendanceData(response.data.data); // Fetch attendance after getting students

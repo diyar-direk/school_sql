@@ -191,7 +191,7 @@ const ExamResult = () => {
           )}
 
           {/* Total score and marks */}
-          <td>{`${totalScore}/${totalMark}`}</td>
+          <td>{`${totalScore?.toFixed(2)}/${totalMark?.toFixed(2)}`}</td>
         </tr>
       );
     });

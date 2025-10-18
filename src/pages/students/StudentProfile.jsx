@@ -75,7 +75,7 @@ const StudentProfile = () => {
       });
   }, []);
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const handleSave = async () => {
     try {
       const response = await axios.patch(
