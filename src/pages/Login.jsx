@@ -39,7 +39,9 @@ const Login = () => {
       const token = getToken.data.token;
       Cookies.set("school-token", token);
 
-      const profile = await axiosInstance.get(`users/profile`);
+      const profile = await axiosInstance.get(`users/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = profile.data.user;
       const isAdmin = data.role.includes("Admin");
       const isTeacher = data.role.includes("Teacher");
@@ -49,8 +51,7 @@ const Login = () => {
         isTeacher: isTeacher,
         isStudent: isStudent,
         token: token,
-        userDetails: data.profileId,
-        role: data.role,
+        ...data,
       });
 
       isTeacher && nav(`/teacher_profile/${data.profileId._id}`);

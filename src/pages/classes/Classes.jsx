@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
 import { Link } from "react-router-dom";
 import SendData from "../../components/response/SendData";
 import FormLoading from "../../components/FormLoading";

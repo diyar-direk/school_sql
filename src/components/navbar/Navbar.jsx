@@ -3,6 +3,7 @@ import "./navbar.css";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import { useAuth } from "../../context/AuthContext";
+import useDarkMode from "../../hooks/useDarkMode";
 
 const Navbar = () => {
   const nav = useNavigate();
@@ -11,17 +12,10 @@ const Navbar = () => {
   const { userDetails, logout } = useAuth();
   const isAdmin = userDetails?.isAdmin;
   const isStudent = userDetails?.isStudent;
-  const isTeacher = userDetails?.isTeacher;
-  const id = userDetails?.userDetails?._id;
-  const ProfilePath = isAdmin
-    ? "/admin_profile"
-    : isTeacher
-    ? `/teacher_profile/${id}`
-    : `/student_profile/${id}`;
+  const id = userDetails?._id;
+  const ProfilePath = `profile/${id}`;
   const name =
-    userDetails?.userDetails?.firstName +
-    " " +
-    userDetails?.userDetails?.lastName;
+    userDetails?.profileId?.firstName + " " + userDetails?.profileId?.lastName;
 
   const location = useLocation();
 
@@ -45,11 +39,6 @@ const Navbar = () => {
     inpDiv && inpDiv.classList.remove("active");
   });
 
-  const modeFun = () => {
-    document.body.classList.toggle("dark");
-    context.setMode(document.body.classList.contains("dark"));
-  };
-
   const openDiv = (ele) => {
     ele.stopPropagation();
     const allDivs = document.querySelectorAll(
@@ -64,6 +53,7 @@ const Navbar = () => {
       main && main.classList.toggle("div-open");
     }
   };
+  const { changeMode } = useDarkMode();
 
   useEffect(() => {
     if (window.innerWidth <= 600) {
@@ -207,7 +197,7 @@ const Navbar = () => {
             </Link>
 
             <i
-              onClick={modeFun}
+              onClick={changeMode}
               className="fa-solid fa-moon fa-regular mode"
             ></i>
             <article className="relative">

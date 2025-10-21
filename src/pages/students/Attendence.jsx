@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import { Context } from "../../context/Context";
 import axiosInstance from "../../utils/axios";
 

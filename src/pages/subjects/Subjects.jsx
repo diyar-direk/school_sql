@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import "../../components/form.css";
 import "./subjects.css";
 import { Link } from "react-router-dom";

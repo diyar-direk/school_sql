@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../context/Context";
-import "../components/profile.css";
-import axiosInstance from "../utils/axios";
-import { useAuth } from "../context/AuthContext";
+import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AdminProfile = () => {
   const context = useContext(Context);
   const language = context?.selectedLang;
+
   const { userDetails } = useAuth();
   const [data, setData] = useState({
     email: "",
@@ -31,9 +31,9 @@ const AdminProfile = () => {
           teachersMale: teachers.data.numberOfMaleTeachers,
           studentsMale: students.data.numberOfFemaleStudents,
           studentsFemale: students.data.numberOfMaleStudents,
-          email: userDetails?.userDetails?.email,
-          firstName: userDetails?.userDetails?.firstName,
-          lastName: userDetails?.userDetails?.lastName,
+          email: userDetails?.profileId?.email,
+          firstName: userDetails?.profileId?.firstName,
+          lastName: userDetails?.profileId?.lastName,
           role: userDetails?.role,
           classes: classes.data.numberOfDocuments,
         });
@@ -119,7 +119,7 @@ const AdminProfile = () => {
             </div>
             <div className="info">
               <h2 className="name">
-                <Link to={`/update_admin/${userDetails?.userDetails?._id}`}>
+                <Link to={`/update_admin/${userDetails?._id}`}>
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
               </h2>

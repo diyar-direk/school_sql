@@ -76,25 +76,25 @@ export const AuthProvider = ({ children }) => {
     };
   }, [token, logout]);
 
+  const [userLoading, setUserLoading] = useState(true);
+
   const getUserDetails = useCallback(async () => {
     try {
-      setLoading(true);
+      setUserLoading(true);
       const { data } = await axiosInstance.get(`users/profile`);
       const isAdmin = data?.user?.role === "Admin";
       const isTeacher = data?.user?.role === "Teacher";
       const isStudent = data?.user?.role === "Student";
-
       return setUserDetails({
         isAdmin,
         isTeacher,
         isStudent,
-        userDetails: data?.user?.profileId,
-        role: data?.user?.role,
+        ...data?.user,
       });
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      setUserLoading(false);
     }
   }, []);
 
@@ -104,11 +104,14 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token, getUserDetails, userDetails]);
 
-  if (loading) return <Loader />;
+  if (userLoading) return <Loader />;
 
   return (
-    <AuthContext.Provider value={{ userDetails, setUserDetails, logout }}>
+    <AuthContext.Provider
+      value={{ userDetails, setUserDetails, logout, userLoading }}
+    >
       {children}
+      {loading && <Loader />}
     </AuthContext.Provider>
   );
 };

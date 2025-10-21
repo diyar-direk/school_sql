@@ -1,10 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import "../components/form.css";
-import "../components/table.css";
-import { Context } from "../context/Context";
-import SendData from "../components/response/SendData";
-import FormLoading from "../components/FormLoading";
-import axiosInstance from "../utils/axios";
+import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const AddUser = () => {
   const context = useContext(Context);
@@ -18,10 +14,7 @@ const AddUser = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const language = context?.selectedLang;
   const [loading, setLoading] = useState(false);
-  const [formLoading, setFormLoading] = useState(false);
 
-  const [overlay, setOverlay] = useState(false);
-  const [response, setResponse] = useState(false);
   const [DataError, setDataError] = useState(false);
   const [dataLength, setDataLength] = useState(0);
   const [activePage, setActivePage] = useState(1);
@@ -32,22 +25,6 @@ const AddUser = () => {
   const handleClick = (e) => {
     e.stopPropagation();
     e.target.classList.toggle("active");
-  };
-
-  const responseFun = (complete = false) => {
-    setOverlay(true);
-
-    complete === true
-      ? setResponse(true)
-      : complete === "reapeted data"
-      ? setResponse(400)
-      : setResponse(false);
-    window.onclick = () => {
-      setOverlay(false);
-    };
-    setTimeout(() => {
-      setOverlay(false);
-    }, 3000);
   };
 
   const handleForm = (e) => {
@@ -66,12 +43,9 @@ const AddUser = () => {
       setDataError(`${language.error && language.error.please_choose_user}`);
     else {
       try {
-        setFormLoading(true);
-
         const data = await axiosInstance.post("users", form);
 
         if (data.status === 201) {
-          responseFun(true);
           setForm({
             username: "",
             password: "",
@@ -82,10 +56,6 @@ const AddUser = () => {
         }
       } catch (error) {
         console.log(error);
-        if (error.status === 400) responseFun("reapeted data");
-        else responseFun(false);
-      } finally {
-        setFormLoading(false);
       }
     }
   };
@@ -208,12 +178,6 @@ const AddUser = () => {
         className={`${context?.isClosed ? "closed" : ""}  dashboard-container`}
       >
         <div className="container relative">
-          {overlay && (
-            <SendData
-              data={`${language.error && language.error.user}`}
-              response={response}
-            />
-          )}
           <h1 className="title">
             {language.users && language.users.add_users}
           </h1>
@@ -222,7 +186,6 @@ const AddUser = () => {
             onSubmit={handelSubmit}
             className="relative user dashboard-form"
           >
-            {formLoading && <FormLoading />}
             <h1>{language.exams && language.exams.please_complete_form}</h1>
             <div className="flex wrap ">
               <div className="flex flex-direction">

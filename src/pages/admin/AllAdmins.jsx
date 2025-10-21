@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import "../components/table.css";
 import { Link } from "react-router-dom";
-import { Context } from "../context/Context";
-import { useAuth } from "../context/AuthContext";
-import axiosInstance from "../utils/axios";
+import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AllAdmins = () => {
   const context = useContext(Context);
   const { userDetails } = useAuth();
-  const id = userDetails?.userDetails?._id;
+  const id = userDetails?._id;
 
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
