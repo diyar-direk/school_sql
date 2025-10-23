@@ -91,6 +91,28 @@ form.login > .flex > div.image {
   flex: 50%;
   background-color: rgba(0, 0, 0, 0.253);
 }
+form.table-form {
+  background-color: var(--body-color);
+  padding: 30px;
+  box-shadow: var(--box-shadow);
+  width: 300px;
+}
+form.table-form h1 {
+  color: var(--font-color);
+  text-transform: capitalize;
+  margin-bottom: 20px;
+  font-size: 27px;
+}
+form.table-form .actions {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+form.table-form .actions .btn {
+  flex: 1;
+}
+
 form.dashboard-form {
   background-color: var(--body-color);
   padding: 30px;
@@ -127,99 +149,6 @@ form.dashboard-form .flex-direction .inp {
   width: 100%;
 }
 
-.selecte {
-  position: relative;
-}
-.selecte .inp {
-  color: #777;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-wrap: nowrap;
-  padding-right: 20px;
-}
-.table .selecte .inp {
-  text-align: center;
-}
-body.arabic .selecte .inp {
-  padding-left: 20px;
-  padding-right: 10px;
-}
-.selecte .inp::before {
-  position: absolute;
-  content: "\f078";
-  font-weight: 900;
-  font-family: "Font Awesome 6 Free";
-  right: 10px;
-  top: 50%;
-  font-size: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-body.arabic .selecte .inp::before {
-  left: 10px;
-  right: auto;
-}
-.selecte > article {
-  background-color: var(--body-color);
-  box-shadow: var(--box-shadow);
-  position: absolute;
-  width: 100%;
-  padding: 10px 15px;
-  top: 140%;
-  opacity: 0;
-  z-index: -1;
-  pointer-events: none;
-  max-height: 300px;
-  overflow-y: auto;
-  text-align: center;
-}
-.selecte .inp.active + article {
-  transition: opacity 0.4s;
-  opacity: 1;
-  z-index: 2;
-  pointer-events: all;
-  top: 110%;
-}
-
-.selected-value {
-  gap: 5px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-.selected-value span {
-  background-color: var(--section-color);
-  padding: 5px 10px;
-  text-transform: capitalize;
-  cursor: pointer;
-  border-radius: 4px;
-  position: relative;
-  color: var(--font-color);
-}
-
-.selected-value span:hover {
-  color: white;
-  background-color: var(--main-color);
-}
-
-.selecte > article h2 {
-  color: var(--font-color);
-  text-transform: capitalize;
-  margin-bottom: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.selecte > article:hover h2 {
-  opacity: 0.5;
-}
-.selecte > article h2:hover {
-  opacity: 1;
-}
-
-.subjects form.dashboard-form .error {
-  width: auto;
-}
 form.dashboard-form .btn {
   margin-top: 20px;
 }
@@ -235,28 +164,6 @@ i.password {
   cursor: pointer;
 }
 
-/* form loading  */
-
-.form-loading {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #00000028;
-  justify-content: center;
-  z-index: 2;
-}
-.form-loading > div {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: solid 4px;
-  border-color: var(--main-color) transparent;
-  animation: 1s rotate linear infinite;
-}
 .overlay form {
   border-radius: 10px;
 }
@@ -275,7 +182,7 @@ i.password {
   font-size: 20px;
   padding: 8px;
 }
-.overlay form.dashboard-form .error {
+.overlay form.dashboard-form {
   padding: 10px;
   width: 100%;
   margin-top: 0px;
@@ -284,7 +191,7 @@ i.password {
 form.exam-result {
   margin-bottom: 30px;
 }
-form.login .error {
+form.login {
   width: 100%;
   margin-top: 0;
   margin-bottom: 10px;
@@ -415,9 +322,7 @@ form.quize i.false:hover {
     padding: 8px;
     font-size: 17px;
   }
-  .selecte > article h2 {
-    font-size: 15px;
-  }
+
   form.dashboard-form button {
     font-size: 20px;
     width: 100%;
@@ -447,11 +352,7 @@ form.quize i.false:hover {
   form.quize .gap-10 {
     gap: 8px;
   }
-  .error {
-    width: 100%;
-    padding: 12px;
-    font-size: 15px;
-  }
+
   form.login {
     width: 65%;
   }
@@ -480,13 +381,7 @@ form.quize i.false:hover {
   form.dashboard-form button {
     font-size: 16px;
   }
-  .selecte > article h2 {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  .selecte > article {
-    padding: 8px 15px;
-  }
+
   form.dashboard-form {
     padding: 20px;
   }
@@ -502,10 +397,7 @@ form.quize i.false:hover {
     height: 30px;
     width: 30px;
   }
-  .error {
-    padding: 10px;
-    font-size: 14px;
-  }
+
   form.login {
     width: 80%;
   }
@@ -528,9 +420,7 @@ form.quize i.false:hover {
   form.dashboard-form .flex-direction .inp {
     font-size: 14px;
   }
-  .selecte > article h2 {
-    font-size: 13px;
-  }
+
   form.dashboard-form button {
     font-size: 15px;
   }
@@ -549,10 +439,7 @@ form.quize i.false:hover {
     top: 0px;
     width: auto;
   }
-  .error {
-    padding: 9px;
-    font-size: 13px;
-  }
+
   form.login {
     width: 90%;
   }

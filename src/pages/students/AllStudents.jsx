@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AllStudents = () => {
   const context = useContext(Context);
-  const language = context && context.selectedLang;
-  const isAdmin = context && context.userDetails.isAdmin;
-  const token = context && context.userDetails.token;
+  const language = context?.selectedLang;
+  const { userDetails } = useAuth();
+  const isAdmin = userDetails?.isAdmin;
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [dataLength, setDataLength] = useState(0);
@@ -67,15 +68,11 @@ const AllStudents = () => {
   };
 
   const getSearchData = async () => {
-    let URL = `http://localhost:8000/api/students/search/${form}?page=${activePage}&limit=${divsCount}&active=true`;
+    let URL = `students/search/${form}?page=${activePage}&limit=${divsCount}&active=true`;
     if (yearLevel) URL += `&yearLevel=${yearLevel}`;
     if (gender) URL += `&gender=${gender}`;
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
 
       setDataLength(data.data.totalResults);
       setSearchData(data.data.data);
@@ -87,15 +84,11 @@ const AllStudents = () => {
   };
 
   const fetchData = async () => {
-    let URL = `http://localhost:8000/api/students?limit=${divsCount}&page=${activePage}&active=true`;
+    let URL = `students?limit=${divsCount}&page=${activePage}&active=true`;
     if (yearLevel) URL += `&yearLevel=${yearLevel}`;
     if (gender) URL += `&gender=${gender}`;
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
       const fltr = data.data.data.filter((e) => e.active);
 
       setDataLength(data.data.numberOfActiveStudents);
@@ -183,7 +176,7 @@ const AllStudents = () => {
 
         <td>
           <Link
-            to={`/dashboard/student_profile/${e._id}`}
+            to={`/student_profile/${e._id}`}
             className="name"
           >{`${e.firstName} ${e.lastName}`}</Link>
         </td>
@@ -216,18 +209,12 @@ const AllStudents = () => {
               </div>
             )}
             {isAdmin && (
-              <Link
-                to={`/dashboard/update_student/${e._id}`}
-                className="flex update"
-              >
+              <Link to={`/update_student/${e._id}`} className="flex update">
                 <i className="fa-regular fa-pen-to-square"></i>
                 {language.students && language.students.update}
               </Link>
             )}
-            <Link
-              to={`/dashboard/student_profile/${e._id}`}
-              className="flex visit"
-            >
+            <Link to={`/student_profile/${e._id}`} className="flex visit">
               <i className="fa-solid fa-circle-user"></i>{" "}
               {language.students && language.students.visit}
             </Link>
@@ -239,14 +226,9 @@ const AllStudents = () => {
 
   const deleteOne = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/students/deactivate/${selectedItems[0]}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const data = await axiosInstance.patch(
+        `students/deactivate/${selectedItems[0]}`,
+        []
       );
       data && fetchData();
 
@@ -260,17 +242,9 @@ const AllStudents = () => {
 
   const deleteAll = async () => {
     try {
-      const data = await axios.patch(
-        "http://localhost:8000/api/students/deleteStudents",
-        {
-          ids: selectedItems,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const data = await axiosInstance.patch("students/deleteStudents", {
+        ids: selectedItems,
+      });
       data && fetchData();
       selectedItems.length = 0;
     } catch (error) {
@@ -414,7 +388,7 @@ const AllStudents = () => {
 
                 <button className="btn fa-solid fa-magnifying-glass"></button>
                 {isAdmin && (
-                  <Link className="btn" to={"/dashboard/add_student"}>
+                  <Link className="btn" to={"/add_student"}>
                     <i className="fa-regular fa-square-plus"></i>{" "}
                     {language.students && language.students.add_student}
                   </Link>

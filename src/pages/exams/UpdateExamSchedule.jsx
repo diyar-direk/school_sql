@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const UpdateExamSchedule = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const params = useParams();
   const [form, setForm] = useState({
     classId: "",
@@ -18,7 +17,7 @@ const UpdateExamSchedule = () => {
     duration: "",
     totalMarks: "",
   });
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   const [loading, setLoading] = useState(false);
   const [DataError, setDataError] = useState(false);
   const [classes, setClasses] = useState([]);
@@ -30,14 +29,7 @@ const UpdateExamSchedule = () => {
 
   const getData = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:8000/api/exams/${params.id}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const res = await axiosInstance.get(`exams/${params.id}`);
       const data = res.data.data;
       const dateObject = new Date(data.date);
       const formattedDateTime = dateObject.toISOString().slice(0, 16);
@@ -63,7 +55,7 @@ const UpdateExamSchedule = () => {
       setForm(updatedForm);
     } catch (error) {
       console.log(error);
-      if (error.status === 400) nav("/dashboard/error-400");
+      if (error.status === 400) nav("/error-400");
     }
   };
 
@@ -155,28 +147,14 @@ const UpdateExamSchedule = () => {
     setClassesName("");
     setSubjectsName("");
     if (form.yearLevel) {
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
 
-      axios
-        .get(
-          `http://localhost:8000/api/subjects?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`subjects?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setSubjects(res.data.data);
         });
@@ -195,15 +173,7 @@ const UpdateExamSchedule = () => {
       setDataError(`${language.error && language.error.please_choose_subject}`);
     else {
       try {
-        const data = await axios.patch(
-          `http://localhost:8000/api/exams/${params.id}`,
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.patch(`exams/${params.id}`, form);
 
         if (data.status === 200) {
           responseFun(true);
@@ -215,7 +185,7 @@ const UpdateExamSchedule = () => {
             duration: "",
             totalMarks: "",
           });
-          nav("/dashboard/exams_schedule");
+          nav("/exams_schedule");
         }
       } catch (error) {
         console.log(error);

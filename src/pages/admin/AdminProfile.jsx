@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../context/Context";
-import "../components/profile.css";
-import axios from "axios";
+import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AdminProfile = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
+
+  const { userDetails } = useAuth();
   const [data, setData] = useState({
     email: "",
     firstName: "",
@@ -21,32 +22,19 @@ const AdminProfile = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const teachers = await axios.get(
-          "http://localhost:8000/api/teachers/count-gender",
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        const students = await axios.get(
-          "http://localhost:8000/api/students/count-gender",
-          { headers: { Authorization: "Bearer " + token } }
-        );
-        const classes = await axios.get(
-          "http://localhost:8000/api/classes/count",
-          { headers: { Authorization: "Bearer " + token } }
-        );
+        const teachers = await axiosInstance.get("teachers/count-gender");
+        const students = await axiosInstance.get("students/count-gender");
+        const classes = await axiosInstance.get("classes/count");
 
         setData({
           teachersFemale: teachers.data.numberOfFemaleTeachers,
           teachersMale: teachers.data.numberOfMaleTeachers,
           studentsMale: students.data.numberOfFemaleStudents,
           studentsFemale: students.data.numberOfMaleStudents,
-          email: context.userDetails.userDetails.email,
-          firstName: context.userDetails.userDetails.firstName,
-          lastName: context.userDetails.userDetails.lastName,
-          role: context.userDetails.role,
+          email: userDetails?.profileId?.email,
+          firstName: userDetails?.profileId?.firstName,
+          lastName: userDetails?.profileId?.lastName,
+          role: userDetails?.role,
           classes: classes.data.numberOfDocuments,
         });
       } catch (error) {
@@ -131,9 +119,7 @@ const AdminProfile = () => {
             </div>
             <div className="info">
               <h2 className="name">
-                <Link
-                  to={`/dashboard/update_admin/${context.userDetails.userDetails._id}`}
-                >
+                <Link to={`/update_admin/${userDetails?._id}`}>
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
               </h2>

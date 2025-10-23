@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const ExamSchedule = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
+  const { userDetails } = useAuth();
+  const isAdmin = userDetails?.isAdmin;
 
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -16,7 +17,7 @@ const ExamSchedule = () => {
   const [yearLevel, setYearLevel] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const divsCount = 10;
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   const createPags = (dataCount, dataLength) => {
     const pages = Math.ceil(dataLength / dataCount);
     let h3Pages = [];
@@ -66,14 +67,10 @@ const ExamSchedule = () => {
   });
 
   const fetchData = async () => {
-    let URL = `http://localhost:8000/api/exams?limit=${divsCount}&page=${activePage}&sort=-date&active=true`;
+    let URL = `exams?limit=${divsCount}&page=${activePage}&sort=-date&active=true`;
     if (yearLevel) URL += `&yearLevel=${yearLevel}`;
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
       setDataLength(data.data.numberOfActiveExams);
       setSearchData(data.data.data);
     } catch (error) {
@@ -187,10 +184,7 @@ const ExamSchedule = () => {
                   <i className="fa-solid fa-trash"></i>{" "}
                   {language.exams && language.exams.delete}
                 </div>
-                <Link
-                  to={`/dashboard/update_exam/${e._id}`}
-                  className="flex update"
-                >
+                <Link to={`/update_exam/${e._id}`} className="flex update">
                   <i className="fa-regular fa-pen-to-square"></i>
                   {language.exams && language.exams.update}
                 </Link>
@@ -203,14 +197,9 @@ const ExamSchedule = () => {
 
   const deleteOne = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/exams/deactivate/${selectedItems[0]}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const data = await axiosInstance.patch(
+        `exams/deactivate/${selectedItems[0]}`,
+        []
       );
       data && fetchData();
 
@@ -223,17 +212,9 @@ const ExamSchedule = () => {
   };
   const deleteAll = async () => {
     try {
-      const data = await axios.patch(
-        "http://localhost:8000/api/exams/deactivate-many",
-        {
-          ids: selectedItems,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const data = await axiosInstance.patch("exams/deactivate-many", {
+        ids: selectedItems,
+      });
       data && fetchData();
 
       selectedItems.length = 0;
@@ -326,7 +307,7 @@ const ExamSchedule = () => {
                 </div>
 
                 {isAdmin && (
-                  <Link className="btn" to={"/dashboard/add_exam"}>
+                  <Link className="btn" to={"/add_exam"}>
                     <i className="fa-regular fa-square-plus"></i>{" "}
                     {language.exams && language.exams.add_exam}
                   </Link>

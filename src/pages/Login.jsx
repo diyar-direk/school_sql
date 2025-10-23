@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import "../components/form.css";
-import axios from "axios";
 import { Context } from "../context/Context";
-import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import FormLoading from "./../components/FormLoading";
+import axiosInstance from "../utils/axios";
+import Cookies from "js-cookie";
+import { useAuth } from "../context/AuthContext";
 
 export const showPassword = (e) => {
   e.target.classList.toggle("fa-eye");
@@ -16,6 +17,7 @@ export const showPassword = (e) => {
 
 const Login = () => {
   const context = useContext(Context);
+  const { setUserDetails } = useAuth();
   const language = context && context.selectedLang;
   const [error, setError] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -32,39 +34,29 @@ const Login = () => {
     e.preventDefault();
     try {
       setFormLoading(true);
-      const cookie = new Cookies();
-      const getToken = await axios.post(
-        "http://localhost:8000/api/users/login",
-        form
-      );
-      const token = getToken.data.token;
 
-      const profile = await axios.get(
-        "http://localhost:8000/api/users/profile",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const getToken = await axiosInstance.post("users/login", form);
+      const token = getToken.data.token;
+      Cookies.set("school-token", token);
+
+      const profile = await axiosInstance.get(`users/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = profile.data.user;
       const isAdmin = data.role.includes("Admin");
       const isTeacher = data.role.includes("Teacher");
       const isStudent = data.role.includes("Student");
-      context.setUserDetails({
+      setUserDetails({
         isAdmin: isAdmin,
         isTeacher: isTeacher,
         isStudent: isStudent,
         token: token,
-        userDetails: data.profileId,
-        role: data.role,
+        ...data,
       });
 
-      cookie.set("school-token", token);
-
-      isTeacher && nav(`/dashboard/teacher_profile/${data.profileId._id}`);
-      isStudent && nav(`/dashboard/student_profile/${data.profileId._id}`);
-      isAdmin && nav(`/dashboard/admin_profile`);
+      isTeacher && nav(`/teacher_profile/${data.profileId._id}`);
+      isStudent && nav(`/student_profile/${data.profileId._id}`);
+      isAdmin && nav(`/admin_profile`);
     } catch (error) {
       console.log(error);
       if (error.status === 401)

@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const AddExamResult = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const [form, setForm] = useState({
     yearLevel: "",
     classId: "",
@@ -16,7 +15,7 @@ const AddExamResult = () => {
     score: "",
     type: "Exam",
   });
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   const [loading, setLoading] = useState(false);
   const [DataError, setDataError] = useState(false);
   const [classes, setClasses] = useState([]);
@@ -108,15 +107,8 @@ const AddExamResult = () => {
     setForm({ ...form, classId: "" });
     setDataNames({ ...dataNames, classesName: "" });
     if (form.yearLevel) {
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
@@ -127,27 +119,13 @@ const AddExamResult = () => {
     setForm({ ...form, exam: "" });
     setDataNames({ ...dataNames, examsName: "" });
     if (form.classId) {
-      axios
-        .get(
-          `http://localhost:8000/api/exams?classId=${form.classId}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`exams?classId=${form.classId}&active=true`)
         .then((res) => {
           setExams(res.data.data);
         });
-      axios
-        .get(
-          `http://localhost:8000/api/students?classId=${form.classId}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`students?classId=${form.classId}&active=true`)
         .then((res) => {
           setStudents(res.data.data);
         });
@@ -168,15 +146,7 @@ const AddExamResult = () => {
       setDataError(`${language.error && language.error.please_choose_student}`);
     else {
       try {
-        const data = await axios.post(
-          "http://localhost:8000/api/exam-results",
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.post("exam-results", form);
 
         if (data.status === 201) {
           responseFun(true);

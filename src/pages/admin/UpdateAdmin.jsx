@@ -1,39 +1,36 @@
-import React, { useContext, useState } from "react";
-import "../components/form.css";
-import axios from "axios";
-import { Context } from "../context/Context";
-import SendData from "../components/response/SendData";
-import FormLoading from "../components/FormLoading";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
+import { pagesRoute } from "../../constants/pagesRoute";
 
-const AddAdmin = () => {
+const UpdateAdmin = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
+  const nav = useNavigate();
+  const { id } = useParams();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     email: "",
   });
 
-  const language = context && context.selectedLang;
-  const [loading, setLoading] = useState(false);
-  const [overlay, setOverlay] = useState(false);
-  const [response, setResponse] = useState(false);
+  useEffect(() => {
+    axiosInstance
+      .get(`admins/${id}`)
+      .then((res) => {
+        setForm({
+          firstName: res.data.data.firstName,
+          lastName: res.data.data.lastName,
+          email: res.data.data.email,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/err-400");
+      });
+  }, []);
 
-  const responseFun = (complete = false) => {
-    setOverlay(true);
-
-    complete === true
-      ? setResponse(true)
-      : complete === "reapeted data"
-      ? setResponse(400)
-      : setResponse(false);
-    window.onclick = () => {
-      setOverlay(false);
-    };
-    setTimeout(() => {
-      setOverlay(false);
-    }, 3000);
-  };
+  const language = context?.selectedLang;
 
   const handleForm = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
@@ -43,26 +40,13 @@ const AddAdmin = () => {
     e.preventDefault();
 
     try {
-      const data = await axios.post("http://localhost:8000/api/admins", form, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.patch(`admins/${id}`, form);
 
-      if (data.status === 201) {
-        responseFun(true);
-        setForm({
-          firstName: "",
-          lastName: "",
-          email: "",
-        });
+      if (data.status === 200) {
+        nav(pagesRoute.admin.page);
       }
     } catch (error) {
       console.log(error);
-      if (error.status === 400) responseFun("reapeted data");
-      else responseFun(false);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -72,18 +56,11 @@ const AddAdmin = () => {
         className={`${context?.isClosed ? "closed" : ""}  dashboard-container`}
       >
         <div className="container relative">
-          {overlay && (
-            <SendData
-              data={`${language.error && language.error.admin}`}
-              response={response}
-            />
-          )}
           <h1 className="title">
-            {language.admins && language.admins.add_admins}
+            {language.admins && language.admins.update_admins}
           </h1>
 
           <form onSubmit={handelSubmit} className="relative dashboard-form">
-            {loading && <FormLoading />}
             <h1>{language.exams && language.exams.please_complete_form}</h1>
             <div className="flex wrap ">
               <div className="flex flex-direction">
@@ -147,4 +124,4 @@ const AddAdmin = () => {
   );
 };
 
-export default AddAdmin;
+export default UpdateAdmin;

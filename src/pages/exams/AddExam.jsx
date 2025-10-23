@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const AddExam = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const [form, setForm] = useState({
     classId: "",
     subjectId: "",
@@ -16,7 +15,7 @@ const AddExam = () => {
     duration: "",
     totalMarks: "",
   });
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   const [loading, setLoading] = useState(false);
   const [DataError, setDataError] = useState(false);
   const [classes, setClasses] = useState([]);
@@ -110,28 +109,14 @@ const AddExam = () => {
     setClassesName("");
     setSubjectsName("");
     if (form.yearLevel) {
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
 
-      axios
-        .get(
-          `http://localhost:8000/api/subjects?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`subjects?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setSubjects(res.data.data);
         });
@@ -150,11 +135,7 @@ const AddExam = () => {
       setDataError(`${language.error && language.error.please_choose_subject}`);
     else {
       try {
-        const data = await axios.post("http://localhost:8000/api/exams", form, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
+        const data = await axiosInstance.post("exams", form);
 
         if (data.status === 201) {
           responseFun(true);

@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const UpdateStudent = () => {
   const { id } = useParams();
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const nav = useNavigate();
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   const [form, setForm] = useState({
     contactInfo: { email: "", phone: "" },
     address: {
@@ -42,12 +41,8 @@ const UpdateStudent = () => {
   const [response, setResponse] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/students/${id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    axiosInstance
+      .get(`students/${id}`)
       .then((res) => {
         const data = res.data.data;
 
@@ -92,7 +87,7 @@ const UpdateStudent = () => {
       })
       .catch((err) => {
         console.log(err);
-        nav("/dashboard/err-400");
+        nav("/err-400");
       });
   }, []);
 
@@ -178,15 +173,8 @@ const UpdateStudent = () => {
     }
 
     form.yearLevel &&
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
@@ -204,15 +192,7 @@ const UpdateStudent = () => {
       setDataError(`${language.error && language.error.please_choose_class}`);
     else {
       try {
-        const data = await axios.patch(
-          `http://localhost:8000/api/students/${id}`,
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.patch(`students/${id}`, form);
         setForm({
           contactInfo: { email: "", phone: "" },
           address: {
@@ -235,7 +215,7 @@ const UpdateStudent = () => {
         });
         if (data.status === 200) {
           responseFun(true);
-          nav("/dashboard/all_students");
+          nav("/all_students");
         }
       } catch (error) {
         console.log(error);

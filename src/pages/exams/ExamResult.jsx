@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
 import "../../components/form.css";
-import axios from "axios";
 import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const ExamResult = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
-  const isStudent = context && context.userDetails.isStudent;
-  const userDetails = context && context.userDetails.userDetails;
+  const { userDetails: user } = useAuth();
+  const isAdmin = user?.isAdmin;
+  const isStudent = user?.isStudent;
+  const userDetails = user?.userDetails;
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,21 +19,14 @@ const ExamResult = () => {
     classId: "",
     student: "",
   });
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   async function fetchData() {
     setData([]);
     setLoading(true);
     try {
       if (form.student)
-        await axios
-          .get(
-            `http://localhost:8000/api/exam-results/details/${form.student}`,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          )
+        await axiosInstance
+          .get(`exam-results/details/${form.student}`)
           .then((res) => {
             setData(res.data.data);
           });
@@ -66,14 +59,9 @@ const ExamResult = () => {
 
   const deleteExam = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/exam-results/deactivate/${selectedItems}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const data = await axiosInstance.patch(
+        `exam-results/deactivate/${selectedItems}`,
+        []
       );
       data && fetchData();
 
@@ -92,14 +80,9 @@ const ExamResult = () => {
         document.querySelector("td.input input").value
       );
 
-      const res = await axios.patch(
-        `http://localhost:8000/api/exam-results/${selectedItems.examResultId}`,
-        { score: inpValue, type: selectedItems.type },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const res = await axiosInstance.patch(
+        `exam-results/${selectedItems.examResultId}`,
+        { score: inpValue, type: selectedItems.type }
       );
 
       if (res.status === 200) {
@@ -250,15 +233,8 @@ const ExamResult = () => {
       setForm({ ...form, classId: "" });
       setDataNames({ ...dataNames, classesName: "" });
       if (form.yearLevel) {
-        axios
-          .get(
-            `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          )
+        axiosInstance
+          .get(`classes?yearLevel=${form.yearLevel}&active=true`)
           .then((res) => {
             setClasses(res.data.data);
           });
@@ -268,15 +244,8 @@ const ExamResult = () => {
 
   useEffect(() => {
     if (form.classId && !isStudent) {
-      axios
-        .get(
-          `http://localhost:8000/api/students?classId=${form.classId}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`tudents?classId=${form.classId}&active=true`)
         .then((res) => {
           setStudents(res.data.data);
         });

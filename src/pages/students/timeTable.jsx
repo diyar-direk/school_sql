@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "./../../components/FormLoading";
 import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const TimeTable = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
-  const isStudent = context && context.userDetails.isStudent;
-  const userDetails = context && context.userDetails.userDetails;
+  const { userDetails: user } = useAuth();
+  const isAdmin = user?.userDetails?.isAdmin;
+  const isStudent = user?.userDetails?.isStudent;
+  const userDetails = user?.userDetails?.userDetails;
   const date = new Date();
   const [data, setData] = useState([]);
   const [dayNumber, setDayNumber] = useState(date.getUTCDay() || 0);
@@ -21,7 +22,7 @@ const TimeTable = () => {
   const [subjectName, setSubjectName] = useState("");
   const [formLoading, setFormLoading] = useState(false);
   const [selectedId, setSelectedId] = useState("");
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
 
   const daysOfWeek = [
     { name: language?.days?.sunday, day: "Sunday" },
@@ -45,13 +46,8 @@ const TimeTable = () => {
   async function getData() {
     if (form.classId) {
       try {
-        const res = await axios.get(
-          `http://localhost:8000/api/time-table?active=true&classId=${form.classId}&dayOfWeek=${daysOfWeek[dayNumber].day}&sort=startTime`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
+        const res = await axiosInstance.get(
+          `time-table?active=true&classId=${form.classId}&dayOfWeek=${daysOfWeek[dayNumber].day}&sort=startTime`
         );
         setData(res.data.data);
       } catch (error) {
@@ -69,15 +65,8 @@ const TimeTable = () => {
   }, [dayNumber, form.classId]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8000/api/subjects?active=true&yearLevel=${form.yearLevel}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      )
+    axiosInstance
+      .get(`subjects?active=true&yearLevel=${form.yearLevel}`)
       .then((res) => setSubjects(res.data.data));
   }, [form.yearLevel]);
 
@@ -95,15 +84,7 @@ const TimeTable = () => {
 
   const deleteData = async (id) => {
     try {
-      await axios.patch(
-        `http://localhost:8000/api/time-table/deactivate/${id}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      await axiosInstance.patch(`time-table/deactivate/${id}`, []);
       getData();
     } catch (error) {
       console.log(error);
@@ -190,22 +171,10 @@ const TimeTable = () => {
       setFormLoading(true);
       try {
         if (!isUpdate) {
-          await axios.post(`http://localhost:8000/api/time-table`, form, {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          });
+          await axiosInstance.post(`time-table`, form);
           getData();
         } else {
-          await axios.patch(
-            `http://localhost:8000/api/time-table/${selectedId._id}`,
-            form,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          );
+          await axiosInstance.patch(`time-table/${selectedId._id}`, form);
           getData();
         }
 
@@ -254,15 +223,8 @@ const TimeTable = () => {
       setForm({ ...form, classId: "" });
       setClassesName("");
       if (form.yearLevel) {
-        axios
-          .get(
-            `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          )
+        axiosInstance
+          .get(`classes?yearLevel=${form.yearLevel}&active=true`)
           .then((res) => {
             setClasses(res.data.data);
           });

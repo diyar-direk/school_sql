@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const AddQuiz = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const [multiQuestionsCount, setMultiQuestionsCount] = useState(1);
   const [multiQuestions, setMultiQuestions] = useState({
     choices: [{ text: "", isCorrect: false }],
@@ -124,28 +123,14 @@ const AddQuiz = () => {
     setClassesName("");
     setSubjectsName("");
     if (form.yearLevel) {
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
 
-      axios
-        .get(
-          `http://localhost:8000/api/subjects?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`subjects?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setSubjects(res.data.data);
         });
@@ -346,15 +331,7 @@ const AddQuiz = () => {
       };
 
       try {
-        const data = await axios.post(
-          "http://localhost:8000/api/quizzes",
-          formWithQuestions,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.post("quizzes", formWithQuestions);
 
         if (data.status === 201) {
           responseFun(true);

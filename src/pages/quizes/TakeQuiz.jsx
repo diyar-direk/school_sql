@@ -1,20 +1,19 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./quiz.css";
 import FormLoading from "../../components/FormLoading";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const TakeQuiz = () => {
   const { id } = useParams();
   const context = useContext(Context);
   const [canTake, setCanTake] = useState(true);
-  const token = context?.userDetails.token;
-  const userDetails = context?.userDetails.userDetails;
-  const studentId = context?.userDetails.userDetails._id;
+  const { userDetails: user } = useAuth();
+  const userDetails = user?.userDetails?.userDetails;
+  const studentId = user?.userDetails?.userDetails?._id;
   const nav = useNavigate();
-  const name =
-    userDetails &&
-    `${userDetails.firstName} ${userDetails.middleName} ${userDetails.lastName}`;
+  const name = `${userDetails?.firstName} ${userDetails?.middleName} ${userDetails?.lastName}`;
   const [data, setData] = useState([]);
   const [time, setTime] = useState(0);
   const [remainingTime, setRemainingTime] = useState("");
@@ -30,15 +29,8 @@ const TakeQuiz = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8000/api/exam-results?student=${studentId}&active=true&exam=${id}&limit=1`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+    axiosInstance
+      .get(`exam-results?student=${studentId}&active=true&exam=${id}&limit=1`)
       .then((res) => {
         if (res.data.data.length > 0) {
           setCanTake(false);
@@ -47,23 +39,17 @@ const TakeQuiz = () => {
       })
       .catch((err) => {
         console.log(err);
-        err.status === 400 && nav("/dashboard/err-400");
+        err.status === 400 && nav("/err-400");
       });
   }, []);
 
   useEffect(() => {
     if (!canTake) return;
-    axios
-      .get(`http://localhost:8000/api/quizzes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setData(res.data.data);
-        setAnswers(res.data.data.questions);
-        setTime(new Date(res.data.data.endDate));
-      });
+    axiosInstance.get(`quizzes/${id}`).then((res) => {
+      setData(res.data.data);
+      setAnswers(res.data.data.questions);
+      setTime(new Date(res.data.data.endDate));
+    });
   }, [canTake]);
 
   useEffect(() => {
@@ -189,16 +175,7 @@ const TakeQuiz = () => {
     };
 
     try {
-      const data = await axios.post(
-        `http://localhost:8000/api/exam-results`,
-        form,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (data.status === 201) nav(`/dashboard/exams_result`);
+      await axiosInstance.post(`exam-results`, form);
     } catch (error) {
       console.log(error);
     }

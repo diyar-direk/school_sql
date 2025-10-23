@@ -1,15 +1,14 @@
-import React, { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { Context } from "../context/Context";
+import { useAuth } from "../context/AuthContext";
 
 const StudentAuth = () => {
-  const context = useContext(Context);
-  const isStudent = context && context.userDetails.isStudent;
+  const { userDetails } = useAuth();
+  const isStudent = userDetails?.isStudent;
   const location = useLocation();
   return isStudent ? (
     <Outlet />
   ) : (
-    <Navigate state={{ from: location }} replace to={"/dashboard/not_found"} />
+    <Navigate state={{ from: location }} replace to={"/not_found"} />
   );
 };
 

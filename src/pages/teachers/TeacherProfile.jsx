@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/profile.css";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
 import { Context } from "../../context/Context";
 import { nextJoin } from "../quizes/AddQuiz";
 import { useNavigate } from "react-router-dom/dist";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const TeacherProfile = () => {
   const [data, setData] = useState({
     classes: [],
@@ -21,17 +22,13 @@ const TeacherProfile = () => {
   const { id } = useParams();
 
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
+  const { userDetails } = useAuth();
+  const isAdmin = userDetails?.isAdmin;
   const nav = useNavigate();
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/teachers/${id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    axiosInstance
+      .get(`teachers/${id}`)
       .then((res) => {
         const data = res.data.teacher;
         setData({
@@ -48,7 +45,7 @@ const TeacherProfile = () => {
       })
       .catch((err) => {
         console.log(err);
-        nav("/dashboard/err-400");
+        nav("/err-400");
       });
   }, []);
 
@@ -63,10 +60,7 @@ const TeacherProfile = () => {
             <div className="image">
               <i className=" photo fa-solid fa-user"></i>
               {isAdmin && (
-                <Link
-                  to={`/dashboard/update_teacher/${id}`}
-                  className="center gap-10"
-                >
+                <Link to={`/update_teacher/${id}`} className="center gap-10">
                   {language.teachers && language.teachers.edit_btn}
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
@@ -75,7 +69,7 @@ const TeacherProfile = () => {
             <div className="info">
               {isAdmin && (
                 <h2 className="name">
-                  <Link to={`/dashboard/update_teacher/${id}`}>
+                  <Link to={`/update_teacher/${id}`}>
                     <i className="fa-regular fa-pen-to-square"></i>
                   </Link>
                 </h2>

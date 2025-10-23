@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AllTeachers = () => {
   const context = useContext(Context);
-  const language = context && context.selectedLang;
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
-  const id = context && context.userDetails.userDetails._id;
+  const language = context?.selectedLang;
+  const { userDetails } = useAuth();
+  const isAdmin = userDetails?.isAdmin;
+  const id = userDetails?.userDetails?._id;
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [dataLength, setDataLength] = useState(0);
@@ -69,14 +70,9 @@ const AllTeachers = () => {
 
   const deleteOne = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/teachers/deactivate/${selectedItems[0]}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const data = await axiosInstance.patch(
+        `teachers/deactivate/${selectedItems[0]}`,
+        []
       );
       data && fetchData();
 
@@ -89,15 +85,11 @@ const AllTeachers = () => {
   };
 
   const getSearchData = async () => {
-    let URL = `http://localhost:8000/api/teachers/search/${form}?page=${activePage}&limit=${divsCount}&active=true`;
+    let URL = `teachers/search/${form}?page=${activePage}&limit=${divsCount}&active=true`;
     if (yearLevel) URL += `&yearLevel=${yearLevel}`;
     if (gender) URL += `&gender=${gender}`;
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
 
       setDataLength(data.data.totalResults);
       setSearchData(data.data.data);
@@ -109,16 +101,12 @@ const AllTeachers = () => {
   };
 
   const fetchData = async () => {
-    let URL = `http://localhost:8000/api/teachers?limit=${divsCount}&page=${activePage}&active=true`;
+    let URL = `teachers?limit=${divsCount}&page=${activePage}&active=true`;
     if (yearLevel) URL += `&yearLevel=${yearLevel}`;
     if (gender) URL += `&gender=${gender}`;
 
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
       setDataLength(data.data.numberOfActiveTeachers);
       setSearchData(data.data.data);
     } catch (error) {
@@ -204,7 +192,7 @@ const AllTeachers = () => {
         )}
 
         <td>
-          <Link className="name" to={`/dashboard/teacher_profile/${e._id}`}>
+          <Link className="name" to={`/teacher_profile/${e._id}`}>
             {`${e.firstName} ${e.lastName}`}{" "}
             {id === e._id && `( ${language.navBar && language.navBar.me} )`}
           </Link>
@@ -247,18 +235,12 @@ const AllTeachers = () => {
               </div>
             )}
             {isAdmin && (
-              <Link
-                to={`/dashboard/update_teacher/${e._id}`}
-                className="flex update"
-              >
+              <Link to={`/update_teacher/${e._id}`} className="flex update">
                 <i className="fa-regular fa-pen-to-square"></i>
                 {language.teachers && language.teachers.update}
               </Link>
             )}
-            <Link
-              to={`/dashboard/teacher_profile/${e._id}`}
-              className={`flex visit`}
-            >
+            <Link to={`/teacher_profile/${e._id}`} className={`flex visit`}>
               <i className="fa-solid fa-circle-user"></i>
               {language.teachers && language.teachers.visit}
             </Link>
@@ -270,17 +252,9 @@ const AllTeachers = () => {
 
   const deleteAll = async () => {
     try {
-      const data = await axios.patch(
-        "http://localhost:8000/api/teachers/deleteTeachers",
-        {
-          teacherIds: selectedItems,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const data = await axiosInstance.patch("teachers/deleteTeachers", {
+        teacherIds: selectedItems,
+      });
       data && fetchData();
 
       setSelectedItems([]);
@@ -423,7 +397,7 @@ const AllTeachers = () => {
 
                 <button className="btn fa-solid fa-magnifying-glass"></button>
                 {isAdmin && (
-                  <Link className="btn" to={"/dashboard/add_teacher"}>
+                  <Link className="btn" to={"/add_teacher"}>
                     <i className="fa-regular fa-square-plus"></i>
                     {language.teachers && language.teachers.add_teachers}
                   </Link>

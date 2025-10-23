@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
+import Cookies from "js-cookie";
+import axiosInstance, { baseURL } from "../../utils/axios";
 
 const AddTeacher = () => {
   const [form, setForm] = useState({
@@ -18,8 +19,8 @@ const AddTeacher = () => {
     classes: "",
   });
   const context = useContext(Context);
-  const language = context && context.selectedLang;
-  const token = context && context.userDetails.token;
+  const language = context?.selectedLang;
+  const token = Cookies.get("school-token");
   const [loading, setLoading] = useState(false);
   const [DataError, setDataError] = useState(false);
   const [subject, setSubject] = useState([]);
@@ -103,7 +104,7 @@ const AddTeacher = () => {
           form.yearLevel &&
             form.yearLevel.map(async (yearLevel) => {
               const response = await fetch(
-                `http://localhost:8000/api/subjects?yearLevel=${yearLevel}&active=true`,
+                `${baseURL}subjects?yearLevel=${yearLevel}&active=true`,
                 {
                   headers: {
                     Authorization: "Bearer " + token,
@@ -135,7 +136,7 @@ const AddTeacher = () => {
           form.yearLevel &&
             form.yearLevel.map(async (yearLevel) => {
               const response = await fetch(
-                `http://localhost:8000/api/classes?yearLevel=${yearLevel}&active=true`,
+                `${baseURL}classes?yearLevel=${yearLevel}&active=true`,
                 {
                   headers: {
                     Authorization: "Bearer " + token,
@@ -174,15 +175,7 @@ const AddTeacher = () => {
       setDataError(`${language.error && language.error.please_choose_subject}`);
     else {
       try {
-        const data = await axios.post(
-          "http://localhost:8000/api/teachers",
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.post("teachers", form);
         setForm({
           firstName: "",
           middleName: "",

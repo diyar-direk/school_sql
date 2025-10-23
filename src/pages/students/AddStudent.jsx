@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const AddStudent = () => {
   const context = useContext(Context);
-  const language = context && context.selectedLang;
-  const token = context && context.userDetails.token;
+  const language = context?.selectedLang;
 
   const [form, setForm] = useState({
     contactInfo: { email: "", phone: "" },
@@ -117,15 +116,8 @@ const AddStudent = () => {
     setClassesName("");
     setForm({ ...form, classId: "" });
     form.yearLevel &&
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
@@ -143,15 +135,7 @@ const AddStudent = () => {
       setDataError(`${language.error && language.error.please_choose_class}`);
     else {
       try {
-        const data = await axios.post(
-          "http://localhost:8000/api/students",
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.post("students", form);
         setForm({
           contactInfo: { email: "", phone: "" },
           address: {

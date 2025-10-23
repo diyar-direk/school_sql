@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../components/profile.css";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom/dist";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 
 const StudentProfile = () => {
   const [data, setData] = useState({
@@ -27,20 +28,16 @@ const StudentProfile = () => {
     },
   });
   const context = useContext(Context);
-  const language = context && context.selectedLang;
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
+  const language = context?.selectedLang;
+  const { userDetails } = useAuth();
+  const isAdmin = userDetails?.isAdmin;
   const [yearRepeated, setYearRepeated] = useState([]);
 
   const { id } = useParams();
   const nav = useNavigate();
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/students/${id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    axiosInstance
+      .get(`students/${id}`)
       .then((res) => {
         const data = res.data.data;
         const birthDateCount = new Date(data.dateOfBirth);
@@ -76,21 +73,16 @@ const StudentProfile = () => {
       })
       .catch((err) => {
         console.log(err);
-        nav("/dashboard/err-400");
+        nav("/err-400");
       });
   }, []);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = async () => {
     try {
-      const response = await axios.patch(
-        `http://localhost:8000/api/students/increment-year/${id}`,
-        { yearRepeated },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const response = await axiosInstance.patch(
+        `students/increment-year/${id}`,
+        { yearRepeated }
       );
 
       const updatedYearRepeated = response.data.data.yearRepeated;
@@ -124,10 +116,7 @@ const StudentProfile = () => {
             <div className="image">
               <i className="photo fa-solid fa-user"></i>
               {isAdmin && (
-                <Link
-                  to={`/dashboard/update_student/${id}`}
-                  className="center gap-10"
-                >
+                <Link to={`/update_student/${id}`} className="center gap-10">
                   {language.students && language.students.edit_btn}
                   <i className="fa-regular fa-pen-to-square"></i>
                 </Link>
@@ -136,7 +125,7 @@ const StudentProfile = () => {
             <div className="info">
               {isAdmin && (
                 <h2 className="name">
-                  <Link to={`/dashboard/update_student/${id}`}>
+                  <Link to={`/update_student/${id}`}>
                     <i className="fa-regular fa-pen-to-square"></i>
                   </Link>
                 </h2>

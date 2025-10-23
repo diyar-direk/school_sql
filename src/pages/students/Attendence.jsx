@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+
 import { Context } from "../../context/Context";
+import axiosInstance from "../../utils/axios";
 
 const Attendence = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const [form, setForm] = useState({
     date: "",
     classId: "",
   });
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
   const [data, setData] = useState([]); // Holds students data
   const [classes, setClasses] = useState([]); // Holds class options
   const [classesName, setClassesName] = useState(""); // Selected class name
@@ -35,12 +34,8 @@ const Attendence = () => {
 
   // Fetch classes
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/classes?active=true", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    axiosInstance
+      .get("classes?active=true")
       .then((res) => setClasses(res.data.data));
   }, []);
 
@@ -65,13 +60,8 @@ const Attendence = () => {
       setDataError(`${language.error && language.error.please_choose_class}`);
     } else {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/students?classId=${form.classId}&active=true&fields=_id,firstName,lastName,middleName&sort=_id`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
+        const response = await axiosInstance.get(
+          `students?classId=${form.classId}&active=true&fields=_id,firstName,lastName,middleName&sort=_id`
         );
         
 
@@ -94,13 +84,8 @@ const Attendence = () => {
     try {
       await Promise.all(
         students.map(async (student) => {
-          const response = await axios.get(
-            `http://localhost:8000/api/attendances/time-filter?month=${form.date}&active=true&studentId=${student._id}`,
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
+          const response = await axiosInstance.get(
+            `attendances/time-filter?month=${form.date}&active=true&studentId=${student._id}`
           );
           attendanceArray.push({
             studentId: student._id,
@@ -150,32 +135,16 @@ const Attendence = () => {
   const trueCheck = async () => {
     try {
       if (selectedStudent.update) {
-        await axios.patch(
-          `http://localhost:8000/api/attendances/${selectedStudent.id}`,
-          {
-            status: "Present",
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        await axiosInstance.patch(`attendances/${selectedStudent.id}`, {
+          status: "Present",
+        });
       } else {
-        await axios.post(
-          `http://localhost:8000/api/attendances`,
-          {
-            studentId: selectedStudent.student.studentId,
-            classId: form.classId,
-            date: `${form.date}-${selectedStudent.day}`,
-            status: "Present",
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        await axiosInstance.post(`attendances`, {
+          studentId: selectedStudent.student.studentId,
+          classId: form.classId,
+          date: `${form.date}-${selectedStudent.day}`,
+          status: "Present",
+        });
       }
       fetchAttendanceData(data); // Fetch updated attendance data
     } catch (error) {
@@ -186,32 +155,16 @@ const Attendence = () => {
   const falseCheck = async () => {
     try {
       if (selectedStudent.update) {
-        await axios.patch(
-          `http://localhost:8000/api/attendances/${selectedStudent.id}`,
-          {
-            status: "Absent",
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        await axiosInstance.patch(`attendances/${selectedStudent.id}`, {
+          status: "Absent",
+        });
       } else {
-        await axios.post(
-          `http://localhost:8000/api/attendances`,
-          {
-            studentId: selectedStudent.student.studentId,
-            classId: form.classId,
-            date: `${form.date}-${selectedStudent.day}`,
-            status: "Absent",
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        await axiosInstance.post(`attendances`, {
+          studentId: selectedStudent.student.studentId,
+          classId: form.classId,
+          date: `${form.date}-${selectedStudent.day}`,
+          status: "Absent",
+        });
       }
       fetchAttendanceData(data); // Fetch updated attendance data
     } catch (error) {
@@ -221,15 +174,10 @@ const Attendence = () => {
   const noneCheck = async () => {
     try {
       if (selectedStudent.update) {
-        await axios.patch(
-          `http://localhost:8000/api/attendances/deactivate/${selectedStudent.id}`,
+        await axiosInstance.patch(
+          `attendances/deactivate/${selectedStudent.id}`,
           {
             active: "false",
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
           }
         );
       }

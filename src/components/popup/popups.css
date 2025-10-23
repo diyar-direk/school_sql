@@ -1,0 +1,39 @@
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgb(0 0 0 / 10%);
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.overlay .popup {
+  padding: 30px 40px;
+  border-radius: 4px;
+  background-color: var(--body-color);
+}
+.overlay .confirm-popup > div {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.overlay .confirm-popup > div > button {
+  flex: 1;
+}
+.overlay .popup h1 {
+  text-transform: capitalize;
+  text-align: center;
+  font-weight: 500;
+  font-size: 25px;
+}
+
+table .overlay {
+  background-color: transparent;
+  backdrop-filter: blur(1px);
+}

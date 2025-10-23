@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../context/Context";
+import axiosInstance, { baseURL } from "../../utils/axios";
+import Cookies from "js-cookie";
 
 const UpdateTeacher = () => {
   const params = useParams();
@@ -18,6 +19,8 @@ const UpdateTeacher = () => {
   const [overlay, setOverlay] = useState(false);
   const [response, setResponse] = useState(false);
 
+  const token = Cookies.get("school-token");
+
   const [form, setForm] = useState({
     firstName: "",
     middleName: "",
@@ -30,15 +33,10 @@ const UpdateTeacher = () => {
     classes: "",
   });
   const context = useContext(Context);
-  const language = context && context.selectedLang;
-  const token = context && context.userDetails.token;
+  const language = context?.selectedLang;
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/teachers/${params.id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    axiosInstance
+      .get(`teachers/${params.id}`)
       .then((res) => {
         const data = res.data.teacher;
         const subjects = data.subjects.map((e) => {
@@ -64,7 +62,7 @@ const UpdateTeacher = () => {
       })
       .catch((err) => {
         console.log(err);
-        nav("/dashboard/err-400");
+        nav("/err-400");
       });
   }, []);
 
@@ -140,7 +138,7 @@ const UpdateTeacher = () => {
           form.yearLevel &&
             form.yearLevel.map(async (yearLevel) => {
               const response = await fetch(
-                `http://localhost:8000/api/subjects?yearLevel=${yearLevel}&active=true`,
+                `${baseURL}subjects?yearLevel=${yearLevel}&active=true`,
                 {
                   headers: {
                     Authorization: "Bearer " + token,
@@ -172,7 +170,7 @@ const UpdateTeacher = () => {
           form.yearLevel &&
             form.yearLevel.map(async (yearLevel) => {
               const response = await fetch(
-                `http://localhost:8000/api/classes?yearLevel=${yearLevel}&active=true`,
+                `${baseURL}classes?yearLevel=${yearLevel}&active=true`,
                 {
                   headers: {
                     Authorization: "Bearer " + token,
@@ -211,15 +209,7 @@ const UpdateTeacher = () => {
       setDataError(`${language.error && language.error.please_choose_subject}`);
     else {
       try {
-        const data = await axios.patch(
-          `http://localhost:8000/api/teachers/${params.id}`,
-          form,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const data = await axiosInstance.patch(`teachers/${params.id}`, form);
         setForm({
           firstName: "",
           middleName: "",
@@ -234,7 +224,7 @@ const UpdateTeacher = () => {
 
         if (data.status === 200) {
           responseFun(true);
-          nav("/dashboard/all_teachers");
+          nav("/all_teachers");
         }
       } catch (error) {
         console.log(error);

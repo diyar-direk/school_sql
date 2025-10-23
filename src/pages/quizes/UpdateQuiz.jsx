@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../components/form.css";
-import axios from "axios";
 import FormLoading from "../../components/FormLoading";
 import SendData from "../../components/response/SendData";
 import { Context } from "../../context/Context";
 import { useNavigate, useParams } from "react-router-dom";
 import { nextJoin } from "./AddQuiz";
+import axiosInstance from "../../utils/axios";
 
 const UpdateQuiz = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
   const { id } = useParams();
 
   const [multiQuestionsCount, setMultiQuestionsCount] = useState(1);
@@ -45,12 +44,8 @@ const UpdateQuiz = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/quizzes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    axiosInstance
+      .get(`quizzes/${id}`)
       .then((res) => {
         const data = res.data.data;
         const dateObject = new Date(data.date);
@@ -78,7 +73,7 @@ const UpdateQuiz = () => {
       })
       .catch((err) => {
         console.log(err);
-        nav("/dashboard/err-400");
+        nav("/err-400");
       });
   }, []);
 
@@ -166,28 +161,14 @@ const UpdateQuiz = () => {
     setClassesName("");
     setSubjectsName("");
     if (form.yearLevel) {
-      axios
-        .get(
-          `http://localhost:8000/api/classes?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`classes?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setClasses(res.data.data);
         });
 
-      axios
-        .get(
-          `http://localhost:8000/api/subjects?yearLevel=${form.yearLevel}&active=true`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        )
+      axiosInstance
+        .get(`subjects?yearLevel=${form.yearLevel}&active=true`)
         .then((res) => {
           setSubjects(res.data.data);
         });
@@ -383,18 +364,10 @@ const UpdateQuiz = () => {
       endDate: endDate.toISOString(),
     };
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/quizzes/${id}`,
-        payload,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const data = await axiosInstance.patch(`quizzes/${id}`, payload);
 
       if (data.status === 200) {
-        nav("/dashboard/all_quizzes");
+        nav("/all_quizzes");
       }
     } catch (error) {
       console.log(error);

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import "../components/table.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { Context } from "../context/Context";
+import { Context } from "../../context/Context";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AllAdmins = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const id = context && context.userDetails.userDetails._id;
+  const { userDetails } = useAuth();
+  const id = userDetails?._id;
 
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState({});
@@ -14,7 +14,7 @@ const AllAdmins = () => {
   const [loading, setLoading] = useState(true);
   const [overlay, setOverlay] = useState(false);
 
-  const language = context && context.selectedLang;
+  const language = context?.selectedLang;
 
   window.addEventListener("click", () => {
     const overlayDiv = document.querySelector(".overlay");
@@ -25,14 +25,10 @@ const AllAdmins = () => {
   });
 
   const fetchData = async () => {
-    let URL = `http://localhost:8000/api/admins?active=true`;
+    let URL = `admins?active=true`;
 
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
 
       setSearchData(data.data.data);
     } catch (error) {
@@ -71,10 +67,7 @@ const AllAdmins = () => {
               >
                 <i className="fa-solid fa-trash"></i>
               </div>
-              <Link
-                to={`/dashboard/update_admin/${e._id}`}
-                className="flex update"
-              >
+              <Link to={`/update_admin/${e._id}`} className="flex update">
                 <i className="fa-regular fa-pen-to-square"></i>
               </Link>
             </div>
@@ -85,14 +78,9 @@ const AllAdmins = () => {
 
   const deleteOne = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/admins/deactivate/${selectedItems._id}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const data = await axiosInstance.patch(
+        `admins/deactivate/${selectedItems._id}`,
+        []
       );
       data && fetchData();
 
@@ -141,7 +129,7 @@ const AllAdmins = () => {
           <div className="tabel-container">
             <div className="table">
               <form className="flex search gap-20">
-                <Link className="btn" to={"/dashboard/add_admin"}>
+                <Link className="btn" to={"/add_admin"}>
                   <i className="fa-regular fa-square-plus"></i>{" "}
                   {language.admins && language.admins.add_admins}
                 </Link>

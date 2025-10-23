@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import "../../components/table.css";
+
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Context } from "../../context/Context";
 import { date } from "../exams/ExamsSchedule";
+import { useAuth } from "../../context/AuthContext";
+import axiosInstance from "../../utils/axios";
 const AllQuizes = () => {
   const context = useContext(Context);
-  const token = context && context.userDetails.token;
-  const isAdmin = context && context.userDetails.isAdmin;
-  const isStudent = context && context.userDetails.isStudent;
-  const isTeacher = context && context.userDetails.isTeacher;
+  const { userDetails } = useAuth();
+  const isAdmin = userDetails?.isAdmin;
+  const isStudent = userDetails?.isStudent;
+  const isTeacher = userDetails?.isTeacher;
   const [searchData, setSearchData] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,8 +18,8 @@ const AllQuizes = () => {
   const [dataLength, setDataLength] = useState(0);
   const [activePage, setActivePage] = useState(1);
   const divsCount = 10;
-  const language = context && context.selectedLang;
-  const studentLevel = isStudent && context?.userDetails.userDetails.yearLevel;
+  const language = context?.selectedLang;
+  const studentLevel = userDetails?.userDetails?.yearLevel;
 
   const [yearLevel, setYearLevel] = useState(studentLevel);
 
@@ -69,15 +70,11 @@ const AllQuizes = () => {
   const fetchData = async () => {
     setLoading(true);
     setSearchData([]);
-    let URL = `http://localhost:8000/api/quizzes?limit=${divsCount}&page=${activePage}&sort=-date&active=true`;
+    let URL = `quizzes?limit=${divsCount}&page=${activePage}&sort=-date&active=true`;
     if (yearLevel) URL += `&yearLevel=${yearLevel}`;
 
     try {
-      const data = await axios.get(URL, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const data = await axiosInstance.get(URL);
 
       setDataLength(data.data.numberOfQuizzes);
       setSearchData(data.data.data);
@@ -149,10 +146,7 @@ const AllQuizes = () => {
                   <i className="fa-solid fa-trash"></i>
                   {language.exams && language.exams.delete}
                 </div>
-                <Link
-                  to={`/dashboard/update_quiz/${e._id}`}
-                  className="flex update"
-                >
+                <Link to={`/update_quiz/${e._id}`} className="flex update">
                   <i className="fa-regular fa-pen-to-square"></i>
                   {language.exams && language.exams.update}
                 </Link>
@@ -163,7 +157,7 @@ const AllQuizes = () => {
             <td className="student-quiz">
               {isStudent && canTake && (
                 <Link
-                  to={`/dashboard/take_quiz/${e._id}`}
+                  to={`/take_quiz/${e._id}`}
                   className="fa-solid fa-play c-pointer start c-green"
                 >
                   {language.quizzes && language.quizzes.start}
@@ -187,14 +181,9 @@ const AllQuizes = () => {
 
   const deleteOne = async () => {
     try {
-      const data = await axios.patch(
-        `http://localhost:8000/api/quizzes/deactivate/${selectedItems[0]}`,
-        [],
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
+      const data = await axiosInstance.patch(
+        `quizzes/deactivate/${selectedItems[0]}`,
+        []
       );
       data && fetchData();
 
@@ -268,7 +257,7 @@ const AllQuizes = () => {
             <div className="table">
               {isAdmin && (
                 <div className="flex search gap-20">
-                  <Link to={"/dashboard/add_quiz"} className="btn">
+                  <Link to={"/add_quiz"} className="btn">
                     <i className="fa-regular fa-square-plus"></i>{" "}
                     {language.quizzes.add_a_quiz}
                   </Link>

@@ -4,7 +4,6 @@ const userLanguage = navigator.language || navigator.userLanguage;
 const userLang = userLanguage.startsWith("ar") ? "AR" : "EN";
 export const Context = createContext({});
 const Provider = ({ children }) => {
-  const [mode, setMode] = useState(+localStorage.getItem("isDark") || false);
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || userLang || "EN"
   );
@@ -12,19 +11,6 @@ const Provider = ({ children }) => {
     JSON.parse(localStorage.getItem("isClosed")) || false
   );
   const [selectedLang, setSelectedLang] = useState("");
-  const [userDetails, setUserDetails] = useState({
-    isAdmin: false,
-    isTeacher: false,
-    isStudent: false,
-    token: "",
-    userDetails: {},
-    role: "",
-  });
-
-  useEffect(() => {
-    localStorage.setItem("isDark", mode ? 1 : 0);
-    mode && document.body.classList.add("dark");
-  }, [mode]);
 
   useEffect(() => {
     const h2Active = document.querySelector(".languages h2.active");
@@ -58,12 +44,9 @@ const Provider = ({ children }) => {
       value={{
         isClosed,
         setIsClosed,
-        setMode,
         language,
         setLanguage,
         selectedLang,
-        userDetails,
-        setUserDetails,
       }}
     >
       {children}
