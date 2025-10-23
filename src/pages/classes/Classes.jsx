@@ -130,7 +130,7 @@ const Classes = () => {
             colmuns={column}
             currentPage={page}
             data={data?.data}
-            dataLength={data?.numverOfAcriveUsers}
+            dataLength={data?.totalCount}
             loading={isFetching}
             selectable
             setPage={setPage}

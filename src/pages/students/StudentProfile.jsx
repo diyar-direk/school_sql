@@ -106,173 +106,157 @@ const StudentProfile = () => {
     );
   };
   return (
-    <main>
-      <div
-        className={`${context?.isClosed ? "closed" : ""}  dashboard-container`}
-      >
-        <div className="container">
-          <h1 className="title"> {data.firstName + " " + data.lastName} </h1>
-          <div className="profile">
-            <div className="image">
-              <i className="photo fa-solid fa-user"></i>
-              {isAdmin && (
-                <Link to={`/update_student/${id}`} className="center gap-10">
-                  {language.students && language.students.edit_btn}
-                  <i className="fa-regular fa-pen-to-square"></i>
-                </Link>
-              )}
-            </div>
-            <div className="info">
-              {isAdmin && (
-                <h2 className="name">
-                  <Link to={`/update_student/${id}`}>
-                    <i className="fa-regular fa-pen-to-square"></i>
-                  </Link>
-                </h2>
-              )}
+    <div className="container">
+      <h1 className="title"> {data.firstName + " " + data.lastName} </h1>
+      <div className="profile">
+        <div className="image">
+          <i className="photo fa-solid fa-user"></i>
+          {isAdmin && (
+            <Link to={`/update_student/${id}`} className="center gap-10">
+              {language.students && language.students.edit_btn}
+              <i className="fa-regular fa-pen-to-square"></i>
+            </Link>
+          )}
+        </div>
+        <div className="info">
+          {isAdmin && (
+            <h2 className="name">
+              <Link to={`/update_student/${id}`}>
+                <i className="fa-regular fa-pen-to-square"></i>
+              </Link>
+            </h2>
+          )}
 
-              <div className="flex">
-                <h2>{language.students && language.students.first_name} :</h2>
-                <p> {data.firstName} </p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.middle_name} :</h2>
-                <p> {data.middleName} </p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.last_name} :</h2>
-                <p> {data.lastName} </p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.email} :</h2>
-                <p className="email">{data.email}</p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.phone} :</h2>
-                <p>{data.phoneNumber}</p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.gender} :</h2>
-                <p> {data.gender} </p>
-              </div>
+          <div className="flex">
+            <h2>{language.students && language.students.first_name} :</h2>
+            <p> {data.firstName} </p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.middle_name} :</h2>
+            <p> {data.middleName} </p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.last_name} :</h2>
+            <p> {data.lastName} </p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.email} :</h2>
+            <p className="email">{data.email}</p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.phone} :</h2>
+            <p>{data.phoneNumber}</p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.gender} :</h2>
+            <p> {data.gender} </p>
+          </div>
 
-              <div className="flex">
-                <h2>
-                  {language.students && language.students.date_of_birth} :
-                </h2>
-                <p> {data.dateOfBirth} </p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.year_level} :</h2>
-                <p>{data.yearLevel}</p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.classes} :</h2>
-                <p>{data.classId}</p>
-              </div>
-              <div className="flex">
-                <h2>
-                  {language.students && language.students.enrollment_date} :
-                </h2>
-                <p>{data.enrollmentDate}</p>
-              </div>
+          <div className="flex">
+            <h2>{language.students && language.students.date_of_birth} :</h2>
+            <p> {data.dateOfBirth} </p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.year_level} :</h2>
+            <p>{data.yearLevel}</p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.classes} :</h2>
+            <p>{data.classId}</p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.enrollment_date} :</h2>
+            <p>{data.enrollmentDate}</p>
+          </div>
 
-              <div className="flex">
-                <h2>{language.students && language.students.city} :</h2>
-                <p>{data.city}</p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.street} :</h2>
-                <p>{data.street}</p>
-              </div>
-              <div className="flex">
-                <h2>{language.students && language.students.guardian} :</h2>
+          <div className="flex">
+            <h2>{language.students && language.students.city} :</h2>
+            <p>{data.city}</p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.street} :</h2>
+            <p>{data.street}</p>
+          </div>
+          <div className="flex">
+            <h2>{language.students && language.students.guardian} :</h2>
+            <p>
+              {data.guardianContact.relationship} :{data.guardianContact.name}{" "}
+              <br />
+              {data.guardianContact.phone}
+            </p>
+          </div>
+          <div className="flex student-reapet">
+            {isEditing ? (
+              <>
+                {/* Editable Title */}
+                <h2>{language.students.years_repeated}:</h2>
+                <div>
+                  {/* Editable Year Data */}
+                  {yearRepeated?.map((e, index) => (
+                    <div className=" collumn" key={index}>
+                      <label className="font-color">
+                        {language.students?.year || "Year"}:{" "}
+                        <span>{e.yearLevel} </span>
+                      </label>
+                      <label className="font-color">
+                        {language.students?.repeated_count || "Repeated Count"}:{" "}
+                        <input
+                          type="number"
+                          className="student-inp"
+                          value={e.yearCount}
+                          onChange={(event) =>
+                            handleInputChange(
+                              index,
+                              "yearCount",
+                              event.target.value
+                            )
+                          }
+                        />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex wrap gap-10">
+                  {/* Buttons to Save or Cancel */}
+                  <button className="student-save stu-btn" onClick={handleSave}>
+                    {language.students?.save_btn}
+                  </button>
+                  <button
+                    className="student-cancel stu-btn"
+                    onClick={handleCancel}
+                  >
+                    {language.students?.cancel_btn}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Read Mode */}
+                <h2>{language.students.years_repeated} :</h2>
                 <p>
-                  {data.guardianContact.relationship} :
-                  {data.guardianContact.name} <br />
-                  {data.guardianContact.phone}
+                  {yearRepeated?.map((e, index) => (
+                    <React.Fragment key={index}>
+                      {`${language.students?.year || "Year"} : ${
+                        e.yearLevel
+                      }; ${
+                        language.students?.repeated_count || "Repeated Count"
+                      }: ${e.yearCount}`}
+                      <br />
+                    </React.Fragment>
+                  ))}
                 </p>
-              </div>
-              <div className="flex student-reapet">
-                {isEditing ? (
-                  <>
-                    {/* Editable Title */}
-                    <h2>{language.students.years_repeated}:</h2>
-                    <div>
-                      {/* Editable Year Data */}
-                      {yearRepeated?.map((e, index) => (
-                        <div className=" collumn" key={index}>
-                          <label className="font-color">
-                            {language.students?.year || "Year"}:{" "}
-                            <span>{e.yearLevel} </span>
-                          </label>
-                          <label className="font-color">
-                            {language.students?.repeated_count ||
-                              "Repeated Count"}
-                            :{" "}
-                            <input
-                              type="number"
-                              className="student-inp"
-                              value={e.yearCount}
-                              onChange={(event) =>
-                                handleInputChange(
-                                  index,
-                                  "yearCount",
-                                  event.target.value
-                                )
-                              }
-                            />
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex wrap gap-10">
-                      {/* Buttons to Save or Cancel */}
-                      <button
-                        className="student-save stu-btn"
-                        onClick={handleSave}
-                      >
-                        {language.students?.save_btn}
-                      </button>
-                      <button
-                        className="student-cancel stu-btn"
-                        onClick={handleCancel}
-                      >
-                        {language.students?.cancel_btn}
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Read Mode */}
-                    <h2>{language.students.years_repeated} :</h2>
-                    <p>
-                      {yearRepeated?.map((e, index) => (
-                        <React.Fragment key={index}>
-                          {`${language.students?.year || "Year"} : ${
-                            e.yearLevel
-                          }; ${
-                            language.students?.repeated_count ||
-                            "Repeated Count"
-                          }: ${e.yearCount}`}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                    </p>
-                    {isAdmin && (
-                      <i
-                        className="fa-regular fa-pen-to-square font-color c-pointer"
-                        onClick={() => setIsEditing(true)}
-                      ></i>
-                    )}
-                  </>
+                {isAdmin && (
+                  <i
+                    className="fa-regular fa-pen-to-square font-color c-pointer"
+                    onClick={() => setIsEditing(true)}
+                  ></i>
                 )}
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

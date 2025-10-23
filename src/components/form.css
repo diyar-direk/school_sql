@@ -25,25 +25,8 @@ form.login > .flex > div.forms > h1 {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
-form.login > .flex > div.forms label {
-  color: var(--font-color);
-  display: block;
-  text-transform: capitalize;
-  font-weight: 500;
-  font-size: 20px;
-  width: fit-content;
-}
-form.login > .flex > div.forms > .inp {
-  background-color: var(--section-color);
-  border-radius: 6px;
-  gap: 5px;
-  padding: 5px 10px;
-  margin: 20px 0;
-  position: relative;
-  overflow: hidden;
-}
 
-form.login > .flex > div.forms > .inp::before {
+form.login .input-wrapper::before {
   content: "";
   position: absolute;
   width: 0%;
@@ -54,7 +37,7 @@ form.login > .flex > div.forms > .inp::before {
   bottom: 0;
   transition: 0.4s;
 }
-form.login > .flex > div.forms > .inp::after {
+form.login .input-wrapper::after {
   content: "";
   position: absolute;
   width: 0%;
@@ -66,26 +49,18 @@ form.login > .flex > div.forms > .inp::after {
   transition: 0.4s;
 }
 
-form.login > .flex > div.forms > .inp:focus-within:before,
-form.login > .flex > div.forms > .inp:focus-within:after {
+form.login .input-wrapper:focus-within:before,
+form.login .input-wrapper:focus-within:after {
   width: 50%;
 }
+form.login .inp {
+  margin-bottom: 20px;
+}
 
-form.login > .flex > div.forms > .inp > i {
-  color: var(--font-color);
-}
-form.login > .flex > div.forms > .inp input {
-  color: var(--font-color);
-  padding: 10px;
-  background-color: transparent;
-  border: none;
-  font-size: 17px;
-}
 form.login > .flex > div.forms .btn {
   width: 100%;
   display: block;
   font-size: 18px;
-  margin-top: 10px;
 }
 form.login > .flex > div.image {
   flex: 50%;
@@ -135,18 +110,9 @@ form.dashboard-form label {
   cursor: text;
   width: fit-content;
 }
-form.dashboard-form .flex-direction {
+form.dashboard-form .inp {
   flex: 1;
   min-width: 300px;
-}
-
-form.dashboard-form .flex-direction .inp {
-  border: none;
-  padding: 10px;
-  font-size: 18px;
-  background-color: var(--section-color);
-  color: var(--font-color);
-  width: 100%;
 }
 
 form.dashboard-form .btn {
@@ -191,11 +157,7 @@ i.password {
 form.exam-result {
   margin-bottom: 30px;
 }
-form.login {
-  width: 100%;
-  margin-top: 0;
-  margin-bottom: 10px;
-}
+
 form.quize {
   margin: 30px 0;
 }
@@ -272,6 +234,16 @@ form.quize i.false:hover {
   background-color: brown;
 }
 
+.field-error {
+  padding: 8px;
+  color: red;
+  background-color: rgba(255, 0, 0, 0.086);
+  margin-top: 5px;
+  text-transform: capitalize;
+  text-align: center;
+  border-radius: 4px;
+}
+
 @keyframes rotate {
   100% {
     rotate: 365deg;
@@ -285,23 +257,13 @@ form.quize i.false:hover {
   form.login > .flex > div.forms {
     padding: 30px;
   }
-  form.login > .flex > div.forms > .inp input {
-    padding: 8px;
-    font-size: 16px;
-  }
-  form.login > .flex > div.forms > .inp {
-    padding: 3px 10px;
-    margin: 15px 0;
-  }
+
   form.login > .flex > div.forms label,
   form.login > .flex > div.forms .btn {
     font-size: 17px;
   }
   form.login > .flex > div.forms > h1 {
     font-size: 25px;
-  }
-  form.login > .flex > div.forms > .inp > i {
-    font-size: 13px;
   }
 }
 
@@ -452,12 +414,5 @@ form.quize i.false:hover {
   form.login > .flex > div.forms label,
   form.login > .flex > div.forms .btn {
     font-size: 16px;
-  }
-  form.login > .flex > div.forms > .inp input {
-    padding: 7px;
-    font-size: 15px;
-  }
-  form.login > .flex > div.forms > .inp > i {
-    font-size: 11px;
   }
 }

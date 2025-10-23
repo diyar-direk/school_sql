@@ -1,110 +1,78 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Context } from "../../context/Context";
-import axiosInstance from "../../utils/axios";
-
+import Input from "../../components/inputs/Input";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Button from "../../components/buttons/Button";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import APIClient from "./../../utils/ApiClient";
+import { endPoints } from "../../constants/endPoints";
+const apiClient = new APIClient(endPoints.admins);
 const AddAdmin = () => {
   const context = useContext(Context);
-
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string().required("first name is required"),
+      lastName: Yup.string().required("first name is required"),
+      email: Yup.string()
+        .required("first name is required")
+        .email("please enter valid email"),
+    }),
+    onSubmit: (values) => handleSubmit.mutate(values),
+  });
+  const queryClient = useQueryClient();
+  const handleSubmit = useMutation({
+    mutationFn: (data) => apiClient.addData(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries([endPoints.admins]);
+      formik.resetForm();
+    },
   });
 
   const language = context?.selectedLang;
 
-  const handleForm = (e) => {
-    setForm({ ...form, [e.target.id]: e.target.value });
-  };
-
-  const handelSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const data = await axiosInstance.post("admins", form);
-      if (data.status === 201) {
-        setForm({
-          firstName: "",
-          lastName: "",
-          email: "",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <main>
-      <div
-        className={`${context?.isClosed ? "closed" : ""}  dashboard-container`}
-      >
-        <div className="container relative">
-          <h1 className="title">
-            {language.admins && language.admins.add_admins}
-          </h1>
+    <div className="container relative">
+      <h1 className="title">{language.admins && language.admins.add_admins}</h1>
 
-          <form onSubmit={handelSubmit} className="relative dashboard-form">
-            <h1>{language.exams && language.exams.please_complete_form}</h1>
-            <div className="flex wrap ">
-              <div className="flex flex-direction">
-                <label htmlFor="firstName">
-                  {language.admins && language.admins.first_name}
-                </label>
-                <input
-                  required
-                  onInput={handleForm}
-                  value={form.firstName}
-                  type="text"
-                  id="firstName"
-                  className="inp"
-                  placeholder={
-                    language.admins && language.admins.first_name_placeholder
-                  }
-                />
-              </div>
-
-              <div className="flex flex-direction">
-                <label htmlFor="lastName">
-                  {language.admins && language.admins.last_name}
-                </label>
-                <input
-                  required
-                  onInput={handleForm}
-                  value={form.lastName}
-                  type="text"
-                  id="lastName"
-                  className="inp"
-                  placeholder={
-                    language.admins && language.admins.last_name_placeholder
-                  }
-                />
-              </div>
-
-              <div className="flex flex-direction">
-                <label htmlFor="email">
-                  {language.admins && language.admins.email}
-                </label>
-                <input
-                  required
-                  onInput={handleForm}
-                  value={form.email}
-                  type="email"
-                  id="email"
-                  className="inp"
-                  placeholder={
-                    language.admins && language.admins.email_placeholder
-                  }
-                />
-              </div>
-            </div>
-            <button className="btn">
-              {language.exams && language.exams.save_btn}
-            </button>
-          </form>
+      <form onSubmit={formik.handleSubmit} className="relative dashboard-form">
+        <h1>{language.exams && language.exams.please_complete_form}</h1>
+        <div className="flex wrap ">
+          <Input
+            title={language?.admins?.first_name}
+            onInput={formik.handleChange}
+            value={formik.values.firstName}
+            placeholder={language?.admins?.first_name_placeholder}
+            name="firstName"
+            errorText={formik.errors?.firstName}
+          />
+          <Input
+            title={language?.admins?.last_name}
+            onInput={formik.handleChange}
+            value={formik.values.lastName}
+            placeholder={language?.admins?.last_name_placeholder}
+            name="lastName"
+            errorText={formik.errors?.lastName}
+          />
+          <Input
+            title={language?.admins?.email}
+            onInput={formik.handleChange}
+            value={formik.values.email}
+            placeholder={language?.admins?.email_placeholder}
+            name="email"
+            errorText={formik.errors?.email}
+          />
         </div>
-      </div>
-    </main>
+        <Button type="submit" isSending={handleSubmit.isPending}>
+          {language?.exams?.save_btn}
+        </Button>
+      </form>
+    </div>
   );
 };
 

@@ -8,12 +8,26 @@
   text-transform: capitalize;
   cursor: text;
 }
-.inp div input {
-  width: 100%;
-  background-color: var(--section-color);
-  border: none;
-  padding: 6px 10px;
+
+.inp .input-wrapper {
   border-radius: 4px;
+  padding: 10px;
+  background-color: var(--section-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inp div input {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+}
+.inp .input-wrapper .password {
+  cursor: pointer;
+}
+.inp .input-wrapper .password:hover {
+  color: var(--main-color);
 }
 
 .select-input label.title {

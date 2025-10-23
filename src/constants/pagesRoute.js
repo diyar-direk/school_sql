@@ -29,8 +29,8 @@ export const pagesRoute = {
   admin: {
     page: "/all_admins",
     add: "/add_admin",
-    update: "/update_admin/:id",
-    profile: "/profile/:id",
+    update: (id = ":id") => `/update_admin/${id}`,
+    profile: "/profile",
   },
   user: {
     page: "/all_users",

@@ -1,121 +1,82 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import "../components/form.css";
 import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
-import FormLoading from "./../components/FormLoading";
-import axiosInstance from "../utils/axios";
+import Input from "../components/inputs/Input";
 import Cookies from "js-cookie";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import Button from "../components/buttons/Button";
+import axiosInstance from "../utils/axios";
+import { endPoints } from "./../constants/endPoints";
 import { useAuth } from "../context/AuthContext";
-
-export const showPassword = (e) => {
-  e.target.classList.toggle("fa-eye");
-  const passInp = document.querySelector("form input.password");
-  passInp.type === "password"
-    ? (passInp.type = "text")
-    : (passInp.type = "password");
-};
+import { pagesRoute } from "./../constants/pagesRoute";
 
 const Login = () => {
-  const context = useContext(Context);
-  const { setUserDetails } = useAuth();
-  const language = context && context.selectedLang;
-  const [error, setError] = useState(false);
-  const [formLoading, setFormLoading] = useState(false);
-  const [form, setForm] = useState({
-    username: "",
-    password: "",
-  });
-  const handleForm = (e) => {
-    setForm({ ...form, [e.target.id]: e.target.value });
-    setError(false);
-  };
   const nav = useNavigate();
-  const handelSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setFormLoading(true);
+  const context = useContext(Context);
+  const language = context && context.selectedLang;
+  const { setUserDetails } = useAuth();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: yup.object({
+      username: yup.string().required("username is required"),
+      password: yup.string().required("password is required"),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const getToken = await axiosInstance.post(endPoints.login, values);
 
-      const getToken = await axiosInstance.post("users/login", form);
-      const token = getToken.data.token;
-      Cookies.set("school-token", token);
+        const token = getToken.data.token;
+        Cookies.set("school-token", token);
 
-      const profile = await axiosInstance.get(`users/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = profile.data.user;
-      const isAdmin = data.role.includes("Admin");
-      const isTeacher = data.role.includes("Teacher");
-      const isStudent = data.role.includes("Student");
-      setUserDetails({
-        isAdmin: isAdmin,
-        isTeacher: isTeacher,
-        isStudent: isStudent,
-        token: token,
-        ...data,
-      });
-
-      isTeacher && nav(`/teacher_profile/${data.profileId._id}`);
-      isStudent && nav(`/student_profile/${data.profileId._id}`);
-      isAdmin && nav(`/admin_profile`);
-    } catch (error) {
-      console.log(error);
-      if (error.status === 401)
-        setError(`${language.error && language.error.worng_user_password}`);
-      else setError(`${language.error && language.error.network_error}`);
-    } finally {
-      setFormLoading(false);
-    }
-  };
+        const profile = await axiosInstance.get(endPoints.profile, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = profile.data.user;
+        const isAdmin = data.role.includes("Admin");
+        const isTeacher = data.role.includes("Teacher");
+        const isStudent = data.role.includes("Student");
+        setUserDetails({
+          isAdmin: isAdmin,
+          isTeacher: isTeacher,
+          isStudent: isStudent,
+          token: token,
+          ...data,
+        });
+        nav(`${pagesRoute.admin.profile}/${data?._id}`);
+      } catch (error) {}
+    },
+  });
 
   return (
     <main className="center section-color">
-      <form onSubmit={handelSubmit} className="login relative">
-        {formLoading && <FormLoading />}
+      <form onSubmit={formik.handleSubmit} className="login relative">
         <div className="flex wrap">
           <div className="forms flex flex-direction">
             <h1>{language.login && language.login.login}</h1>
-            <label htmlFor="username">
-              {language.login && language.login.user_name}
-            </label>
-            <div className="center inp">
-              <i className="fa-solid fa-user"></i>
-              <input
-                onInput={handleForm}
-                value={form.username}
-                className="flex-1"
-                type="text"
-                placeholder={
-                  language.login && language.login.user_name_placeholder
-                }
-                required
-                id="username"
-              />
-            </div>
-            <label htmlFor="password">
-              {language.login && language.login.password}
-            </label>
-            <div className="center inp">
-              <i className="fa-solid fa-key"></i>
-              <input
-                value={form.password}
-                onInput={handleForm}
-                className="password flex-1"
-                type="password"
-                placeholder={
-                  language.login && language.login.password_placeholder
-                }
-                required
-                id="password"
-              />
-              <i
-                onClick={showPassword}
-                className="password fa-solid fa-eye-slash"
-              ></i>
-            </div>
-            {error && <p className="error"> {error} </p>}
-            <button className="btn">
-              {language.login && language.login.submit_btn}
-            </button>
+
+            <Input
+              placeholder={language?.login?.user_name_placeholder}
+              title={language?.login?.user_name}
+              name="username"
+              icon={<i className="fa-solid fa-user" />}
+              onChange={formik.handleChange}
+              errorText={formik.errors?.username}
+            />
+            <Input
+              placeholder={language?.login?.password_placeholder}
+              type="password"
+              title={language?.login?.password}
+              name="password"
+              icon={<i className="fa-solid fa-key" />}
+              onChange={formik.handleChange}
+              errorText={formik.errors?.password}
+            />
+            <Button> {language?.login?.submit_btn} </Button>
           </div>
           <div className="image">
             <img src={require("./loginimage.jpg")} alt="" />

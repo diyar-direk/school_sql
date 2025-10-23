@@ -3,6 +3,7 @@ import ConfirmPopUp from "../popup/ConfirmPopUp";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import IconButton from "./../buttons/IconButton";
 import APIClient from "../../utils/ApiClient";
+import { endPoints } from "../../constants/endPoints";
 
 const Delete = ({
   setSelectedItems,
@@ -20,7 +21,7 @@ const Delete = ({
   }, [setSelectedItems]);
 
   const queryclient = useQueryClient();
-  const apiClient = new APIClient(endPoint);
+  const apiClient = new APIClient(`${endPoint}/${endPoints["delete-many"]}`);
   const handleDelete = useMutation({
     mutationFn: (data) => apiClient.deleteAll(data),
     onSuccess: () => {

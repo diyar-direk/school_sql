@@ -25,7 +25,7 @@ export const adminRouter = [
     ),
   },
   {
-    path: pagesRoute.admin.update,
+    path: pagesRoute.admin.update(),
     element: (
       <AllowedTo roles={[roles.admin]}>
         <UpdateAdmin />

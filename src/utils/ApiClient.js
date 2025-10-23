@@ -51,36 +51,34 @@ class APIClient {
       params: paramFilters,
     });
 
-    const { totalCount, totalPages, data: d } = data;
+    const { total, data: d } = data;
 
     return {
       data: d || data,
-      totalCount: totalCount || 0,
+      totalCount: total || 0,
       limit,
-      totalPages: totalPages || 0,
     };
   };
 
-  getOne = async ({ id }) => {
+  getOne = async (id) => {
     const { data } = await axiosInstance.get(`${this.endPoint}/${id}`);
 
-    return data;
+    return data?.data;
   };
   deleteAll = async (ids) => {
-    await axiosInstance.post(`${this.endPoint}`, { ids });
+    await axiosInstance.patch(`${this.endPoint}`, {
+      data: { ids },
+    });
   };
   deleteOne = async ({ id }) => {
-    await axiosInstance.delete(`${this.endPoint}${id}/`);
+    await axiosInstance.patch(`${this.endPoint}${id}/`);
   };
   addData = async (data) => {
-    const res = await axiosInstance.post(this.endPoint, { data });
+    const res = await axiosInstance.post(this.endPoint, data);
     return res.data;
   };
-  updateData = async ({ data, id, url }) => {
-    const res = await axiosInstance.patch(
-      url || `${this.endPoint}/${id}`,
-      data
-    );
+  updateData = async ({ data, id }) => {
+    const res = await axiosInstance.patch(`${this.endPoint}/${id}`, data);
     return res.results;
   };
 }
