@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import { nextJoin } from "../quizes/AddQuiz";
+import { useNavigate } from "react-router-dom/dist";
 const TeacherProfile = () => {
   const [data, setData] = useState({
     classes: [],
@@ -22,7 +23,7 @@ const TeacherProfile = () => {
   const context = useContext(Context);
   const token = context && context.userDetails.token;
   const isAdmin = context && context.userDetails.isAdmin;
-
+  const nav = useNavigate();
   const language = context && context.selectedLang;
   useEffect(() => {
     axios
@@ -44,6 +45,10 @@ const TeacherProfile = () => {
           subjects: data.subjects,
           yearLevel: data.yearLevel,
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/dashboard/err-400");
       });
   }, []);
 

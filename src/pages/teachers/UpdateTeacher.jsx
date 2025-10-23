@@ -61,6 +61,10 @@ const UpdateTeacher = () => {
           yearLevel: data.yearLevel,
           classes: classes,
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/dashboard/err-400");
       });
   }, []);
 

@@ -3,6 +3,7 @@ import "./navbar.css";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context/Context";
 import Cookies from "universal-cookie";
+
 const Navbar = () => {
   const nav = useNavigate();
   const context = useContext(Context);
@@ -268,10 +269,13 @@ const Navbar = () => {
 
       <aside className={`${context?.isClosed ? "closed" : ""}`}>
         <article className="between">
-          <Link className="center">
-            <i className="fa-solid fa-graduation-cap"></i>
-            <h1>school</h1>
-          </Link>
+          <div className="logo">
+            <i className="fa-solid fa-graduation-cap" />
+            <div>
+              <h1>ideaacadmey</h1>
+              <p>for computer science</p>
+            </div>
+          </div>
           <i onClick={closeAside} className="fa-solid fa-bars-staggered"></i>
         </article>
 

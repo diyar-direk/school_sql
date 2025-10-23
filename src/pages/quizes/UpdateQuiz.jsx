@@ -75,6 +75,10 @@ const UpdateQuiz = () => {
         const t_r = data.questions.filter((e) => e.type === "true-false");
         setArrayOfMultiQuestions(multi);
         setArrayOfT_RQuestions(t_r);
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/dashboard/err-400");
       });
   }, []);
 

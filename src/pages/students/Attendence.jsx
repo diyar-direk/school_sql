@@ -16,6 +16,10 @@ const Attendence = () => {
   const [classesName, setClassesName] = useState(""); // Selected class name
   const [dataError, setDataError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [tableLoader, setTableLoader] = useState({
+    loading: false,
+    loaded: false,
+  });
   const [attendance, setAttendance] = useState([]); // Holds attendance data for each student
   const [selectedStudent, setSelectedStudent] = useState({
     student: "",
@@ -52,6 +56,10 @@ const Attendence = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTableLoader({
+      loading: true,
+      loaded: false,
+    });
 
     if (!form.classId) {
       setDataError(`${language.error && language.error.please_choose_class}`);
@@ -71,6 +79,11 @@ const Attendence = () => {
         fetchAttendanceData(response.data.data); // Fetch attendance after getting students
       } catch (error) {
         console.log(error);
+      } finally {
+        setTableLoader({
+          loading: false,
+          loaded: true,
+        });
       }
     }
   };
@@ -360,6 +373,9 @@ const Attendence = () => {
               {language.attendance && language.attendance.search_btn}
             </button>
           </form>
+
+          {tableLoader.loading && <h1>loading...</h1>}
+          {tableLoader.loaded && data.length < 1 && <h1>no data avaible</h1>}
 
           {data.length > 0 && (
             <div className="tabel-container">

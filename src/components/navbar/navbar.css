@@ -184,23 +184,33 @@ aside > article {
   z-index: 1;
   box-shadow: 0 0 14px #000000b0;
 }
-aside > article a {
+aside > article .logo {
   color: white;
-  font-size: 17px;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
-aside.closed > article a {
+aside.closed > article .logo {
   display: none;
 }
 aside.closed > article > i {
   margin: 0 auto;
 }
-aside > article a h1 {
-  letter-spacing: 2px;
+aside > article .logo h1 {
+  font-size: 19px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 0.9;
 }
-aside > article a i {
-  margin-right: 4px;
+aside > article .logo p {
+  line-height: 0.9;
+  font-size: 14px;
+  text-transform: capitalize;
 }
+aside > article .logo i {
+  cursor: default;
+}
+
 aside > article i {
   color: white;
   cursor: pointer;
@@ -393,9 +403,12 @@ aside.closed .log-out span {
   nav .search > button {
     font-size: 15px;
   }
-  aside > article a h1,
+  aside > article .logo h1,
   aside > article i {
     font-size: 14px;
+  }
+  aside > article .logo p {
+    font-size: 12px;
   }
   aside > div {
     padding: 10px;
@@ -475,9 +488,12 @@ aside.closed .log-out span {
   body.arabic nav {
     right: 210px;
   }
-  aside > article a h1,
+  aside > article .logo h1,
   aside > article i {
     font-size: 12px;
+  }
+  aside > article .logo p {
+    font-size: 10px;
   }
   aside > article,
   nav {
@@ -527,9 +543,12 @@ aside.closed .log-out span {
   nav .container {
     gap: 10px;
   }
-  aside > article a h1,
+  aside > article .logo h1,
   aside > article i {
     font-size: 11px;
+  }
+  aside > article .logo p {
+    font-size: 9px;
   }
   aside > article {
     padding: 10px;

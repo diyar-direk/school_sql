@@ -30,6 +30,10 @@ const UpdateAdmin = () => {
           lastName: res.data.data.lastName,
           email: res.data.data.email,
         });
+      })
+      .catch((err) => {
+        console.log(err);
+        nav("/dashboard/err-400");
       });
   }, []);
 

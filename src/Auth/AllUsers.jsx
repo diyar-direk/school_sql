@@ -90,7 +90,9 @@ const AllUsers = () => {
 
       return (
         <tr key={e._id}>
-          <td>{e.username}</td>
+          <td>
+            {e.username} {e._id === myId && "(me)"}
+          </td>
 
           <td>{language.users && language.users[e.role.toLowerCase()]}</td>
           <td>

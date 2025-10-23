@@ -63,6 +63,7 @@ const UpdateExamSchedule = () => {
       setForm(updatedForm);
     } catch (error) {
       console.log(error);
+      if (error.status === 400) nav("/dashboard/error-400");
     }
   };
 
