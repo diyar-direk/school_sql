@@ -29,7 +29,9 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const getToken = await axiosInstance.post(endPoints.login, values);
+        const getToken = await axiosInstance.post(endPoints.login, values, {
+          withCredentials: true, // 👈 necessary
+        });
 
         const accessToken = getToken.data.accessToken;
         Cookies.set("accessToken", accessToken);
@@ -39,8 +41,8 @@ const Login = () => {
         });
 
         const data = profile.data.user;
-        const refreshToken = data.refreshToken;
-        Cookies.set("refreshToken", refreshToken);
+        // const refreshToken = data.refreshToken;
+        // Cookies.set("refreshToken", refreshToken);
         const isAdmin = data.role === roles.admin;
         const isTeacher = data.role === roles.teacher;
         const isStudent = data.role === roles.student;

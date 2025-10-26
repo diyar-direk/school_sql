@@ -6,6 +6,7 @@ import { dashboardRouter } from "../pages/router";
 import { Suspense } from "react";
 import Loader from "../components/Loader";
 import NotFound from "../components/NotFound";
+import { pagesRoute } from "../constants/pagesRoute";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -19,7 +20,7 @@ const AppRouter = () => {
       children: [...dashboardRouter],
     },
     {
-      path: "/login",
+      path: pagesRoute.login,
       element: (
         <AuthProvider>
           <Login />

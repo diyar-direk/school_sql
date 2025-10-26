@@ -25,8 +25,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     setUserDetails(null);
-    Cookies.remove("accessToken");
-    nav("/login");
+    Cookies.remove("refreshToken");
+    nav(pagesRoute.login);
   }, [nav]);
 
   useEffect(() => {
@@ -72,19 +72,14 @@ export const AuthProvider = ({ children }) => {
         const originalRequest = error.config;
         const status = error.response?.status;
 
-        if ((status === 401 || status === 403) && !originalRequest._retry) {
+        if (status === 403 && !originalRequest._retry) {
           originalRequest._retry = true;
-
-          const hasRefreshCookie = Cookies.get("refreshToken");
-
-          if (!hasRefreshCookie) {
-            logout();
-            return Promise.reject(error);
-          }
 
           if (isRefreshing) {
             return new Promise((resolve) => {
               addSubscriber((newToken) => {
+                console.log(newToken);
+
                 originalRequest.headers.Authorization = `Bearer ${newToken}`;
                 resolve(axiosInstance(originalRequest));
               });
@@ -92,13 +87,13 @@ export const AuthProvider = ({ children }) => {
           }
 
           isRefreshing = true;
+
           try {
             const { data } = await axiosInstance.post(
               endPoints["refresh-token"],
               {},
               { withCredentials: true }
             );
-
             const newAccessToken = data.accessToken;
 
             Cookies.set("accessToken", newAccessToken);
@@ -122,7 +117,7 @@ export const AuthProvider = ({ children }) => {
           "Something went wrong";
         toast.error(message);
 
-        if (status === 403) logout();
+        if (status === 401) logout();
 
         return Promise.reject(error);
       }
@@ -137,7 +132,11 @@ export const AuthProvider = ({ children }) => {
   const getUserDetails = useCallback(async () => {
     try {
       setUserLoading(true);
-      const { data: user } = await axiosInstance.get(endPoints.profile);
+      const { data: user } = await axiosInstance.get(
+        endPoints.profile,
+        {},
+        { withCredentials: true }
+      );
       const { user: data } = user;
 
       const isAdmin = data.role === roles.admin;

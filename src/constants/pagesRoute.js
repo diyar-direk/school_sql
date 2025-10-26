@@ -49,4 +49,5 @@ export const pagesRoute = {
     page: "/quize/all",
     add: "/quize/add",
   },
+  login: "/login",
 };

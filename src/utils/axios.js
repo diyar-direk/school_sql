@@ -1,10 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-export const baseURL = `http://127.0.0.1:8000/api/`;
+export const baseURL = `http://localhost:8000/api/`;
 
 const axiosInstance = axios.create({
   baseURL,
-  headers: { Authorization: `Bearer ${Cookies.get("school-token")}` },
+  headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+  withCredentials: true,
 });
 
 export default axiosInstance;
