@@ -62,13 +62,7 @@ const TimeTable = () => {
     getData();
 
     setForm({ ...form, dayOfWeek: daysOfWeek[dayNumber].day });
-  }, [dayNumber, form.classId]);
-
-  useEffect(() => {
-    axiosInstance
-      .get(`subjects?active=true&yearLevel=${form.yearLevel}`)
-      .then((res) => setSubjects(res.data.data));
-  }, [form.yearLevel]);
+  }, [dayNumber, form]);
 
   useEffect(() => {
     if (selectedId) {
@@ -201,23 +195,6 @@ const TimeTable = () => {
     setClassesName(e.target.dataset.classes);
   }
 
-  function selectYears(e) {
-    setForm({
-      ...form,
-      yearLevel: e.target.dataset.level,
-    });
-  }
-  function createYearLeve() {
-    let h2 = [];
-    for (let index = 1; index < 13; index++) {
-      h2.push(
-        <h2 key={index} onClick={selectYears} data-level={index}>
-          {index}
-        </h2>
-      );
-    }
-    return h2;
-  }
   useEffect(() => {
     if (!isStudent) {
       setForm({ ...form, classId: "" });
@@ -327,7 +304,7 @@ const TimeTable = () => {
                             language.timeTable.year_level_placeholder
                           }`}
                     </div>
-                    <article className="grid-3">{createYearLeve()}</article>
+                   
                   </div>
                 </div>
 
