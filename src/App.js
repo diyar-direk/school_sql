@@ -1,10 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import TeacherProfile from "./pages/teachers/TeacherProfile";
-import Attendence from "./pages/students/Attendence";
-import StudentProfile from "./pages/students/StudentProfile";
-import TimeTable from "./pages/students/timeTable";
-import { useEffect } from "react";
-import NotFound from "./components/NotFound";
+import Attendence from "./pages/activities/Attendence";
+import TimeTable from "./pages/activities/TimeTable";
 import AddQuiz from "./pages/quizes/AddQuiz";
 import UpdateQuiz from "./pages/quizes/UpdateQuiz";
 import StudentAuth from "./Auth/StudentAuth";
@@ -29,20 +25,14 @@ function App() {
     <div className="App">
       <Toaster position="top-center" />
       {/* <Routes>
-        <Route path="*" element={<NotFound />} />
 
-            <Route path="*" element={<NotFound />} />
               <Route path="admin_profile" element={<AdminProfile />} />
-              <Route path="all_users" element={<AllUsers />} />
-              <Route path="add_user" element={<AddUser />} />
               <Route path="add_quiz" element={<AddQuiz />} />
               <Route path="update_quiz/:id" element={<UpdateQuiz />} />
 
-              <Route path="teacher_profile/:id" element={<TeacherProfile />} />
               <Route path="attendence" element={<Attendence />} />
 
             <Route path="all_quizzes" element={<AllQuizes />} />
-            <Route path="student_profile/:id" element={<StudentProfile />} />
             <Route path="time_table" element={<TimeTable />} />
 
             <Route element={<StudentAuth />}>

@@ -51,4 +51,8 @@ export const pagesRoute = {
     add: "/quize/add",
   },
   login: "/login",
+  activities: {
+    attendance: "/activities/attendance",
+    timeTable: "/activities/time_table",
+  },
 };

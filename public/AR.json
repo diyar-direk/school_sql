@@ -428,12 +428,12 @@
     "cancel": "إلغاء"
   },
   "days":{
-    "sunday":"الاحد",
-    "monday":"الاثنين",
-    "tuesday":"الثلثاء",
-    "wednesday":"الاربعاء",
-    "thursday":"الخميس",
-    "friday":"الجمعة",
-    "saturday":"السبت"
+    "Sunday":"الاحد",
+    "Monday":"الاثنين",
+    "Tuesday":"الثلثاء",
+    "Wednesday":"الاربعاء",
+    "Thursday":"الخميس",
+    "Friday":"الجمعة",
+    "Saturday":"السبت"
   }
 }

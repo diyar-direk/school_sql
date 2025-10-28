@@ -82,6 +82,24 @@ const navbarLinks = [
     ],
   },
   {
+    title: (lang) => "lang.activites",
+    type: "multi",
+    showIf: [roles.admin, roles.teacher, roles.student],
+    icon: <i className="fa-solid fa-table-list" />,
+    children: [
+      {
+        title: (lang) => "lang.attendance",
+        showIf: [roles.admin, roles.teacher],
+        to: pagesRoute.activities.attendance,
+      },
+      {
+        title: (lang) => "lang.timeTable",
+        showIf: [roles.admin, roles.student, roles.teacher],
+        to: pagesRoute.activities.timeTable,
+      },
+    ],
+  },
+  {
     title: (lang) => lang.exam,
     type: "multi",
     showIf: [roles.admin, roles.teacher, roles.student],

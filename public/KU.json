@@ -428,12 +428,12 @@
     "cancel": "Iptal Bike"
   },
   "days":{
-    "sunday":"Yekşem",
-    "monday":"Duşem",
-    "tuesday":"Sêşem",
-    "wednesday":"Çarşem",
-    "thursday":"Pêncşem",
-    "friday":"În",
-    "saturday":"Şemî"
+    "Sunday":"Yekşem",
+    "Monday":"Duşem",
+    "Tuesday":"Sêşem",
+    "Wednesday":"Çarşem",
+    "Thursday":"Pêncşem",
+    "Friday":"În",
+    "Saturday":"Şemî"
   }
 }

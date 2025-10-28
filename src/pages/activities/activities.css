@@ -1,0 +1,32 @@
+.time-table {
+  display: flex;
+  width: 100%;
+}
+.time-table h2 {
+  flex: 1;
+  text-align: center;
+  text-transform: capitalize;
+  cursor: pointer;
+  background-color: var(--section-color);
+  padding: 6px;
+  font-weight: normal;
+  font-size: 20px;
+}
+.time-table h2:hover {
+  background-color: var(--border-color);
+}
+.time-table h2:first-of-type {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.time-table h2:last-of-type {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.time-table h2.active {
+  background-color: var(--main-color);
+  color: white;
+  cursor: default;
+
+  border-radius: 0;
+}

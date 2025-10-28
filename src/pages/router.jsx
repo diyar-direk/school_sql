@@ -1,3 +1,4 @@
+import { activitiesRouter } from "./activities/router";
 import { adminRouter } from "./admin/router";
 import { classesRouter } from "./classes/router";
 import { coursesRouter } from "./courses/router";
@@ -14,4 +15,5 @@ export const dashboardRouter = [
   ...teacherRouter,
   ...adminRouter,
   ...usersRouter,
+  ...activitiesRouter,
 ];

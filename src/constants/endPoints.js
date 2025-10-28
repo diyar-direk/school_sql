@@ -12,4 +12,5 @@ export const endPoints = {
   students: "students",
   "refresh-token": "users/refresh-token",
   "exam-results": "exam-results",
+  "time-table": "time-table",
 };

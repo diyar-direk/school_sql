@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }) => {
 
         if (status === 403 && !originalRequest._retry) {
           originalRequest._retry = true;
+          setUserLoading(false);
 
           if (isRefreshing) {
             return new Promise((resolve) => {
