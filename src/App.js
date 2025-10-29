@@ -1,6 +1,4 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Attendence from "./pages/activities/Attendence";
-import TimeTable from "./pages/activities/TimeTable";
 import AddQuiz from "./pages/quizes/AddQuiz";
 import UpdateQuiz from "./pages/quizes/UpdateQuiz";
 import StudentAuth from "./Auth/StudentAuth";

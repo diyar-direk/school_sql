@@ -5,6 +5,11 @@ import { roles } from "../../constants/enums";
 const Courses = lazy(() => import("./Courses"));
 const AddCourse = lazy(() => import("./AddCourse"));
 const UpdateCourse = lazy(() => import("./UpdateCourse"));
+const CourseView = lazy(() => import("./CourseView"));
+const CourseTimeTable = lazy(() => import("./components/CourseTimeTable"));
+const CourseExams = lazy(() => import("./components/CourseExams"));
+const CourseStudents = lazy(() => import("./components/CourseStudents"));
+
 export const coursesRouter = [
   {
     path: pagesRoute.courses.page,
@@ -25,5 +30,23 @@ export const coursesRouter = [
         <UpdateCourse />
       </AllowedTo>
     ),
+  },
+  {
+    path: pagesRoute.courses.view(),
+    element: <CourseView />,
+    children: [
+      {
+        path: pagesRoute.courses.timeTable(),
+        element: <CourseTimeTable />,
+      },
+      {
+        path: pagesRoute.courses.exams(),
+        element: <CourseExams />,
+      },
+      {
+        path: pagesRoute.courses.students(),
+        element: <CourseStudents />,
+      },
+    ],
   },
 ];

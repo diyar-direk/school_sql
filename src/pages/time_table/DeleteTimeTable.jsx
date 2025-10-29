@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ConfirmPopUp from "../../components/popup/ConfirmPopUp";
-import APIClient from "./../../utils/ApiClient";
+import APIClient from "../../utils/ApiClient";
 import { useCallback } from "react";
 const DeleteTimeTable = ({ isOpen, endPoint, setIsOpen }) => {
   const apiClient = new APIClient(endPoint);

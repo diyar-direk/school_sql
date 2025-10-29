@@ -36,7 +36,6 @@ const StudentProfile = () => {
   const courses = course?.pages?.[0]?.data;
 
   const [updatedCourse, setUpdatedCourse] = useState(null);
-  console.log(updatedCourse);
 
   return (
     <div className="container">

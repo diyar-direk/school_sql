@@ -9,6 +9,12 @@
   gap: 10px;
   align-items: center;
 }
+.table-toolbar > h2 {
+  text-transform: capitalize;
+  color: var(--main-color);
+  font-weight: 500;
+  font-size: 20px;
+}
 .table-container .table-toolbar .table-toolbar-search {
   background-color: var(--section-color);
   border-radius: 4px;

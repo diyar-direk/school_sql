@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { timeTableSchema } from "./../../schemas/timeTable";
+import { timeTableSchema } from "../../schemas/timeTable";
 import PopUp from "../../components/popup/PopUp";
 import SelectInputApi from "../../components/inputs/SelectInputApi";
 import Input from "../../components/inputs/Input";

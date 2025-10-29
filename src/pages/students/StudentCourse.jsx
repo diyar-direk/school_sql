@@ -36,7 +36,7 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
 
   return (
     <>
-      <div className={`student-course ${data?.status}`} key={data?._id}>
+      <div className={`student-course ${data?.status}`}>
         <AllowedTo roles={[roles.admin]}>
           <div className="options">
             <i

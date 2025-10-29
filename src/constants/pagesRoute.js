@@ -23,6 +23,10 @@ export const pagesRoute = {
     add: "/courses/add",
     update: (id = ":id") => `/courses/update/${id}`,
     view: (id = ":id") => `/courses/view/${id}`,
+    timeTable: (id = ":id") => `/courses/view/${id}/time_table`,
+    exams: (id = ":id") => `/courses/view/${id}/exams`,
+    students: (id = ":id") => `/courses/view/${id}/students`,
+    attendance: (id = ":id") => `/courses/view/${id}/attendance`,
   },
   teacher: {
     page: "/teacher/all",
@@ -51,8 +55,4 @@ export const pagesRoute = {
     add: "/quize/add",
   },
   login: "/login",
-  activities: {
-    attendance: "/activities/attendance",
-    timeTable: "/activities/time_table",
-  },
 };

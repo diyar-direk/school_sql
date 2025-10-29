@@ -60,7 +60,9 @@ const Login = () => {
         });
 
         nav(myProfilePath);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
@@ -88,7 +90,7 @@ const Login = () => {
               onChange={formik.handleChange}
               errorText={formik.errors?.password}
             />
-            <Button> {language?.login?.submit_btn} </Button>
+            <Button type="submit"> {language?.login?.submit_btn} </Button>
           </div>
           <div className="image">
             <img src={require("./loginimage.jpg")} alt="" />

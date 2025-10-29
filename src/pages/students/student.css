@@ -77,6 +77,12 @@
 .student-course .options > div span i {
   font-size: 12px;
 }
+.student-course .visit-text {
+  color: inherit;
+}
+.student-course .visit-text:hover {
+  text-decoration: underline;
+}
 
 .add-course-popup {
   min-width: 50%;

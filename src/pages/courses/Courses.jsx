@@ -14,10 +14,20 @@ import { Link } from "react-router-dom";
 import { spritObject } from "./../../utils/spritObject";
 import { pagesRoute } from "../../constants/pagesRoute";
 import AllowedTo from "../../components/AllowedTo";
+
 const apiClient = new APIClient(endPoints.courses);
 
 const column = [
-  { name: "name", headerName: "name", sort: true },
+  {
+    name: "name",
+    headerName: "name",
+    sort: true,
+    getCell: ({ row }) => (
+      <Link className="visit-text" to={pagesRoute.courses.view(row._id)}>
+        {row.name}
+      </Link>
+    ),
+  },
   { name: "code", headerName: "code" },
   { name: "description", headerName: "description", hidden: true },
   {
@@ -35,25 +45,32 @@ const column = [
     name: "createdAt",
     headerName: "createdAt",
     sort: true,
-    getCell: ({ row }) => dateFormatter(row.createdAt,"fullDate"),
+    getCell: ({ row }) => dateFormatter(row.createdAt, "fullDate"),
   },
   {
     name: "updatedAt",
     headerName: "updatedAt",
     sort: true,
     hidden: true,
-    getCell: ({ row }) => dateFormatter(row.updatedAt,"fullDate"),
+    getCell: ({ row }) => dateFormatter(row.updatedAt, "fullDate"),
   },
   {
     name: "actions",
     headerName: "actions",
     className: "center",
     getCell: ({ row }) => (
-      <Link to={pagesRoute.courses.update(row._id)}>
-        <Button>
-          <i className="fa-regular fa-pen-to-square"></i> update
-        </Button>
-      </Link>
+      <div className="flex gap-10">
+        <Link to={pagesRoute.courses.update(row._id)}>
+          <Button btnStyleType="outlined">
+            <i className="fa-regular fa-pen-to-square" /> update
+          </Button>
+        </Link>
+        <Link to={pagesRoute.courses.view(row._id)}>
+          <Button btnType="save" btnStyleType="outlined">
+            <i className="fa-solid fa-eye" /> view
+          </Button>
+        </Link>
+      </div>
     ),
     allowedTo: [roles.admin],
   },

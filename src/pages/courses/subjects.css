@@ -22,6 +22,35 @@
   width: 100%;
   margin: 0;
 }
+.profile .visit-text {
+  color: var(--font-color);
+}
+.profile .visit-text:hover {
+  text-decoration: underline;
+}
+
+.course-pages {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 30px;
+  white-space: nowrap;
+  overflow: auto;
+}
+.course-pages a {
+  color: var(--font-color);
+  text-transform: capitalize;
+  padding: 10px;
+  background-color: var(--body-color);
+  border-radius: 4px;
+  flex: 1;
+  text-align: center;
+}
+.course-pages a.active,
+.course-pages a:hover {
+  font-weight: bold;
+  background-color: var(--main-color);
+  color: white;
+}
 
 @media (max-width: 900px) {
   .subjects form.dashboard-form label {
