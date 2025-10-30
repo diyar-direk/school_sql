@@ -14,5 +14,5 @@ export const endPoints = {
   "exam-results": "exam-results",
   "time-table": "time-table",
   attendances: "attendances",
-  count: "/count",
+  count: "admins/count",
 };

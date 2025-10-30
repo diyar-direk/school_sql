@@ -1,7 +1,7 @@
 .admin-page {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(31%, 1fr));
   margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .admin-page > article {
   padding: 20px;
@@ -10,6 +10,7 @@
   box-shadow: var(--box-shadow);
   gap: 10px;
   display: flex;
+  flex: 1;
 }
 .admin-page > article i {
   width: 80px;
@@ -32,6 +33,10 @@
 .admin-page > article i.classes {
   background-color: #ffa0012b;
   color: #ffa001;
+}
+.admin-page > article i.courses {
+  background-color: #ff01012b;
+  color: #ff0000;
 }
 
 .admin-page > article > div h2 {
@@ -191,9 +196,6 @@ div.profile .info > .flex p:not(.email) {
 }
 
 @media (max-width: 1200px) {
-  .admin-page {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
   div.profile .image .photo {
     width: 230px;
     height: 230px;
