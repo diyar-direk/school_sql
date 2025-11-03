@@ -10,10 +10,25 @@ import Button from "../../components/buttons/Button";
 import { questionTypes } from "../../constants/enums";
 import IconButton from "./../../components/buttons/IconButton";
 import { questionTypeOptions, tofOptions } from "./questionTypeOptions";
+import SelectInputApi from "../../components/inputs/SelectInputApi";
+import { endPoints } from "../../constants/endPoints";
+import APIClient from "./../../utils/ApiClient";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 const AddQuiz = () => {
   const context = useContext(Context);
 
   const language = context && context.selectedLang;
+  const nav = useNavigate();
+  const queryClient = useQueryClient();
+  const api = new APIClient(endPoints.quizzes);
+  const handleSubmit = useMutation({
+    mutationFn: (data) => api.addData(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries([endPoints.quizzes]);
+      nav(-1);
+    },
+  });
 
   return (
     <>
@@ -31,9 +46,13 @@ const AddQuiz = () => {
             questions: [],
           }}
           validationSchema={quizeSchema}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(values) =>
+            handleSubmit.mutate({
+              ...values,
+              courseId: values?.courseId?._id,
+              classId: values?.classId?._id || null,
+            })
+          }
         >
           {(formik) => (
             <form onSubmit={formik.handleSubmit} className="dashboard-form">
@@ -47,6 +66,23 @@ const AddQuiz = () => {
                   name="title"
                   onChange={formik.handleChange}
                   value={formik?.values?.title}
+                />
+
+                <SelectInputApi
+                  label="course"
+                  optionLabel={(e) => e?.name}
+                  placeholder={formik.values?.courseId?.name || "select course"}
+                  endPoint={endPoints.courses}
+                  onChange={(e) => formik.setFieldValue("courseId", e)}
+                  errorText={formik.errors?.courseId}
+                />
+                <SelectInputApi
+                  label="class"
+                  optionLabel={(e) => e?.name}
+                  placeholder={formik.values?.classId?.name || "select class"}
+                  endPoint={endPoints.classes}
+                  onChange={(e) => formik.setFieldValue("classId", e)}
+                  errorText={formik.errors?.classId}
                 />
 
                 <Input
