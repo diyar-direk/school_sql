@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { endPoints } from "../../constants/endPoints";
 import { limit, roles } from "../../constants/enums";
@@ -17,82 +17,15 @@ import SelectInputApi from "../../components/inputs/SelectInputApi";
 import { formatInputsData } from "../../utils/formatInputsData";
 import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
+import "./quiz.css";
 
-const column = [
-  {
-    name: "title",
-    headerName: "title",
-  },
-  {
-    name: "description",
-    headerName: "description",
-    hidden: true,
-  },
-  {
-    name: "courseId",
-    headerName: "courseId",
-    getCell: ({ row }) => (
-      <Link
-        className="visit-text"
-        to={pagesRoute.courses.view(row?.courseId?._id)}
-      >
-        {row?.courseId?.name}
-      </Link>
-    ),
-  },
-  {
-    name: "classId",
-    headerName: "classId",
-    getCell: ({ row }) => row?.classId?.name,
-  },
-  {
-    name: "date",
-    headerName: "date",
-    sort: true,
-    getCell: ({ row }) => dateFormatter(row.date, "fullDate"),
-  },
-  {
-    name: "duration",
-    headerName: "duration",
-    sort: true,
-  },
-  {
-    name: "totalMarks",
-    headerName: "totalMarks",
-    sort: true,
-  },
-  {
-    name: "createdAt",
-    headerName: "createdAt",
-    sort: true,
-    getCell: ({ row }) => dateFormatter(row.createdAt, "fullDate"),
-    alloewdTo: [roles.admin],
-  },
-  {
-    name: "updatedAt",
-    headerName: "updatedAt",
-    sort: true,
-    hidden: true,
-    getCell: ({ row }) => dateFormatter(row.updatedAt, "fullDate"),
-    alloewdTo: [roles.admin],
-  },
-  {
-    name: "actions",
-    headerName: "actions",
-    className: "center",
-    alloewdTo: [roles.admin],
-    getCell: ({ row }) => (
-      <Link to={pagesRoute.quize.update(row?._id)}>
-        <Button> update</Button>
-      </Link>
-    ),
-  },
-];
 const apiClient = new APIClient(endPoints.quizzes);
 const AllQuizes = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
+  const { userDetails } = useAuth();
+  const { role, profileId } = userDetails;
   const [filters, setFilters] = useState({ courseId: null });
   const { data, isFetching } = useQuery({
     queryKey: [
@@ -112,9 +45,98 @@ const AllQuizes = () => {
       }),
   });
 
+  const column = useMemo(
+    () => [
+      {
+        name: "title",
+        headerName: "title",
+      },
+      {
+        name: "description",
+        headerName: "description",
+        hidden: true,
+      },
+      {
+        name: "courseId",
+        headerName: "courseId",
+        getCell: ({ row }) => (
+          <Link
+            className="visit-text"
+            to={pagesRoute.courses.view(row?.courseId?._id)}
+          >
+            {row?.courseId?.name}
+          </Link>
+        ),
+      },
+      {
+        name: "date",
+        headerName: "date",
+        sort: true,
+        getCell: ({ row }) => dateFormatter(row.date, "fullDate"),
+      },
+      {
+        name: "duration",
+        headerName: "duration",
+        sort: true,
+      },
+      {
+        name: "totalMarks",
+        headerName: "totalMarks",
+        sort: true,
+      },
+      {
+        name: "createdAt",
+        headerName: "createdAt",
+        sort: true,
+        getCell: ({ row }) => dateFormatter(row.createdAt, "fullDate"),
+        alloewdTo: [roles.admin],
+      },
+      {
+        name: "updatedAt",
+        headerName: "updatedAt",
+        sort: true,
+        hidden: true,
+        getCell: ({ row }) => dateFormatter(row.updatedAt, "fullDate"),
+        alloewdTo: [roles.admin],
+      },
+      {
+        name: "status",
+        headerName: "status",
+        getCell: ({ row }) => {
+          const now = new Date();
+          const start = new Date(row.date);
+          const end = new Date(start.getTime() + row.duration * 60000);
+          if (now < start) {
+            return (
+              <div className="quize-status passed"> exam not started yet </div>
+            );
+          } else if (now > end) {
+            return <div className="quize-status done"> exam finished </div>;
+          } else {
+            return (
+              <Link className="quize-status started">exam is running now</Link>
+            );
+          }
+        },
+      },
+      {
+        name: "actions",
+        headerName: "actions",
+        alloewdTo: [roles.admin, roles.teacher],
+        getCell: ({ row }) =>
+          (role === roles.admin ||
+            row.courseId?.teacherId?.includes(profileId?._id)) && (
+            <Link to={pagesRoute.quize.update(row?._id)}>
+              <Button> update</Button>
+            </Link>
+          ),
+      },
+    ],
+    [role, profileId]
+  );
+
   const [selectedItems, setSelectedItems] = useState(new Set());
-  const { userDetails } = useAuth();
-  const { role } = userDetails;
+
   return (
     <div className="container">
       <h1 className="title">lang.quizes</h1>
@@ -130,6 +152,8 @@ const AllQuizes = () => {
               setSelectedItems={setSelectedItems}
               endPoint={endPoints.quizzes}
             />
+          </AllowedTo>
+          <AllowedTo roles={[roles.admin, roles.teacher]}>
             <Add path={pagesRoute.quize.add} />
           </AllowedTo>
           <Filters>
@@ -142,18 +166,6 @@ const AllQuizes = () => {
               addOption={
                 <h3 onClick={() => setFilters({ ...filters, courseId: null })}>
                   all courses
-                </h3>
-              }
-            />
-            <SelectInputApi
-              endPoint={endPoints.classes}
-              label="class"
-              placeholder={filters?.classId?.name || "any class"}
-              optionLabel={(opt) => opt?.name}
-              onChange={(opt) => setFilters({ ...filters, classId: opt })}
-              addOption={
-                <h3 onClick={() => setFilters({ ...filters, classId: null })}>
-                  any class
                 </h3>
               }
             />

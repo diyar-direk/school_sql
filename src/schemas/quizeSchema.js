@@ -4,14 +4,13 @@ import { questionTypes, tofQuestionStatus } from "../constants/enums";
 export const quizeSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   description: Yup.string().notRequired(),
-  classId: Yup.object().notRequired(),
   courseId: Yup.object().required("please select a test quize"),
   date: Yup.date()
     .required("Date is required")
     .min(new Date(), "Date must be in the future"),
-  endDate: Yup.date()
-    .required("End date is required")
-    .min(Yup.ref("date"), "End date must be after start date"),
+  duration: Yup.number()
+    .required("quize duration is required")
+    .min(1, "quize duration must be bigger than 0 minutes"),
 
   questions: Yup.array()
     .of(

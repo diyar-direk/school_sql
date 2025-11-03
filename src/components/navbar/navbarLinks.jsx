@@ -154,7 +154,7 @@ const navbarLinks = [
       },
       {
         title: (lang) => lang.add_quiz,
-        showIf: [roles.admin],
+        showIf: [roles.admin, roles.teacher],
         to: pagesRoute.quize.add,
       },
     ],

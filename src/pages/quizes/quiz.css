@@ -28,6 +28,20 @@
   flex-wrap: wrap;
 }
 
+td .quize-status {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+td .quize-status.passed {
+  color: #0a15a1;
+}
+td .quize-status.done {
+  color: #c61515;
+}
+td .quize-status.started {
+  color: #2e912e;
+}
+
 .quiz-title > div {
   color: var(--font-color);
 }

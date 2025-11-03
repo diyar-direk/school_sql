@@ -88,21 +88,22 @@ form.table-form .actions .btn {
   flex: 1;
 }
 
-form.dashboard-form {
+.dashboard-form {
   background-color: var(--body-color);
   padding: 30px;
   box-shadow: var(--box-shadow);
+  margin-bottom: 15px;
 }
-form.dashboard-form h1 {
+.dashboard-form h1 {
   color: var(--font-color);
   text-transform: capitalize;
   margin-bottom: 30px;
   font-size: 27px;
 }
-form.dashboard-form > div {
+.dashboard-form > div {
   gap: 30px;
 }
-form.dashboard-form label {
+.dashboard-form label {
   text-transform: capitalize;
   font-size: 18px;
   margin-bottom: 15px;
@@ -110,15 +111,15 @@ form.dashboard-form label {
   cursor: text;
   width: fit-content;
 }
-form.dashboard-form .inp {
+.dashboard-form .inp {
   flex: 1;
   min-width: 300px;
 }
 
-form.dashboard-form .btn:not(.selected-value) {
+.dashboard-form .btn:not(.selected-value) {
   margin-top: 20px;
 }
-form.dashboard-form .btn.question {
+.dashboard-form .btn.question {
   width: auto;
 }
 .array-of-values {
@@ -141,16 +142,16 @@ i.password {
 .overlay form input {
   margin: 5px 0;
 }
-.overlay form.dashboard-form .flex-direction {
+.overlay .dashboard-form .flex-direction {
   gap: 10px;
 }
-.overlay form.dashboard-form .btn:not(.selected-value) {
+.overlay .dashboard-form .btn:not(.selected-value) {
   margin: 0;
   width: 100%;
   font-size: 20px;
   padding: 8px;
 }
-.overlay form.dashboard-form {
+.overlay .dashboard-form {
   padding: 10px;
   width: 100%;
   margin-top: 0px;
@@ -270,24 +271,24 @@ form.quize i.false:hover {
 }
 
 @media (max-width: 800px) {
-  form.dashboard-form > div {
+  .dashboard-form > div {
     gap: 20px;
   }
 
-  form.dashboard-form h1 {
+  .dashboard-form h1 {
     font-size: 21px;
     margin-bottom: 20px;
   }
-  form.dashboard-form label {
+  .dashboard-form label {
     font-size: 16px;
     margin-bottom: 10px;
   }
-  form.dashboard-form .flex-direction .inp {
+  .dashboard-form .flex-direction .inp {
     padding: 8px;
     font-size: 17px;
   }
 
-  form.dashboard-form .flex-direction {
+  .dashboard-form .flex-direction {
     min-width: 250px;
   }
   .add-question {
@@ -321,25 +322,25 @@ form.quize i.false:hover {
   }
 }
 @media (max-width: 650px) {
-  form.dashboard-form {
+  .dashboard-form {
     padding: 20px 15px;
   }
-  form.dashboard-form h1 {
+  .dashboard-form h1 {
     font-size: 18px;
     margin-bottom: 15px;
   }
-  form.dashboard-form label {
+  .dashboard-form label {
     font-size: 15px;
     margin-bottom: 5px;
   }
-  form.dashboard-form .flex-direction .inp {
+  .dashboard-form .flex-direction .inp {
     font-size: 15px;
   }
-  form.dashboard-form > div {
+  .dashboard-form > div {
     gap: 10px;
   }
 
-  form.dashboard-form {
+  .dashboard-form {
     padding: 20px;
   }
   form.quize i.delete {
@@ -361,20 +362,20 @@ form.quize i.false:hover {
 }
 
 @media (max-width: 500px) {
-  form.dashboard-form .flex-direction {
+  .dashboard-form .flex-direction {
     min-width: auto;
     flex: 100%;
   }
-  .overlay form.dashboard-form .flex-direction {
+  .overlay .dashboard-form .flex-direction {
     min-width: 260px;
   }
-  form.dashboard-form h1 {
+  .dashboard-form h1 {
     font-size: 15px;
   }
-  form.dashboard-form label {
+  .dashboard-form label {
     font-size: 14px;
   }
-  form.dashboard-form .flex-direction .inp {
+  .dashboard-form .flex-direction .inp {
     font-size: 14px;
   }
 

@@ -7,7 +7,7 @@ import { quizeSchema } from "../../schemas/quizeSchema";
 import Input from "../../components/inputs/Input";
 import dateFormatter from "../../utils/dateFormatter";
 import Button from "../../components/buttons/Button";
-import { questionTypes } from "../../constants/enums";
+import { questionTypes, roles } from "../../constants/enums";
 import IconButton from "./../../components/buttons/IconButton";
 import { questionTypeOptions, tofOptions } from "./questionTypeOptions";
 import SelectInputApi from "../../components/inputs/SelectInputApi";
@@ -15,9 +15,11 @@ import { endPoints } from "../../constants/endPoints";
 import APIClient from "./../../utils/ApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 const AddQuiz = () => {
   const context = useContext(Context);
-
+  const { userDetails } = useAuth();
+  const { profileId, role } = userDetails;
   const language = context && context.selectedLang;
   const nav = useNavigate();
   const queryClient = useQueryClient();
@@ -39,10 +41,9 @@ const AddQuiz = () => {
           initialValues={{
             title: "",
             courseId: "",
-            classId: "",
             description: "",
             date: dateFormatter(new Date()),
-            endDate: "",
+            duration: "",
             questions: [],
           }}
           validationSchema={quizeSchema}
@@ -50,76 +51,77 @@ const AddQuiz = () => {
             handleSubmit.mutate({
               ...values,
               courseId: values?.courseId?._id,
-              classId: values?.classId?._id || null,
             })
           }
         >
           {(formik) => (
-            <form onSubmit={formik.handleSubmit} className="dashboard-form">
-              <h1>{language?.exams?.please_complete_form}</h1>
+            <form onSubmit={formik.handleSubmit}>
+              <div className="dashboard-form">
+                <h1>{language?.exams?.please_complete_form}</h1>
+                <div className="flex wrap">
+                  <Input
+                    errorText={formik.errors?.title}
+                    title={language?.quizzes?.exam_title}
+                    placeholder={language?.quizzes?.exam_title_placeholder}
+                    name="title"
+                    onChange={formik.handleChange}
+                    value={formik?.values?.title}
+                  />
 
-              <div className="flex wrap">
-                <Input
-                  errorText={formik.errors?.title}
-                  title={language?.quizzes?.exam_title}
-                  placeholder={language?.quizzes?.exam_title_placeholder}
-                  name="title"
-                  onChange={formik.handleChange}
-                  value={formik?.values?.title}
-                />
+                  <SelectInputApi
+                    label="course"
+                    optionLabel={(e) => e?.name}
+                    placeholder={
+                      formik.values?.courseId?.name || "select course"
+                    }
+                    endPoint={endPoints.courses}
+                    onChange={(e) => formik.setFieldValue("courseId", e)}
+                    errorText={formik.errors?.courseId}
+                    params={{
+                      teacherId: role === roles.teacher ? profileId?._id : null,
+                    }}
+                  />
 
-                <SelectInputApi
-                  label="course"
-                  optionLabel={(e) => e?.name}
-                  placeholder={formik.values?.courseId?.name || "select course"}
-                  endPoint={endPoints.courses}
-                  onChange={(e) => formik.setFieldValue("courseId", e)}
-                  errorText={formik.errors?.courseId}
-                />
-                <SelectInputApi
-                  label="class"
-                  optionLabel={(e) => e?.name}
-                  placeholder={formik.values?.classId?.name || "select class"}
-                  endPoint={endPoints.classes}
-                  onChange={(e) => formik.setFieldValue("classId", e)}
-                  errorText={formik.errors?.classId}
-                />
+                  <Input
+                    errorText={formik.errors?.date}
+                    title={language?.quizzes?.quiz_date}
+                    name="date"
+                    onChange={formik.handleChange}
+                    value={formik?.values?.date}
+                    type="datetime-local"
+                  />
 
-                <Input
-                  errorText={formik.errors?.date}
-                  title={language?.quizzes?.quiz_date}
-                  name="date"
-                  onChange={formik.handleChange}
-                  value={formik?.values?.date}
-                  type="datetime-local"
-                />
+                  <Input
+                    errorText={formik.errors?.duration}
+                    title={"language?.quizzes?.duration"}
+                    name="duration"
+                    onChange={formik.handleChange}
+                    placeholder={"language?.quizzes?.duration"}
+                    value={formik?.values?.duration}
+                    type="number"
+                  />
 
-                <Input
-                  errorText={formik.errors?.endDate}
-                  title={"language?.quizzes?.endDate"}
-                  name="endDate"
-                  onChange={formik.handleChange}
-                  value={formik?.values?.endDate}
-                  type="datetime-local"
-                />
-
-                <Input
-                  errorText={formik.errors?.description}
-                  title={language?.quizzes?.exam_discreption}
-                  placeholder={language?.quizzes?.exam_discreption_placeholder}
-                  name="description"
-                  onChange={formik.handleChange}
-                  value={formik?.values?.description}
-                  elementType="textarea"
-                  rows={5}
-                />
+                  <Input
+                    errorText={formik.errors?.description}
+                    title={language?.quizzes?.exam_discreption}
+                    placeholder={
+                      language?.quizzes?.exam_discreption_placeholder
+                    }
+                    name="description"
+                    onChange={formik.handleChange}
+                    value={formik?.values?.description}
+                    elementType="textarea"
+                    rows={5}
+                  />
+                </div>
               </div>
+              <h1 style={{ color: "var(--font-color)", marginBottom: "10px" }}>
+                Questions
+              </h1>
 
               <FieldArray name="questions">
                 {({ push, remove }) => (
                   <div className="questions-section">
-                    <h1>Questions</h1>
-
                     {formik.errors?.questions &&
                       typeof formik.errors?.questions === "string" && (
                         <p className="field-error">
@@ -131,7 +133,7 @@ const AddQuiz = () => {
                       const questionError =
                         formik.errors?.questions?.[index] || {};
                       return (
-                        <div key={index}>
+                        <div key={index} className="dashboard-form">
                           <Input
                             errorText={questionError?.text}
                             title={`Question ${index + 1}`}
@@ -296,26 +298,27 @@ const AddQuiz = () => {
                       );
                     })}
 
-                    <Button
-                      type="button"
-                      btnType="main"
-                      btnStyleType="outlined"
-                      onClick={() =>
-                        push({
-                          text: "",
-                          type: "",
-                          choices: [],
-                          correctAnswer: "",
-                        })
-                      }
-                    >
-                      <i className="fa-solid fa-plus" /> Add Question
-                    </Button>
+                    <div className="flex">
+                      <Button
+                        type="button"
+                        btnType="main"
+                        btnStyleType="outlined"
+                        onClick={() =>
+                          push({
+                            text: "",
+                            type: "",
+                            choices: [],
+                            correctAnswer: "",
+                          })
+                        }
+                      >
+                        <i className="fa-solid fa-plus" /> Add Question
+                      </Button>
+                      <Button type="submit">submit</Button>
+                    </div>
                   </div>
                 )}
               </FieldArray>
-
-              <Button type="submit">submit</Button>
             </form>
           )}
         </Formik>
@@ -325,13 +328,3 @@ const AddQuiz = () => {
 };
 
 export default AddQuiz;
-
-export function nextJoin(array, obj) {
-  let text = "";
-  for (let i = 0; i < array.length; i++) {
-    if (array[i + 1]) text += array[i][obj] + " , ";
-    else text += array[i][obj];
-  }
-
-  return text;
-}

@@ -14,6 +14,7 @@ import "./inputs.css";
  * @property {any | any[]} value - القيمة الحالية المختارة، يمكن أن تكون كائن أو مصفوفة من الكائنات.
  * @property {boolean} isArray - تحدد إذا كانت القيمة المختارة مصفوفة (اختيار متعدد) أو مفردة.
  * @property {string} endPoint - رابط الـ API لجلب البيانات.
+ * @property {object} params - خصائص اضافية للفلترة
  * @property {string} [errorText] - نص الخطأ ليتم عرضه (اختياري).
  * @property {number} [delay=500] - تأخير الـ debounce بالميللي ثانية (اختياري).
  * @property {HTMLElement} [addOption] - اضافة اختيار (اختياري).
@@ -31,6 +32,7 @@ const SelectInputApi = ({
   errorText,
   delay = 500,
   addOption,
+  params = {},
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,6 +43,7 @@ const SelectInputApi = ({
     endPoint: endPoint,
     limit: 3,
     search: debouncedSearch,
+    ...params,
   });
 
   const items = data?.pages?.flatMap((data) => data.data);
