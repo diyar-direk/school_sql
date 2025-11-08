@@ -93,7 +93,7 @@ const ExamResult = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
   const { userDetails } = useAuth();
-  const { isStudent, role } = userDetails;
+  const { isStudent, role } = userDetails||{};
 
   const [filters, setFilters] = useState({
     examId: null,

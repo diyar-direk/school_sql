@@ -5,6 +5,7 @@ import { Context } from "../../context/Context";
 import { useAuth } from "../../context/AuthContext";
 import useDarkMode from "../../hooks/useDarkMode";
 import navbarLinks from "./navbarLinks";
+import { pagesRoute } from "../../constants/pagesRoute";
 
 const Navbar = () => {
   const nav = useNavigate();
@@ -13,7 +14,13 @@ const Navbar = () => {
   const { userDetails, logout } = useAuth();
   const name =
     userDetails?.profileId?.firstName + " " + userDetails?.profileId?.lastName;
-  const { myProfilePath } = userDetails;
+  const { isAdmin, isTeacher } = userDetails || {};
+
+  const myProfilePath = isAdmin
+    ? pagesRoute.admin.view(userDetails?.profileId?._id)
+    : isTeacher
+    ? pagesRoute.teacher.view(userDetails?.profileId?._id)
+    : pagesRoute.student.view(userDetails?.profileId?._id);
 
   const location = useLocation();
 

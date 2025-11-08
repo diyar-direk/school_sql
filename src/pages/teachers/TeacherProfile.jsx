@@ -22,7 +22,7 @@ const TeacherProfile = () => {
 
   const context = useContext(Context);
   const { userDetails } = useAuth();
-  const { isAdmin } = userDetails;
+  const { isAdmin } = userDetails || false;
 
   const language = context?.selectedLang;
 

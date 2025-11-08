@@ -25,7 +25,7 @@ const AllQuizes = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
   const { userDetails } = useAuth();
-  const { role, profileId } = userDetails;
+  const { role, profileId } = userDetails||{};
   const [filters, setFilters] = useState({ courseId: null });
   const { data, isFetching } = useQuery({
     queryKey: [

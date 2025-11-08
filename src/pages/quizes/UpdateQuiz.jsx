@@ -20,7 +20,7 @@ import Skeleton from "../../components/skeleton/Skeleton";
 const UpdateQuiz = () => {
   const context = useContext(Context);
   const { userDetails } = useAuth();
-  const { profileId, role } = userDetails;
+  const { profileId, role } = userDetails || {};
   const language = context && context.selectedLang;
   const nav = useNavigate();
   const queryClient = useQueryClient();

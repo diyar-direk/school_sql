@@ -5,7 +5,6 @@ export const baseURL = `http://localhost:8000/api/`;
 const axiosInstance = axios.create({
   baseURL,
   headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-  withCredentials: true,
 });
 
 export default axiosInstance;

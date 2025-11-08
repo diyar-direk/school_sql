@@ -99,7 +99,7 @@ const ExamSchedule = () => {
 
   const [selectedItems, setSelectedItems] = useState(new Set());
   const { userDetails } = useAuth();
-  const { role } = userDetails;
+  const { role } = userDetails || "";
   return (
     <div className="container">
       <h1 className="title">exams</h1>

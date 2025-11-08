@@ -57,7 +57,7 @@ const CloumnsVisible = ({ columns, setColumns, defaultColumns }) => {
 
             return (
               (!column.allowedTo ||
-                column.allowedTo?.includes(userDetails.role)) &&
+                column.allowedTo?.includes(userDetails?.role)) &&
               (!search ? (
                 <div key={column.name}>
                   <input

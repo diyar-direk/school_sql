@@ -15,6 +15,9 @@ import { spritObject } from "./../../utils/spritObject";
 import { pagesRoute } from "../../constants/pagesRoute";
 import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
+import Filters from "../../components/table_toolbar/Filters";
+import SelectInputApi from "./../../components/inputs/SelectInputApi";
+import { formatInputsData } from "./../../utils/formatInputsData";
 
 const apiClient = new APIClient(endPoints.courses);
 
@@ -76,7 +79,6 @@ const column = [
         </Link>
       </div>
     ),
-    allowedTo: [roles.admin],
   },
 ];
 
@@ -84,15 +86,34 @@ const Courses = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
+
+  const { userDetails } = useAuth();
+  const { role, profileId, isTeacher } = userDetails || {};
+
+  const [filter, setFilter] = useState({
+    teacherId: isTeacher ? profileId : null,
+  });
+
   const { data, isFetching } = useQuery({
-    queryKey: [endPoints.courses, page, limit, sort, search],
-    queryFn: () => apiClient.getAll({ limit, page, sort, search }),
+    queryKey: [
+      endPoints.courses,
+      page,
+      limit,
+      sort,
+      search,
+      formatInputsData(filter),
+    ],
+    queryFn: () =>
+      apiClient.getAll({
+        limit,
+        page,
+        sort,
+        search,
+        ...formatInputsData(filter),
+      }),
   });
 
   const [selectedItems, setSelectedItems] = useState(new Set());
-
-  const { userDetails } = useAuth();
-  const { role } = userDetails;
 
   return (
     <div className="container">
@@ -110,6 +131,21 @@ const Courses = () => {
               endPoint={endPoints.courses}
             />
             <Add path={pagesRoute.courses.add} />
+            <Filters>
+              <SelectInputApi
+                endPoint={endPoints.teachers}
+                label="teacher"
+                onChange={(e) => setFilter(e)}
+                optionLabel={(e) =>
+                  `${e.firstName} ${e.middleName} ${e.lastName}`
+                }
+                placeholder={
+                  filter?.teacherId
+                    ? `${filter?.teacherId?.firstName} ${filter?.teacherId?.lastName}`
+                    : "any teacher"
+                }
+              />
+            </Filters>
           </AllowedTo>
         </TableToolBar>
         <Table

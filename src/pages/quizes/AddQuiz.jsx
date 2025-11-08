@@ -19,7 +19,7 @@ import { useAuth } from "../../context/AuthContext";
 const AddQuiz = () => {
   const context = useContext(Context);
   const { userDetails } = useAuth();
-  const { profileId, role } = userDetails;
+  const { profileId, role } = userDetails || {};
   const language = context && context.selectedLang;
   const nav = useNavigate();
   const queryClient = useQueryClient();

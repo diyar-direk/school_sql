@@ -85,7 +85,7 @@ const AllTeachers = () => {
   });
   const [selectedItems, setSelectedItems] = useState(new Set());
   const { userDetails } = useAuth();
-  const { role } = userDetails;
+  const { role } = userDetails || "";
   const language = context?.selectedLang;
 
   return (

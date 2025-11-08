@@ -16,7 +16,7 @@ const api = new APIClient(endPoints.courses);
 const CourseView = () => {
   const { id } = useParams();
   const { userDetails } = useAuth();
-  const { isAdmin, porfileId, isTeacher } = userDetails;
+  const { isAdmin, porfileId } = userDetails || {};
   const { data, isLoading } = useQuery({
     queryKey: [endPoints.courses, id],
     queryFn: () => api.getOne(id),

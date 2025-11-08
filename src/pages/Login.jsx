@@ -55,7 +55,6 @@ const Login = () => {
           isAdmin: isAdmin,
           isTeacher: isTeacher,
           isStudent: isStudent,
-          myProfilePath,
           ...data,
         });
 
@@ -65,6 +64,9 @@ const Login = () => {
       }
     },
   });
+
+  const token = Cookies.get("accessToken");
+  if (token) return nav("/");
 
   return (
     <main className="center section-color">

@@ -61,7 +61,7 @@ const TableBody = ({
             (column) =>
               !column.hidden &&
               (!column.allowedTo ||
-                column.allowedTo?.includes(userDetails.role)) && (
+                column.allowedTo?.includes(userDetails?.role)) && (
                 <td key={column.name} className={column.className}>
                   {renderCell(column, row)}
                 </td>

@@ -116,7 +116,7 @@ const AllStudents = () => {
 
   const language = context?.selectedLang;
   const { userDetails } = useAuth();
-  const { role } = userDetails;
+  const { role } = userDetails || {};
 
   return (
     <div className="container">

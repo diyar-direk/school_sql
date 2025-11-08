@@ -6,6 +6,7 @@ import dateFormatter from "./../../../utils/dateFormatter";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addAttendance, deleteAttendance, updateAttendance } from "./api";
 import { endPoints } from "../../../constants/endPoints";
+import { useAuth } from "../../../context/AuthContext";
 
 const AddAttendance = ({ selectedData, onClose }) => {
   const { student, date, courseId, isUpdate, _id } = selectedData;
@@ -33,6 +34,9 @@ const AddAttendance = ({ selectedData, onClose }) => {
     },
   });
 
+  const { userDetails } = useAuth();
+  const { isAdmin } = userDetails || {};
+
   return (
     <PopUp isOpen={student} onClose={onClose} className="attendace-pop-up">
       <h1>
@@ -52,13 +56,15 @@ const AddAttendance = ({ selectedData, onClose }) => {
             {e}
           </Button>
         ))}
-        <Button
-          btnType="delete"
-          btnStyleType="contained"
-          onClick={handleDelete.mutate}
-        >
-          <i className="fa-solid fa-trash" /> delete status
-        </Button>
+        {isAdmin && isUpdate && (
+          <Button
+            btnType="delete"
+            btnStyleType="contained"
+            onClick={handleDelete.mutate}
+          >
+            <i className="fa-solid fa-trash" /> delete status
+          </Button>
+        )}
       </div>
     </PopUp>
   );

@@ -106,7 +106,7 @@ const navbarLinks = [
       },
       {
         title: (lang) => lang.exam_results,
-        showIf: [roles.admin, roles.teacher, roles.student],
+        showIf: [roles.admin, roles.student],
         to: pagesRoute.examResult.page,
       },
       {
