@@ -55,7 +55,6 @@ const Login = () => {
           isAdmin: isAdmin,
           isTeacher: isTeacher,
           isStudent: isStudent,
-          myProfilePath,
           ...data,
         });
 

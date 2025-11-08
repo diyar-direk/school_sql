@@ -23,9 +23,9 @@ export const AuthProvider = ({ children }) => {
 
   const nav = useNavigate();
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
     setUserDetails(null);
-    Cookies.remove("refreshToken");
+    await axiosInstance.post(endPoints.logout);
     Cookies.remove("accessToken");
     nav(pagesRoute.login);
   }, [nav]);
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         const originalRequest = error.config;
         const status = error.response?.status;
 
-        if (status === 403 && !originalRequest._retry) {
+        if (status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
           setUserLoading(false);
 
@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
           "Something went wrong";
         toast.error(message);
 
-        if (status === 401) logout();
+        if (status === 403) logout();
 
         return Promise.reject(error);
       }
@@ -130,36 +130,21 @@ export const AuthProvider = ({ children }) => {
   }, [logout]);
 
   const getUserDetails = useCallback(async () => {
-    const accessToken = Cookies.get("accessToken");
-    if (!accessToken) return setUserLoading(false);
     try {
       setUserLoading(true);
-      const { data: user } = await axiosInstance.get(
-        endPoints.profile,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-        { withCredentials: true }
-      );
+      const { data: user } = await axiosInstance.get(endPoints.profile, {
+        withCredentials: true,
+      });
       const { user: data } = user;
 
       const isAdmin = data.role === roles.admin;
       const isTeacher = data.role === roles.teacher;
       const isStudent = data.role === roles.student;
 
-      const myProfilePath = isAdmin
-        ? pagesRoute.admin.view(data?._id)
-        : isTeacher
-        ? pagesRoute.teacher.view(data?.profileId?._id)
-        : pagesRoute.student.view(data?.profileId?._id);
-
       setUserDetails({
         isAdmin,
         isTeacher,
         isStudent,
-        myProfilePath,
         ...data,
       });
     } catch (error) {

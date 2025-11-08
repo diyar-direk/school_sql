@@ -16,7 +16,7 @@ const AdminProfile = () => {
   const { profileId } = userDetails;
 
   const { data, isLoading } = useQuery({
-    queryKey: [endPoints.count],
+    queryKey: [endPoints?.count],
     queryFn: () => countDocs(),
   });
 
