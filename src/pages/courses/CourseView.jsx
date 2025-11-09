@@ -16,7 +16,7 @@ const api = new APIClient(endPoints.courses);
 const CourseView = () => {
   const { id } = useParams();
   const { userDetails } = useAuth();
-  const { isAdmin, porfileId } = userDetails || {};
+  const { isAdmin, profileId } = userDetails || {};
   const { data, isLoading } = useQuery({
     queryKey: [endPoints.courses, id],
     queryFn: () => api.getOne(id),
@@ -78,7 +78,7 @@ const CourseView = () => {
         <NavLink to={pagesRoute.courses.exams(id)}> exams</NavLink>
         <AllowedTo roles={[roles.admin, roles.teacher]}>
           <NavLink to={pagesRoute.courses.students(id)}> students</NavLink>
-          {(data?.teacherId?.some((e) => e?._id === porfileId?._id) ||
+          {(data?.teacherId?.some((e) => e?._id === profileId?._id) ||
             isAdmin) && (
             <NavLink to={pagesRoute.courses.attendance(id)}>attendance</NavLink>
           )}

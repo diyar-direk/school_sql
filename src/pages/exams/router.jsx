@@ -45,7 +45,7 @@ export const examRouter = [
   {
     path: pagesRoute.examResult.update(),
     element: (
-      <AllowedTo roles={[roles.admin]}>
+      <AllowedTo roles={[roles.admin, roles.teacher]}>
         <UpdateExamResult />
       </AllowedTo>
     ),

@@ -53,8 +53,6 @@ const UpdateExamResult = () => {
 
   return (
     <div className="container relative">
-      <h1 className="title">{language?.examResult?.add_exam_result}</h1>
-
       <form onSubmit={formik.handleSubmit} className="relative dashboard-form">
         <h1>{language.exams && language.exams.please_complete_form}</h1>
         <div className="flex wrap">

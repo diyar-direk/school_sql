@@ -107,7 +107,7 @@ const CourseExams = () => {
                 <Button btnStyleType="outlined"> update</Button>
               </Link>
             </AllowedTo>
-            {new Date(row.date).getTime() >= Date.now() && (
+            {new Date(row.date).getTime() < Date.now() && (
               <Link
                 to={pagesRoute.examResult.page}
                 state={{ courseId: id, examId: row?._id }}
