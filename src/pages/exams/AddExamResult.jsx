@@ -9,16 +9,23 @@ import { endPoints } from "../../constants/endPoints";
 import SelectInputApi from "./../../components/inputs/SelectInputApi";
 import { formatInputsData } from "./../../utils/formatInputsData";
 import { examResultSchema } from "./../../schemas/examResult";
-import SelectOptionInput from "../../components/inputs/SelectOptionInput";
 import { examTypes } from "../../constants/enums";
+import { useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 const apiClient = new APIClient(endPoints["exam-results"]);
 const AddExamResult = () => {
+  const { state } = useLocation();
+  const examId = state?.examId || null;
   const context = useContext(Context);
+
+  const { userDetails } = useAuth();
+  const { isAdmin } = userDetails || false;
+
   const formik = useFormik({
     initialValues: {
       studentId: "",
-      type: "",
-      examId: "",
+      type: examTypes?.Exam,
+      examId,
       score: "",
     },
     validationSchema: examResultSchema,
@@ -56,24 +63,16 @@ const AddExamResult = () => {
             onChange={(opt) => formik.setFieldValue("studentId", opt)}
             errorText={formik.errors?.studentId}
           />
-          <SelectInputApi
-            endPoint={endPoints.exams}
-            label="exam"
-            placeholder={formik.values?.examId?.title || "select exam"}
-            optionLabel={(opt) => opt?.title}
-            onChange={(opt) => formik.setFieldValue("examId", opt)}
-            errorText={formik.errors?.examId}
-          />
-          <SelectOptionInput
-            label="type"
-            options={[
-              { text: "exam", value: examTypes.Exam },
-              { text: "quiz", value: examTypes.Quiz },
-            ]}
-            onSelectOption={(opt) => formik.setFieldValue("type", opt.value)}
-            placeholder={formik.values?.type || "select type"}
-            errorText={formik.errors?.type}
-          />
+          {!examId && isAdmin && (
+            <SelectInputApi
+              endPoint={endPoints.exams}
+              label="exam"
+              placeholder={formik.values?.examId?.title || "select exam"}
+              optionLabel={(opt) => opt?.title}
+              onChange={(opt) => formik.setFieldValue("examId", opt)}
+              errorText={formik.errors?.examId}
+            />
+          )}
 
           <Input
             title={"language?.exam?.score"}

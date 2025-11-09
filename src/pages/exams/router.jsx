@@ -17,7 +17,7 @@ export const examRouter = [
   {
     path: pagesRoute.exam.add,
     element: (
-      <AllowedTo roles={[roles.admin]}>
+      <AllowedTo roles={[roles.admin, roles.teacher]}>
         <AddExam />
       </AllowedTo>
     ),
@@ -32,7 +32,11 @@ export const examRouter = [
   },
   {
     path: pagesRoute.examResult.page,
-    element: <ExamResult />,
+    element: (
+      <AllowedTo roles={[roles.admin, roles.student]}>
+        <ExamResult />
+      </AllowedTo>
+    ),
   },
   {
     path: pagesRoute.examResult.add,

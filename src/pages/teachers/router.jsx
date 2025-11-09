@@ -11,7 +11,7 @@ export const teacherRouter = [
   {
     path: pagesRoute.teacher.page,
     element: (
-      <AllowedTo roles={[roles.admin, roles.teacher]}>
+      <AllowedTo roles={[roles.admin]}>
         <AllTeachers />
       </AllowedTo>
     ),

@@ -10,13 +10,19 @@ import { examSchema } from "../../schemas/exam";
 import dateFormatter from "../../utils/dateFormatter";
 import SelectInputApi from "./../../components/inputs/SelectInputApi";
 import { formatInputsData } from "./../../utils/formatInputsData";
+import { useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 const apiClient = new APIClient(endPoints.exams);
 const AddExam = () => {
   const context = useContext(Context);
+
+  const { state } = useLocation();
+  const courseId = state?.courseId || null;
+
   const formik = useFormik({
     initialValues: {
       title: "",
-      courseId: "",
+      courseId: courseId || "",
       date: dateFormatter(new Date()),
       duration: "",
       totalMarks: "",
@@ -35,6 +41,9 @@ const AddExam = () => {
 
   const language = context?.selectedLang;
 
+  const { userDetails } = useAuth();
+  const { isAdmin } = userDetails || false;
+
   return (
     <div className="container relative">
       <h1 className="title">{language?.exams?.add_exam}</h1>
@@ -50,14 +59,16 @@ const AddExam = () => {
             name="title"
             errorText={formik.errors?.title}
           />
-          <SelectInputApi
-            endPoint={endPoints.courses}
-            label="course"
-            placeholder={formik.values?.courseId?.name || "select course "}
-            optionLabel={(opt) => opt?.name}
-            onChange={(opt) => formik.setFieldValue("courseId", opt)}
-            errorText={formik.errors?.courseId}
-          />
+          {isAdmin && !courseId && (
+            <SelectInputApi
+              endPoint={endPoints.courses}
+              label="course"
+              placeholder={formik.values?.courseId?.name || "select course "}
+              optionLabel={(opt) => opt?.name}
+              onChange={(opt) => formik.setFieldValue("courseId", opt)}
+              errorText={formik.errors?.courseId}
+            />
+          )}
           <Input
             title={"language?.admins?.last_name"}
             onInput={formik.handleChange}

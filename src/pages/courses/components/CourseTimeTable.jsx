@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { dayes, limit } from "../../../constants/enums";
+import { useCallback, useContext, useMemo, useState } from "react";
+import { dayes, limit, roles } from "../../../constants/enums";
 import TableToolBar from "../../../components/table_toolbar/TableToolBar";
 import Table from "../../../components/table/Table";
 import { useQuery } from "@tanstack/react-query";
@@ -9,69 +9,139 @@ import Filters from "../../../components/table_toolbar/Filters";
 import SelectInputApi from "../../../components/inputs/SelectInputApi";
 import { formatInputsData } from "../../../utils/formatInputsData";
 import { useParams } from "react-router-dom";
-import SelectOptionInput from "../../../components/inputs/SelectOptionInput";
+import "../../time_table/time-table.css";
+import AllowedTo from "../../../components/AllowedTo";
+import IconButton from "../../../components/buttons/IconButton";
+import { Context } from "../../../context/Context";
+import Button from "../../../components/buttons/Button";
+import AddTimeTable from "./AddTimeTable";
+import DeleteTimeTable from "../../time_table/DeleteTimeTable";
 
 const apiClient = new APIClient(endPoints["time-table"]);
 
-const column = [
-  {
-    name: "dayOfWeek",
-    headerName: "day Of Week",
-  },
-  {
-    name: "classId",
-    headerName: "class",
-    getCell: ({ row }) => row?.classId?.name,
-  },
-  {
-    name: "startTime",
-    headerName: "startTime",
-    sort: true,
-    getCell: ({ row }) => formatTime(row.startTime),
-  },
-];
-
 const CourseTimeTable = () => {
   const [filters, setFilters] = useState({});
-
   const { id } = useParams();
-
   const [sort, setSort] = useState({});
-
   const [page, setPage] = useState(1);
-
   const [selectedItems, setSelectedItems] = useState(null);
+  const date = new Date();
+  const context = useContext(Context);
+  const [dayNumber, setDayNumber] = useState(date.getUTCDay() || 0);
+  const language = context?.selectedLang;
+  const daysOfWeek = [
+    dayes.Sunday,
+    dayes.Monday,
+    dayes.Tuesday,
+    dayes.Wednesday,
+    dayes.Thursday,
+    dayes.Friday,
+    dayes.Saturday,
+  ];
+
+  const increment = useCallback(
+    () => setDayNumber((prev) => (prev + 1) % 7),
+    []
+  );
+  const decrement = useCallback(
+    () => setDayNumber((prev) => (prev - 1 + 7) % 7),
+    []
+  );
 
   const { data, isFetching } = useQuery({
-    queryKey: [endPoints["time-table"], page, sort, filters, id],
+    queryKey: [
+      endPoints["time-table"],
+      page,
+      sort,
+      filters,
+      daysOfWeek[dayNumber],
+      id,
+    ],
     queryFn: () =>
       apiClient.getAll({
         page,
         sort,
         limit,
-        ...formatInputsData(filters),
         courseId: id,
+        ...formatInputsData(filters),
+        dayOfWeek: daysOfWeek[dayNumber],
       }),
   });
+  const [isOpen, setIsOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+
+  const column = useMemo(
+    () => [
+      {
+        name: "classId",
+        headerName: "class",
+        getCell: ({ row }) => row?.classId?.name,
+      },
+      {
+        name: "startTime",
+        headerName: "startTime",
+        sort: true,
+        getCell: ({ row }) => formatTime(row.startTime),
+      },
+
+      {
+        name: "actions",
+        headerName: "actions",
+        allowedTo: roles.admin,
+        getCell: ({ row }) => (
+          <div className="center gap-10">
+            <Button
+              btnType="delete"
+              btnStyleType="outlined"
+              onClick={() => setSelectedItems(row?._id)}
+            >
+              <i className="fa-solid fa-trash-can" /> delete
+            </Button>
+            <Button btnStyleType="outlined" onClick={() => setIsUpdate(row)}>
+              <i className="fa-solid fa-pen-to-square" /> update
+            </Button>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
 
   return (
     <div className="table-container flex-1">
+      <AllowedTo roles={[roles.admin]}>
+        <AddTimeTable
+          courseId={id}
+          day={daysOfWeek[dayNumber]}
+          isOpen={isOpen}
+          isUpdate={isUpdate}
+          setIsOpen={setIsOpen}
+          setIsUpdate={setIsUpdate}
+        />
+        <DeleteTimeTable
+          isOpen={selectedItems}
+          endPoint={`${endPoints["time-table"]}/${endPoints["delete-many"]}`}
+          setIsOpen={setSelectedItems}
+        />
+      </AllowedTo>
+
       <TableToolBar>
         <h2>time table</h2>
+        <div className="time-table">
+          <h2 onClick={decrement}>prev</h2>
+          <h2 className="active">{language?.days?.[daysOfWeek[dayNumber]]}</h2>
+          <h2 onClick={increment}>next</h2>
+        </div>
+        <AllowedTo roles={[roles.admin]}>
+          <IconButton
+            color="secondry-color"
+            title="add new data"
+            onClick={() => setIsOpen(true)}
+          >
+            <i className="fa-solid fa-plus" />
+          </IconButton>
+        </AllowedTo>
         <Filters>
-          <SelectOptionInput
-            label="days"
-            placeholder={filters?.dayOfWeek || "any day"}
-            addOption={
-              <h3 onClick={() => setFilters({ ...filters, dayOfWeek: "" })}>
-                any day
-              </h3>
-            }
-            options={Object.values(dayes).map((e) => ({ text: e, value: e }))}
-            onSelectOption={(e) =>
-              setFilters({ ...filters, dayOfWeek: e.value })
-            }
-          />
           <SelectInputApi
             endPoint={endPoints.classes}
             label="class"

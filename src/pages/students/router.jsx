@@ -10,7 +10,7 @@ export const studentRouter = [
   {
     path: pagesRoute.student.page,
     element: (
-      <AllowedTo roles={[roles.admin, roles.teacher]}>
+      <AllowedTo roles={[roles.admin]}>
         <AllStudents />
       </AllowedTo>
     ),

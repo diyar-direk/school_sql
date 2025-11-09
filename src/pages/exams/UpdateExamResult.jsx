@@ -9,8 +9,6 @@ import { endPoints } from "../../constants/endPoints";
 import SelectInputApi from "./../../components/inputs/SelectInputApi";
 import { formatInputsData } from "./../../utils/formatInputsData";
 import { examResultSchema } from "./../../schemas/examResult";
-import SelectOptionInput from "../../components/inputs/SelectOptionInput";
-import { examTypes } from "../../constants/enums";
 import { useParams } from "react-router-dom";
 import Skeleton from "../../components/skeleton/Skeleton";
 const apiClient = new APIClient(endPoints["exam-results"]);
@@ -78,16 +76,6 @@ const UpdateExamResult = () => {
             optionLabel={(opt) => opt?.title}
             onChange={(opt) => formik.setFieldValue("examId", opt)}
             errorText={formik.errors?.examId}
-          />
-          <SelectOptionInput
-            label="type"
-            options={[
-              { text: "exam", value: examTypes.Exam },
-              { text: "quiz", value: examTypes.Quiz },
-            ]}
-            onSelectOption={(opt) => formik.setFieldValue("type", opt.value)}
-            placeholder={formik.values?.type || "select type"}
-            errorText={formik.errors?.type}
           />
 
           <Input
