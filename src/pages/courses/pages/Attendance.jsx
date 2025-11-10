@@ -3,8 +3,8 @@ import { endPoints } from "../../../constants/endPoints";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { attendanceStatus } from "../../../constants/enums";
-import AddAttendance from "./AddAttendance";
-import { getAllAttendance, getStudentCourse } from "./api";
+import AddAttendance from "../components/AddAttendance";
+import { getAllAttendance, getStudentCourse } from "../components/api";
 
 const Attendance = () => {
   const { id } = useParams();

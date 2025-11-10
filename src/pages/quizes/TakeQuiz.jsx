@@ -8,7 +8,11 @@ import ConfirmPopUp from "../../components/popup/ConfirmPopUp";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { endPoints } from "../../constants/endPoints";
 import { useFormik } from "formik";
-import { questionTypes, tofQuestionStatus } from "../../constants/enums";
+import {
+  courseStatus,
+  questionTypes,
+  tofQuestionStatus,
+} from "../../constants/enums";
 import Button from "../../components/buttons/Button";
 import { pagesRoute } from "../../constants/pagesRoute";
 import Skeleton from "../../components/skeleton/Skeleton";
@@ -27,9 +31,29 @@ const TakeQuiz = () => {
       const { data } = await axiosInstance.get(`${endPoints.quizzes}/${id}`);
       const { data: res } = data;
       setTime(new Date(new Date(res?.date).getTime() + res?.duration * 60000));
-
       return data.data;
     },
+  });
+
+  const { data: canTake, isLoading: checkingLoading } = useQuery({
+    queryKey: [endPoints["student-courses"], profileId?._id, id],
+    queryFn: async () => {
+      const { data: res } = await axiosInstance.get(
+        endPoints["student-courses"],
+        {
+          params: {
+            studentId: profileId?._id,
+            status: courseStatus.Active,
+            limit: 1,
+            page: 1,
+            courseId: data?.courseId?._id,
+          },
+        }
+      );
+
+      return res?.total > 0 || false;
+    },
+    enabled: Boolean(data),
   });
 
   const name = `${profileId?.firstName} ${profileId?.middleName} ${profileId?.lastName}`;
@@ -93,8 +117,24 @@ const TakeQuiz = () => {
         })) || [],
       quizId: id,
     },
-    onSubmit: (v) => submitQuiz.mutate(v),
+    onSubmit: (v) => canTake && submitQuiz.mutate(v),
   });
+
+  if (checkingLoading)
+    return (
+      <div className="container">
+        <Skeleton height="200px" />
+      </div>
+    );
+
+  if (!canTake)
+    return (
+      <div className="container">
+        <h1 className="center text-capitalize font-color">
+          you can not take this quize
+        </h1>
+      </div>
+    );
 
   if (formik?.errors?.server)
     return (
@@ -110,7 +150,9 @@ const TakeQuiz = () => {
   if (isLoading)
     return (
       <div className="container">
-        <Skeleton height="200px" />
+        <h1 className="center text-capitalize font-color">
+          loading questions ...
+        </h1>
       </div>
     );
 

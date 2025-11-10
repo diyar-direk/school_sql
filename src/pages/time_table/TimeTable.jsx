@@ -17,6 +17,7 @@ import DeleteTimeTable from "./DeleteTimeTable";
 import { Link } from "react-router-dom";
 import { pagesRoute } from "../../constants/pagesRoute";
 import AllowedTo from "./../../components/AllowedTo";
+import { useAuth } from "../../context/AuthContext";
 
 const apiClient = new APIClient(endPoints["time-table"]);
 
@@ -121,6 +122,8 @@ const TimeTable = () => {
     []
   );
   const [isOpen, setIsOpen] = useState(false);
+  const { userDetails } = useAuth();
+  const { isTeacher, profileId } = userDetails || {};
 
   return (
     <div className="container">
@@ -169,6 +172,7 @@ const TimeTable = () => {
                 </h3>
               }
               onChange={(e) => setFilters({ ...filters, courseId: e })}
+              params={{ teacherId: isTeacher ? profileId?._id : null }}
             />
             <SelectInputApi
               endPoint={endPoints.classes}

@@ -14,7 +14,7 @@ import AllowedTo from "../../../components/AllowedTo";
 import IconButton from "../../../components/buttons/IconButton";
 import { Context } from "../../../context/Context";
 import Button from "../../../components/buttons/Button";
-import AddTimeTable from "./AddTimeTable";
+import AddTimeTable from "../components/AddTimeTable";
 import DeleteTimeTable from "../../time_table/DeleteTimeTable";
 
 const apiClient = new APIClient(endPoints["time-table"]);

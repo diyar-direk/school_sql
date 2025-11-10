@@ -4,7 +4,7 @@ import { useInfiniteFetch } from "../../../hooks/useInfiniteFetch";
 import { endPoints } from "../../../constants/endPoints";
 import { Link, useParams } from "react-router-dom";
 import { pagesRoute } from "../../../constants/pagesRoute";
-import AddStudentsToCourse from "./AddStudentsToCourse";
+import AddStudentsToCourse from "../components/AddStudentsToCourse";
 import AllowedTo from "../../../components/AllowedTo";
 const CourseStudents = () => {
   const { id } = useParams();

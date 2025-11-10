@@ -14,12 +14,14 @@ import SelectInputApi from "../../components/inputs/SelectInputApi";
 import { endPoints } from "../../constants/endPoints";
 import APIClient from "./../../utils/ApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 const AddQuiz = () => {
   const context = useContext(Context);
   const { userDetails } = useAuth();
   const { profileId, role } = userDetails || {};
+  const { state } = useLocation();
+  const { courseId } = state || {};
   const language = context && context.selectedLang;
   const nav = useNavigate();
   const queryClient = useQueryClient();
@@ -40,7 +42,7 @@ const AddQuiz = () => {
         <Formik
           initialValues={{
             title: "",
-            courseId: "",
+            courseId,
             description: "",
             date: dateFormatter(new Date()),
             duration: "",
@@ -68,19 +70,22 @@ const AddQuiz = () => {
                     value={formik?.values?.title}
                   />
 
-                  <SelectInputApi
-                    label="course"
-                    optionLabel={(e) => e?.name}
-                    placeholder={
-                      formik.values?.courseId?.name || "select course"
-                    }
-                    endPoint={endPoints.courses}
-                    onChange={(e) => formik.setFieldValue("courseId", e)}
-                    errorText={formik.errors?.courseId}
-                    params={{
-                      teacherId: role === roles.teacher ? profileId?._id : null,
-                    }}
-                  />
+                  {!courseId && (
+                    <SelectInputApi
+                      label="course"
+                      optionLabel={(e) => e?.name}
+                      placeholder={
+                        formik.values?.courseId?.name || "select course"
+                      }
+                      endPoint={endPoints.courses}
+                      onChange={(e) => formik.setFieldValue("courseId", e)}
+                      errorText={formik.errors?.courseId}
+                      params={{
+                        teacherId:
+                          role === roles.teacher ? profileId?._id : null,
+                      }}
+                    />
+                  )}
 
                   <Input
                     errorText={formik.errors?.date}

@@ -25,7 +25,7 @@ const AllQuizes = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
   const { userDetails } = useAuth();
-  const { role, profileId } = userDetails||{};
+  const { role, profileId, isTeacher } = userDetails || {};
   const [filters, setFilters] = useState({ courseId: null });
   const { data, isFetching } = useQuery({
     queryKey: [
@@ -102,7 +102,6 @@ const AllQuizes = () => {
       {
         name: "status",
         headerName: "status",
-        allowedTo: [roles.student],
         getCell: ({ row }) => {
           const now = new Date();
           const start = new Date(row.date);
@@ -117,7 +116,9 @@ const AllQuizes = () => {
             return (
               <Link
                 className="quize-status started"
-                to={pagesRoute.quize.take(row?._id)}
+                to={
+                  role === roles.student ? pagesRoute.quize.take(row?._id) : ""
+                }
               >
                 exam is running now
               </Link>
@@ -142,7 +143,6 @@ const AllQuizes = () => {
   );
 
   const [selectedItems, setSelectedItems] = useState(new Set());
-
   return (
     <div className="container">
       <h1 className="title">lang.quizes</h1>
@@ -174,6 +174,7 @@ const AllQuizes = () => {
                   all courses
                 </h3>
               }
+              params={{ teacherId: isTeacher ? profileId?._id : null }}
             />
           </Filters>
         </TableToolBar>

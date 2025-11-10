@@ -3,7 +3,7 @@ import { pagesRoute } from "../../constants/pagesRoute";
 
 const navbarLinks = [
   {
-    title: (lang) => lang.my_profile,
+    title: (lang) => lang?.my_profile,
     type: "single",
     showIf: [roles.admin, roles.teacher, roles.student],
     icon: <i className="fa-regular fa-circle-user" />,

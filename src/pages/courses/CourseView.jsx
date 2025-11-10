@@ -76,11 +76,16 @@ const CourseView = () => {
       <div className="course-pages">
         <NavLink to={pagesRoute.courses.timeTable(id)}> time table </NavLink>
         <NavLink to={pagesRoute.courses.exams(id)}> exams</NavLink>
+        <NavLink to={pagesRoute.courses.quiz(id)}> quiz</NavLink>
         <AllowedTo roles={[roles.admin, roles.teacher]}>
-          <NavLink to={pagesRoute.courses.students(id)}> students</NavLink>
           {(data?.teacherId?.some((e) => e?._id === profileId?._id) ||
             isAdmin) && (
-            <NavLink to={pagesRoute.courses.attendance(id)}>attendance</NavLink>
+            <>
+              <NavLink to={pagesRoute.courses.students(id)}> students</NavLink>
+              <NavLink to={pagesRoute.courses.attendance(id)}>
+                attendance
+              </NavLink>
+            </>
           )}
         </AllowedTo>
       </div>

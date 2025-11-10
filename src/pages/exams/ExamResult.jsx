@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { endPoints } from "../../constants/endPoints";
 import { examTypes, limit, roles } from "../../constants/enums";
 import TableToolBar from "../../components/table_toolbar/TableToolBar";
-import Search from "../../components/table_toolbar/Search";
 import Delete from "../../components/table_toolbar/Delete";
 import Add from "../../components/table_toolbar/Add";
 import { pagesRoute } from "../../constants/pagesRoute";
@@ -91,7 +90,6 @@ const column = [
 const apiClient = new APIClient(endPoints["exam-results"]);
 const ExamResult = () => {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
   const { userDetails } = useAuth();
   const { isStudent, role, isAdmin } = userDetails || {};
@@ -108,14 +106,12 @@ const ExamResult = () => {
     queryKey: [
       endPoints["exam-results"],
       page,
-      search,
       sort,
       formatInputsData(filters),
     ],
     queryFn: () =>
       apiClient.getAll({
         page,
-        search,
         sort,
         limit,
         ...formatInputsData(filters),
@@ -147,9 +143,8 @@ const ExamResult = () => {
       <h1 className="title">exams result</h1>
       <div className="table-container flex-1">
         <TableToolBar>
-          <Search setSearch={setSearch} />
-
           <AllowedTo roles={[roles.teacher, roles.admin]}>
+            <div className="flex-1"></div>
             <Delete
               queryKey={endPoints.exams}
               data={data}

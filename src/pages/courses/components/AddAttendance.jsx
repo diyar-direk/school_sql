@@ -1,6 +1,6 @@
 import PopUp from "../../../components/popup/PopUp";
 import Button from "../../../components/buttons/Button";
-import { attendanceStatusIcon } from "./Attendance";
+import { attendanceStatusIcon } from "../pages/Attendance";
 import { attendanceStatus } from "../../../constants/enums";
 import dateFormatter from "./../../../utils/dateFormatter";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

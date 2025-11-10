@@ -25,6 +25,7 @@ export const pagesRoute = {
     view: (id = ":id") => `/courses/view/${id}`,
     timeTable: (id = ":id") => `/courses/view/${id}/time_table`,
     exams: (id = ":id") => `/courses/view/${id}/exams`,
+    quiz: (id = ":id") => `/courses/view/${id}/quiz`,
     students: (id = ":id") => `/courses/view/${id}/students`,
     attendance: (id = ":id") => `/courses/view/${id}/attendance`,
   },

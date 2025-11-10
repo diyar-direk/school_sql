@@ -6,10 +6,11 @@ const Courses = lazy(() => import("./Courses"));
 const AddCourse = lazy(() => import("./AddCourse"));
 const UpdateCourse = lazy(() => import("./UpdateCourse"));
 const CourseView = lazy(() => import("./CourseView"));
-const CourseTimeTable = lazy(() => import("./components/CourseTimeTable"));
-const CourseExams = lazy(() => import("./components/CourseExams"));
-const CourseStudents = lazy(() => import("./components/CourseStudents"));
-const Attendance = lazy(() => import("./components/Attendance"));
+const CourseTimeTable = lazy(() => import("./pages/CourseTimeTable"));
+const CourseExams = lazy(() => import("./pages/CourseExams"));
+const CourseStudents = lazy(() => import("./pages/CourseStudents"));
+const Attendance = lazy(() => import("./pages/Attendance"));
+const CourseQuiz = lazy(() => import("./pages/CourseQuiz"));
 
 export const coursesRouter = [
   {
@@ -59,6 +60,10 @@ export const coursesRouter = [
             <Attendance />
           </AllowedTo>
         ),
+      },
+      {
+        path: pagesRoute.courses.quiz(),
+        element: <CourseQuiz />,
       },
     ],
   },

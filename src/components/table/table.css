@@ -256,6 +256,8 @@ tr:not(:last-of-type) td {
   font-size: 14px;
   cursor: pointer;
   border: none;
+  background-color: var(--section-color);
+  color: var(--font-color);
 }
 
 .pagination .page-container button:not(.btn).active,
