@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { endPoints } from "../../constants/endPoints";
 import { limit, roles } from "../../constants/enums";
@@ -18,13 +18,17 @@ import SelectOptionInput from "./../../components/inputs/SelectOptionInput";
 import { formatInputsData } from "./../../utils/formatInputsData";
 import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
+import { getMyExamsApi } from "./api";
 
 const apiClient = new APIClient(endPoints.exams);
 const ExamSchedule = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
-  const [filters, setFilters] = useState({ courseId: null });
+  const [filters, setFilters] = useState({
+    courseId: null,
+    courseId_multi: [],
+  });
   const { data, isFetching } = useQuery({
     queryKey: [endPoints.exams, page, search, sort, formatInputsData(filters)],
     queryFn: () =>
@@ -36,10 +40,11 @@ const ExamSchedule = () => {
         ...formatInputsData(filters),
       }),
   });
+  const [getMyExams, setGetMyExams] = useState(false);
 
   const [selectedItems, setSelectedItems] = useState(new Set());
   const { userDetails } = useAuth();
-  const { role } = userDetails || "";
+  const { role, profileId, isTeacher } = userDetails || {};
 
   const dateKey = Object.keys(filters).find((key) => key.includes("date"));
   const dateText = dateKey ? filters[dateKey].text : null;
@@ -125,6 +130,35 @@ const ExamSchedule = () => {
     [handleNavigate]
   );
 
+  const { data: coursesId } = useQuery({
+    queryKey: [
+      profileId?._id,
+      role === roles.teacher ? endPoints.courses : endPoints["student-courses"],
+    ],
+    queryFn: async () => {
+      const data = await getMyExamsApi(role, profileId?._id);
+      return data || null;
+    },
+    enabled: getMyExams,
+  });
+
+  useEffect(() => {
+    if (!getMyExams)
+      return setFilters((prev) => ({
+        ...prev,
+        courseId_multi: [],
+      }));
+
+    if (!coursesId) return;
+
+    setFilters((prev) => ({
+      ...prev,
+      courseId_multi: coursesId.map((e) =>
+        role === roles.student ? e?.courseId?._id : e?._id
+      ),
+    }));
+  }, [coursesId, role, profileId, getMyExams]);
+
   return (
     <div className="container">
       <h1 className="title">exams</h1>
@@ -154,6 +188,7 @@ const ExamSchedule = () => {
                   all courses
                 </h3>
               }
+              params={{ teacherId: isTeacher ? profileId?._id : null }}
             />
             <SelectOptionInput
               label="exam type"
@@ -171,6 +206,15 @@ const ExamSchedule = () => {
                 setFilters({ courseId: filters?.courseId, [opt.enum]: opt })
               }
             />
+            <AllowedTo roles={[roles.teacher, roles.student]}>
+              <SelectOptionInput
+                label="exam"
+                placeholder={getMyExams ? "my exams" : "all"}
+                onSelectOption={() => setGetMyExams(true)}
+                options={[{ text: "my exams" }]}
+                addOption={<h3 onClick={() => setGetMyExams(false)}>all</h3>}
+              />
+            </AllowedTo>
           </Filters>
         </TableToolBar>
         <Table

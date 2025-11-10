@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { endPoints } from "../../constants/endPoints";
 import { limit, roles } from "../../constants/enums";
@@ -18,6 +18,8 @@ import { formatInputsData } from "../../utils/formatInputsData";
 import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
 import "./quiz.css";
+import { getMyExamsApi } from "../exams/api";
+import SelectOptionInput from "../../components/inputs/SelectOptionInput";
 
 const apiClient = new APIClient(endPoints.quizzes);
 const AllQuizes = () => {
@@ -26,7 +28,10 @@ const AllQuizes = () => {
   const [sort, setSort] = useState({});
   const { userDetails } = useAuth();
   const { role, profileId, isTeacher } = userDetails || {};
-  const [filters, setFilters] = useState({ courseId: null });
+  const [filters, setFilters] = useState({
+    courseId: null,
+    courseId_multi: [],
+  });
   const { data, isFetching } = useQuery({
     queryKey: [
       endPoints.quizzes,
@@ -141,6 +146,36 @@ const AllQuizes = () => {
     ],
     [role, profileId]
   );
+  const [getMyExams, setGetMyExams] = useState(false);
+
+  const { data: coursesId } = useQuery({
+    queryKey: [
+      profileId?._id,
+      role === roles.teacher ? endPoints.courses : endPoints["student-courses"],
+    ],
+    queryFn: async () => {
+      const data = await getMyExamsApi(role, profileId?._id);
+      return data || null;
+    },
+    enabled: getMyExams,
+  });
+
+  useEffect(() => {
+    if (!getMyExams)
+      return setFilters((prev) => ({
+        ...prev,
+        courseId_multi: [],
+      }));
+
+    if (!coursesId) return;
+
+    setFilters((prev) => ({
+      ...prev,
+      courseId_multi: coursesId.map((e) =>
+        role === roles.student ? e?.courseId?._id : e?._id
+      ),
+    }));
+  }, [coursesId, role, profileId, getMyExams]);
 
   const [selectedItems, setSelectedItems] = useState(new Set());
   return (
@@ -176,6 +211,16 @@ const AllQuizes = () => {
               }
               params={{ teacherId: isTeacher ? profileId?._id : null }}
             />
+
+            <AllowedTo roles={[roles.teacher, roles.student]}>
+              <SelectOptionInput
+                label="exam"
+                placeholder={getMyExams ? "my exams" : "all"}
+                onSelectOption={() => setGetMyExams(true)}
+                options={[{ text: "my exams" }]}
+                addOption={<h3 onClick={() => setGetMyExams(false)}>all</h3>}
+              />
+            </AllowedTo>
           </Filters>
         </TableToolBar>
         <Table

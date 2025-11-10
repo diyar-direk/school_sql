@@ -79,9 +79,9 @@ const Attendance = () => {
       const record = studentData.find((item) => {
         const date = new Date(item.date);
         return (
-          date.getDate() === day &&
-          date.getMonth() + 1 === month &&
-          date.getFullYear() === year
+          date.getUTCDate() === day &&
+          date.getUTCMonth() + 1 === month &&
+          date.getUTCFullYear() === year
         );
       });
 

@@ -77,7 +77,7 @@ const Paginations = ({
             <button
               disabled={currentPage === page}
               onClick={() => onPageChange(page)}
-              className={currentPage === page && "active"}
+              className={currentPage === page ? "active" : ""}
               key={page}
             >
               {page}
