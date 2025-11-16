@@ -18,15 +18,18 @@
   align-items: center;
   gap: 10px;
   border: none;
+  color: var(--font-color);
 }
 
 .inp div input {
   flex: 1;
   border: none;
   background-color: transparent;
+  color: var(--font-color);
 }
 .inp .input-wrapper .password {
   cursor: pointer;
+  color: var(--font-color);
 }
 .inp .input-wrapper .password:hover {
   color: var(--main-color);
@@ -36,6 +39,7 @@
   text-transform: capitalize;
   width: fit-content;
   cursor: text;
+  color: var(--font-color);
 }
 
 .select-input .placeholder {

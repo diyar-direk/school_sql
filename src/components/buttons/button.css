@@ -151,7 +151,7 @@ button.sending:disabled {
 .icon-button-hover::before {
   content: "";
   position: absolute;
-  background: black;
+  background: #222;
   width: 10px;
   height: 10px;
   border-radius: 50%;

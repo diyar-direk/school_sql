@@ -16,6 +16,7 @@ import APIClient from "./../../utils/ApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import "./quiz.css";
 const AddQuiz = () => {
   const context = useContext(Context);
   const { userDetails } = useAuth();

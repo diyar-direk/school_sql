@@ -17,6 +17,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Skeleton from "../../components/skeleton/Skeleton";
+import "./quiz.css";
 const UpdateQuiz = () => {
   const context = useContext(Context);
   const { userDetails } = useAuth();

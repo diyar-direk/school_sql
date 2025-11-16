@@ -35,3 +35,39 @@
 .teacher-course:hover::before {
   opacity: 1;
 }
+@media (max-width: 1200px) {
+  .teacher-course div h3 {
+    font-size: 17px;
+  }
+  .teacher-course div span {
+    font-size: 16px;
+  }
+}
+@media (max-width: 800px) {
+  .teacher-course div h3 {
+    font-size: 14px;
+  }
+  .teacher-course div {
+    gap: 5px;
+  }
+  .teacher-course div span {
+    font-size: 13px;
+  }
+  .teacher-course {
+    padding: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .teacher-course div h3 {
+    font-size: 12px;
+  }
+  .teacher-course div {
+    gap: 5px;
+  }
+  .teacher-course div span {
+    font-size: 11px;
+  }
+  .teacher-course {
+    padding: 10px;
+  }
+}

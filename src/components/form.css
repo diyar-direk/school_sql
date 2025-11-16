@@ -318,6 +318,9 @@ form.quize i.false:hover {
   form.login > .flex > div.image {
     display: none;
   }
+  .field-error {
+    font-size: 15px;
+  }
 }
 @media (max-width: 650px) {
   .dashboard-form {
@@ -359,6 +362,10 @@ form.quize i.false:hover {
   }
   .inp .input-wrapper .password {
     font-size: 12px;
+  }
+  .field-error {
+    font-size: 12px;
+    padding: 6px;
   }
 }
 

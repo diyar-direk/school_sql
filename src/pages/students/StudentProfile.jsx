@@ -136,7 +136,7 @@ const StudentProfile = () => {
 
         <div ref={loadMoreRef} />
       </div>
-      {isFetching && <h3> loading... </h3>}
+      {isFetching && <h3 className="font-color"> loading... </h3>}
     </div>
   );
 };

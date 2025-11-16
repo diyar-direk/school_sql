@@ -136,7 +136,7 @@ const SelectInputApi = ({
                 {optionLabel(itm)}
               </h3>
             ))}
-            {isFetching && <p>loading...</p>}
+            {isFetching && <p className="font-color">loading...</p>}
           </article>
         </div>
       </div>

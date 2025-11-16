@@ -208,6 +208,7 @@ body.arabic {
   display: grid;
   gap: 30px;
   grid-template-columns: repeat(auto-fill, minmax(31%, 1fr));
+  align-items: flex-start;
 }
 .gap-2 {
   gap: 2px;
@@ -374,7 +375,7 @@ body::-webkit-scrollbar {
 
 @media (max-width: 675px) {
   .grid-3 {
-    gap: 10px;
+    gap: 20px;
   }
 
   .btn {
@@ -384,5 +385,9 @@ body::-webkit-scrollbar {
 @media (max-width: 500px) {
   main > div.dashboard-container {
     width: calc(100% - 55px);
+  }
+  .grid-3 {
+    gap: 10px;
+    grid-template-columns: 1fr;
   }
 }

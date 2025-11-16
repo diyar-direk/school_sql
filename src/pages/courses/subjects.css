@@ -79,15 +79,31 @@
 .attendace-table table tbody tr:nth-child(even) {
   background-color: var(--section-color);
 }
+
+.attendance-controls {
+  margin-bottom: 10px;
+}
+.attendance-controls input {
+  background-color: var(--body-color);
+  border: solid 1px var(--border-color);
+  padding: 10px;
+  border-radius: 4px;
+  color: var(--font-color);
+}
+
 .attendace-table table tbody tr td {
   padding: 8px;
   text-transform: capitalize;
   color: var(--font-color);
   border-inline: solid 1px var(--border-color);
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
 }
 .attendace-table table tbody tr td div {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--border-color);
   display: flex;
@@ -124,6 +140,25 @@
   .subjects form.dashboard-form button {
     font-size: 16px;
   }
+  .attendace-table table thead tr th {
+    padding: 6px;
+    font-size: 14px;
+  }
+  .attendace-table table tbody tr td {
+    padding: 7px;
+    font-size: 12px;
+    max-width: 150px;
+  }
+  .attendace-table table tbody tr td div {
+    width: 25px;
+    height: 25px;
+  }
+  .attendace-table table tbody tr td div i {
+    font-size: 12px;
+  }
+  .attendance-controls input {
+    padding: 8px;
+  }
 }
 
 @media (max-width: 650px) {
@@ -150,5 +185,24 @@
   .course-pages a {
     padding: 6px;
     font-size: 14px;
+  }
+  .attendace-table table thead tr th {
+    font-size: 12px;
+  }
+  .attendace-table table tbody tr td {
+    padding: 6px;
+    font-size: 11px;
+    max-width: 120px;
+  }
+  .attendace-table table tbody tr td div {
+    width: 20px;
+    height: 20px;
+  }
+  .attendace-table table tbody tr td div i {
+    font-size: 9px;
+  }
+  .attendance-controls input {
+    padding: 8px;
+    font-size: 11px;
   }
 }

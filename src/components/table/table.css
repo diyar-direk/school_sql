@@ -336,6 +336,12 @@ body.arabic .pagination .page-container {
     height: 20px;
     font-size: 13px;
   }
+  .table-toolbar > h2 {
+    font-size: 17px;
+  }
+  div.table thead th .sort {
+    font-size: 10px;
+  }
 }
 @media (max-width: 600px) {
   .table-container .table-toolbar {
@@ -374,5 +380,11 @@ body.arabic .pagination .page-container {
     width: 18x;
     height: 18x;
     font-size: 11px;
+  }
+  .table-toolbar > h2 {
+    font-size: 14px;
+  }
+  div.table thead th .sort {
+    font-size: 9px;
   }
 }

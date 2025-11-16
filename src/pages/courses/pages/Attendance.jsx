@@ -127,10 +127,10 @@ const Attendance = () => {
     setSelectedData({});
   }, []);
 
-  if (isFetching) return <h3>loading ...</h3>;
+  if (isFetching) return <h3 className="font-color">loading ...</h3>;
 
   if (studentsAttendance.length === 0)
-    return <h3> لا يوجد طلاب في هذا الكورس </h3>;
+    return <h3 className="font-color"> لا يوجد طلاب في هذا الكورس </h3>;
 
   return (
     <>
