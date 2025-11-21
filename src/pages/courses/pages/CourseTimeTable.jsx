@@ -74,7 +74,7 @@ const CourseTimeTable = () => {
       {
         name: "classId",
         headerName: "class",
-        getCell: ({ row }) => row?.classId?.name,
+        getCell: ({ row }) => row?.class?.name,
       },
       {
         name: "startTime",
@@ -92,7 +92,7 @@ const CourseTimeTable = () => {
             <Button
               btnType="delete"
               btnStyleType="outlined"
-              onClick={() => setSelectedItems(row?._id)}
+              onClick={() => setSelectedItems(row?.id)}
             >
               <i className="fa-solid fa-trash-can" /> delete
             </Button>

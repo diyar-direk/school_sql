@@ -10,6 +10,7 @@ import SelectInputApi from "../../components/inputs/SelectInputApi";
 import { useNavigate, useParams } from "react-router-dom";
 import Skeleton from "./../../components/skeleton/Skeleton";
 import { useTranslation } from "react-i18next";
+import { formatInputsData } from "./../../utils/formatInputsData";
 const apiClient = new APIClient(endPoints.courses);
 const UpdateCourse = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const UpdateCourse = () => {
     },
     validationSchema: courseSchema,
     enableReinitialize: true,
-    onSubmit: (values) => handleSubmit.mutate(values),
+    onSubmit: (values) => handleSubmit.mutate(formatInputsData(values)),
   });
   const queryClient = useQueryClient();
   const handleSubmit = useMutation({
@@ -42,8 +43,8 @@ const UpdateCourse = () => {
 
   const selectTeachers = useCallback(
     (value) => {
-      const prev = formik.values?.teacherId?.map((s) => s?._id);
-      if (!prev.includes(value?._id)) {
+      const prev = formik.values?.teacherId?.map((s) => s?.id);
+      if (!prev.includes(value?.id)) {
         const newTeachers = [...(formik?.values?.teacherId || []), value];
         formik.setFieldValue("teacherId", newTeachers);
       }
@@ -53,7 +54,7 @@ const UpdateCourse = () => {
   const ignoreTeacher = useCallback(
     (value) => {
       const filterd = formik.values?.teacherId?.filter(
-        (s) => s?._id !== value?._id
+        (s) => s?.id !== value?.id
       );
       formik.setFieldValue("teacherId", filterd);
     },

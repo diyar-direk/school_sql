@@ -9,14 +9,14 @@ import { endPoints } from "../../../constants/endPoints";
 import { useAuth } from "../../../context/AuthContext";
 
 const AddAttendance = ({ selectedData, onClose }) => {
-  const { student, date, courseId, isUpdate, _id } = selectedData;
+  const { student, date, courseId, isUpdate, id } = selectedData;
   const queryClient = useQueryClient();
   const handleSubmit = useMutation({
     mutationFn: (status) =>
       isUpdate
-        ? updateAttendance({ status, id: _id })
+        ? updateAttendance({ status, id: id })
         : addAttendance({
-            studentId: student?._id || student,
+            studentId: student?.id || student,
             date,
             courseId,
             status,
@@ -27,7 +27,7 @@ const AddAttendance = ({ selectedData, onClose }) => {
     },
   });
   const handleDelete = useMutation({
-    mutationFn: () => deleteAttendance([_id]),
+    mutationFn: () => deleteAttendance([id]),
     onSuccess: () => {
       queryClient.invalidateQueries([endPoints.attendances, courseId]);
       onClose();

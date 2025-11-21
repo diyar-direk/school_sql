@@ -67,7 +67,7 @@ const AllQuizes = () => {
         getCell: ({ row }) => (
           <Link
             className="visit-text"
-            to={pagesRoute.courses.view(row?.courseId?._id)}
+            to={pagesRoute.courses.view(row?.courseId)}
           >
             {row?.courseId?.name}
           </Link>
@@ -122,7 +122,7 @@ const AllQuizes = () => {
               <Link
                 className="quize-status started"
                 to={
-                  role === roles.student ? pagesRoute.quize.take(row?._id) : ""
+                  role === roles.student ? pagesRoute.quize.take(row?.id) : ""
                 }
               >
                 exam is running now
@@ -137,8 +137,8 @@ const AllQuizes = () => {
         allowedTo: [roles.admin, roles.teacher],
         getCell: ({ row }) =>
           (role === roles.admin ||
-            row.courseId?.teacherId?.includes(profileId?._id)) && (
-            <Link to={pagesRoute.quize.update(row?._id)}>
+            row.courseId?.teacherId?.includes(profileId?.id)) && (
+            <Link to={pagesRoute.quize.update(row?.id)}>
               <Button> update</Button>
             </Link>
           ),
@@ -150,11 +150,11 @@ const AllQuizes = () => {
 
   const { data: coursesId } = useQuery({
     queryKey: [
-      profileId?._id,
+      profileId?.id,
       role === roles.teacher ? endPoints.courses : endPoints["student-courses"],
     ],
     queryFn: async () => {
-      const data = await getMyExamsApi(role, profileId?._id);
+      const data = await getMyExamsApi(role, profileId?.id);
       return data || null;
     },
     enabled: getMyExams,
@@ -172,7 +172,7 @@ const AllQuizes = () => {
     setFilters((prev) => ({
       ...prev,
       courseId_multi: coursesId.map((e) =>
-        role === roles.student ? e?.courseId?._id : e?._id
+        role === roles.student ? e?.courseId?.id : e?.id
       ),
     }));
   }, [coursesId, role, profileId, getMyExams]);
@@ -209,7 +209,7 @@ const AllQuizes = () => {
                   all courses
                 </h3>
               }
-              params={{ teacherId: isTeacher ? profileId?._id : null }}
+              params={{ teacherId: isTeacher ? profileId?.id : null }}
             />
 
             <AllowedTo roles={[roles.teacher, roles.student]}>

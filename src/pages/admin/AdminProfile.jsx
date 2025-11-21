@@ -32,19 +32,23 @@ const AdminProfile = () => {
           <div className="flex-1">
             <h2 className="flex gap-10">
               <p>
-                {`${data?.femaleTeacherCount + data?.maleTeacherCount}` ||
-                  "..."}
+                {isLoading
+                  ? `${
+                      (data?.femaleTeacherCount || 0) +
+                      (data?.maleTeacherCount || 0)
+                    }`
+                  : "..."}
               </p>
               {t("dashboard.teachers")}
             </h2>
             <div className="flex gap-20">
               <h3 className="center flex-direction">
                 {t("dashboard.female")} <br />
-                <span>{data?.femaleTeacherCount || "..."}</span>
+                <span>{isLoading ? data?.femaleTeacherCount : "..."}</span>
               </h3>
               <h3 className="center flex-direction">
                 {t("dashboard.male")} <br />
-                <span>{data?.maleTeacherCount || "..."}</span>
+                <span>{isLoading ? data?.maleTeacherCount : "..."}</span>
               </h3>
             </div>
           </div>
@@ -54,19 +58,23 @@ const AdminProfile = () => {
           <div className="flex-1">
             <h2 className="flex gap-10">
               <p>
-                {`${data?.femaleStudentCount + data?.maleStudentCount}` ||
-                  "..."}
+                {isLoading
+                  ? `${
+                      (data?.femaleStudentCount || 0) +
+                      (data?.maleStudentCount || 0)
+                    }`
+                  : "..."}
               </p>
               {t("dashboard.students")}
             </h2>
             <div className="flex gap-20">
               <h3 className="center flex-direction">
                 {t("dashboard.female")} <br />
-                <span>{data?.femaleStudentCount || "..."}</span>
+                <span>{isLoading ? data?.femaleStudentCount : "..."}</span>
               </h3>
               <h3 className="center flex-direction">
                 {t("dashboard.male")} <br />
-                <span>{data?.maleStudentCount || "..."}</span>
+                <span>{isLoading ? data?.maleStudentCount : "..."}</span>
               </h3>
             </div>
           </div>
@@ -75,7 +83,7 @@ const AdminProfile = () => {
           <i className="fa-solid fa-school-flag classes" />
           <div className="flex-1">
             <h2 className="flex gap-10">
-              <p> {data?.classCount || "..."}</p>
+              <p> {isLoading ? data?.classCount : "..."}</p>
               {t("dashboard.classes")}
             </h2>
           </div>
@@ -85,7 +93,7 @@ const AdminProfile = () => {
           <i className="fa-solid fa-pen-nib courses" />
           <div className="flex-1">
             <h2 className="flex gap-10">
-              <p> {data?.courseCount || "..."}</p>
+              <p> {isLoading ? data?.courseCount : "..."}</p>
               {t("dashboard.courses")}
             </h2>
           </div>
@@ -97,7 +105,7 @@ const AdminProfile = () => {
         </div>
         <div className="info">
           <h2 className="name">
-            <Link to={pagesRoute.admin.update(profileId?._id)}>
+            <Link to={pagesRoute.admin.update(profileId?.id)}>
               <i className="fa-regular fa-pen-to-square" />
             </Link>
           </h2>

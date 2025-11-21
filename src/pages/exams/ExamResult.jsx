@@ -26,17 +26,17 @@ const column = [
     getCell: ({ row }) => (
       <Link
         className="visit-text"
-        to={pagesRoute.student.view(row?.studentId?._id)}
+        to={pagesRoute.student.view(row?.studentId)}
       >
-        {row?.studentId?.firstName} {row?.studentId?.middleName}
-        {row?.studentId?.lastName}
+        {row?.student?.firstName} {row?.student?.middleName}
+        {row?.student?.lastName}
       </Link>
     ),
   },
   {
     name: "examId",
     headerName: "examId",
-    getCell: ({ row }) => row.examId?.title,
+    getCell: ({ row }) => row.exam?.title,
   },
   {
     name: "type",
@@ -81,7 +81,7 @@ const column = [
     className: "center",
     allowedTo: [roles.admin, roles.teacher],
     getCell: ({ row }) => (
-      <Link to={pagesRoute.examResult.update(row?._id)}>
+      <Link to={pagesRoute.examResult.update(row?.id)}>
         <Button> update</Button>
       </Link>
     ),
@@ -99,7 +99,7 @@ const ExamResult = () => {
 
   const [filters, setFilters] = useState({
     examId,
-    studentId: isStudent ? userDetails?.profileId?._id : null,
+    studentId: isStudent ? userDetails?.profileId?.id : null,
     type: null,
   });
   const { data, isFetching } = useQuery({

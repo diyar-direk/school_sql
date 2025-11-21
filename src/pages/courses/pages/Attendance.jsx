@@ -46,26 +46,26 @@ const Attendance = () => {
     const attendanceData = data || [];
 
     const uniqueStudents = allStudents.reduce((acc, curr) => {
-      const id = curr.studentId._id;
-      if (!acc.some((s) => s.studentId._id === id)) {
+      const id = curr.student.id;
+      if (!acc.some((s) => s.student.id === id)) {
         acc.push(curr);
       }
       return acc;
     }, []);
 
     const groupedAttendance = attendanceData.reduce((acc, item) => {
-      const studentId = item.studentId._id;
+      const studentId = item.student.id;
       if (!acc[studentId]) acc[studentId] = [];
       acc[studentId].push(item);
       return acc;
     }, {});
 
     return uniqueStudents.map((student) => {
-      const fullName = `${student.studentId.firstName} ${student.studentId.lastName}`;
+      const fullName = `${student.student.firstName} ${student.student.lastName}`;
       return {
         name: fullName,
-        studentId: student.studentId._id,
-        data: groupedAttendance[student.studentId._id] || [],
+        studentId: student.student.id,
+        data: groupedAttendance[student.student.id] || [],
       };
     });
   }, [students, data]);
@@ -95,7 +95,7 @@ const Attendance = () => {
               setSelectedData({
                 student: record.studentId,
                 date: record.date,
-                _id: record._id,
+                id: record.id,
                 isUpdate: true,
               })
             }

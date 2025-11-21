@@ -81,16 +81,16 @@ const TimeTable = () => {
         getCell: ({ row }) => (
           <Link
             className="visit-text"
-            to={pagesRoute.courses.view(row?.courseId?._id)}
+            to={pagesRoute.courses.view(row?.courseId)}
           >
-            {row?.courseId?.name}
+            {row?.course?.name}
           </Link>
         ),
       },
       {
         name: "classId",
         headerName: "class",
-        getCell: ({ row }) => row?.classId?.name,
+        getCell: ({ row }) => row?.class?.name,
       },
       {
         name: "startTime",
@@ -107,7 +107,7 @@ const TimeTable = () => {
             <Button
               btnType="delete"
               btnStyleType="outlined"
-              onClick={() => setSelectedItems(row?._id)}
+              onClick={() => setSelectedItems(row?.id)}
             >
               <i className="fa-solid fa-trash-can" /> delete
             </Button>
@@ -169,7 +169,7 @@ const TimeTable = () => {
                 </h3>
               }
               onChange={(e) => setFilters({ ...filters, courseId: e })}
-              params={{ teacherId: isTeacher ? profileId?._id : null }}
+              params={{ teacherId: isTeacher ? profileId?.id : null }}
             />
             <SelectInputApi
               endPoint={endPoints.classes}

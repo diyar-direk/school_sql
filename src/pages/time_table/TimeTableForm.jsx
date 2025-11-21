@@ -15,8 +15,8 @@ const apiClient = new APIClient(endPoints["time-table"]);
 const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
   const formik = useFormik({
     initialValues: {
-      classId: isUpdate?.classId || "",
-      courseId: isUpdate?.courseId || "",
+      classId: isUpdate?.class || "",
+      courseId: isUpdate?.course || "",
       dayOfWeek: day,
       startTime: isUpdate?.startTime || "",
     },
@@ -35,7 +35,7 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
       isUpdate
         ? apiClient.updateData({
             data: formatInputsData(data),
-            id: isUpdate?._id,
+            id: isUpdate?.id,
           })
         : apiClient.addData(formatInputsData(data)),
     onSuccess: () => {

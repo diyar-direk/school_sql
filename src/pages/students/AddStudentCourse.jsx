@@ -16,7 +16,7 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
   const formik = useFormik({
     initialValues: {
       studentId,
-      courseId: isUpdate?.courseId || "",
+      courseId: isUpdate?.course || "",
       status: isUpdate?.status || "",
     },
     validationSchema: yup.object({
@@ -35,10 +35,10 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
     mutationFn: (values) =>
       isUpdate
         ? apiClient.updateData({
-            data: { ...values, courseId: values?.courseId?._id },
-            id: isUpdate?._id,
+            data: { ...values, courseId: values?.courseId?.id },
+            id: isUpdate?.id,
           })
-        : apiClient.addData({ ...values, courseId: values?.courseId?._id }),
+        : apiClient.addData({ ...values, courseId: values?.courseId?.id }),
     onSuccess: () => {
       formik.resetForm();
       query.invalidateQueries([endPoints["student-courses"], studentId]);

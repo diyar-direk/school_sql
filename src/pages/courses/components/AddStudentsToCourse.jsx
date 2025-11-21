@@ -9,6 +9,7 @@ import SelectInputApi from "../../../components/inputs/SelectInputApi";
 import { endPoints } from "../../../constants/endPoints";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "./../../../utils/ApiClient";
+import { formatInputsData } from "../../../utils/formatInputsData";
 
 const AddStudentsToCourse = ({ courseId }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ const AddStudentsToCourse = ({ courseId }) => {
         .required("please selecte student course status")
         .oneOf(Object.values(courseStatus)),
     }),
-    onSubmit: (values) => handleConfirm.mutate(values),
+    onSubmit: (values) => handleConfirm.mutate(formatInputsData(values)),
   });
 
   const queryClient = useQueryClient();

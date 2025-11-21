@@ -41,7 +41,7 @@ const column = [
     headerName: "actions",
     className: "center",
     getCell: ({ row }) => (
-      <Link to={pagesRoute.admin.update(row._id)}>
+      <Link to={pagesRoute.admin.update(row.id)}>
         <Button> update</Button>
       </Link>
     ),

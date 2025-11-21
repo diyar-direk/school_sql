@@ -35,17 +35,17 @@ const TakeQuiz = () => {
   });
 
   const { data: canTake, isLoading: checkingLoading } = useQuery({
-    queryKey: [endPoints["student-courses"], profileId?._id, id],
+    queryKey: [endPoints["student-courses"], profileId?.id, id],
     queryFn: async () => {
       const { data: res } = await axiosInstance.get(
         endPoints["student-courses"],
         {
           params: {
-            studentId: profileId?._id,
+            studentId: profileId?.id,
             status: courseStatus.Active,
             limit: 1,
             page: 1,
-            courseId: data?.courseId?._id,
+            courseId: data?.courseId?.id,
           },
         }
       );
@@ -111,7 +111,7 @@ const TakeQuiz = () => {
     initialValues: {
       studentAnswers:
         data?.questions?.map((q) => ({
-          questionId: q._id,
+          questionId: q.id,
           answer: "",
         })) || [],
       quizId: id,
@@ -184,7 +184,7 @@ const TakeQuiz = () => {
           </h2>
 
           {data.questions.map((q, i) => (
-            <div key={q._id} className="questions-space">
+            <div key={q.id} className="questions-space">
               <h3>{`Q-${i + 1}`}</h3>
 
               {q.type === questionTypes.TOF && (
@@ -234,7 +234,7 @@ const TakeQuiz = () => {
                         formik.values.studentAnswers[i]?.answer === choice.text;
 
                       return (
-                        <label key={choice._id || index} className="flex-1">
+                        <label key={choice.id || index} className="flex-1">
                           <input
                             type="radio"
                             name={`studentAnswers[${i}].answer`}

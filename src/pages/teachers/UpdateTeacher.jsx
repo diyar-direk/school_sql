@@ -7,7 +7,7 @@ import { endPoints } from "../../constants/endPoints";
 import { teacherSchema } from "./../../schemas/teacher";
 import SelectOptionInput from "../../components/inputs/SelectOptionInput";
 import { genders } from "../../constants/enums";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Skeleton from "../../components/skeleton/Skeleton";
 import { useTranslation } from "react-i18next";
 
@@ -18,6 +18,7 @@ const UpdateTeacher = () => {
     queryKey: [endPoints.teachers, id],
     queryFn: () => apiClient.getOne(id),
   });
+  const nav = useNavigate();
   const formik = useFormik({
     initialValues: {
       firstName: data?.firstName || "",
@@ -36,7 +37,7 @@ const UpdateTeacher = () => {
     mutationFn: (data) => apiClient.updateData({ data, id }),
     onSuccess: () => {
       queryClient.invalidateQueries([endPoints.teachers]);
-      formik.resetForm();
+      nav(-1);
     },
   });
 

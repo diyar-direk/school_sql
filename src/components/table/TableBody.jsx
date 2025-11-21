@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 const TableBody = ({
   loading,
@@ -40,35 +41,44 @@ const TableBody = ({
     },
     [userDetails, isCustomPopUpOpen, setIsCustomPopUpOpen]
   );
+  const location = useLocation();
 
   const rows = useMemo(
     () =>
-      data?.map((row) => (
-        <tr key={row._id}>
-          {selectable && (
-            <td>
-              {row?._id !== userDetails?._id && (
-                <div
-                  onClick={() => selectRowId(row._id)}
-                  className={`checkbox ${
-                    selectedItems?.has(row._id) ? "active" : ""
-                  }`}
-                ></div>
-              )}
-            </td>
-          )}
-          {column?.map(
-            (column) =>
-              !column.hidden &&
-              (!column.allowedTo ||
-                column.allowedTo?.includes(userDetails?.role)) && (
-                <td key={column.name} className={column?.className || ""}>
-                  {renderCell(column, row)}
-                </td>
-              )
-          )}
-        </tr>
-      )),
+      data?.map((row) => {
+        const hideCheckbox =
+          (location.pathname.includes("user") ||
+            location.pathname.includes("admin")) &&
+          row.id === userDetails?.id;
+
+        return (
+          <tr key={row.id}>
+            {selectable && (
+              <td>
+                {!hideCheckbox && (
+                  <div
+                    onClick={() => selectRowId(row.id)}
+                    className={`checkbox ${
+                      selectedItems?.has(row.id) ? "active" : ""
+                    }`}
+                  ></div>
+                )}
+              </td>
+            )}
+
+            {column?.map(
+              (column) =>
+                !column.hidden &&
+                (!column.allowedTo ||
+                  column.allowedTo?.includes(userDetails?.role)) && (
+                  <td key={column.name} className={column?.className || ""}>
+                    {renderCell(column, row)}
+                  </td>
+                )
+            )}
+          </tr>
+        );
+      }),
     [
       data,
       column,
@@ -77,6 +87,7 @@ const TableBody = ({
       selectedItems,
       selectRowId,
       userDetails,
+      location.pathname,
     ]
   );
 

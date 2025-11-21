@@ -28,15 +28,15 @@ const CourseStudents = () => {
 
       <div className="grid-3" style={{ marginTop: "10px" }}>
         {students?.map((data) => (
-          <div className={`student-course ${data?.status}`} key={data?._id}>
+          <div className={`student-course ${data?.status}`} key={data?.id}>
             <div>
               <h3>name</h3>
               <Link
                 className="visit-text"
-                to={pagesRoute.student.view(data?.studentId?._id)}
+                to={pagesRoute.student.view(data?.studentId)}
               >
-                {data?.studentId?.firstName} {data?.studentId?.middleName}{" "}
-                {data?.studentId?.lastName}
+                {data?.student?.firstName} {data?.student?.middleName}{" "}
+                {data?.student?.lastName}
               </Link>
             </div>
             <div>

@@ -22,9 +22,9 @@ const UpdateExamResult = () => {
   const nav = useNavigate();
   const formik = useFormik({
     initialValues: {
-      studentId: data?.studentId || "",
+      studentId: data?.student || "",
       type: data?.type || "",
-      examId: data?.examId || "",
+      examId: data?.exam || "",
       score: data?.score || "",
     },
     validationSchema: examResultSchema,

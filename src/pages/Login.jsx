@@ -43,10 +43,10 @@ const Login = () => {
         const isStudent = data.role === roles.student;
 
         const myProfilePath = isAdmin
-          ? pagesRoute.admin.view(data?._id)
+          ? pagesRoute.admin.view(data?.id)
           : isTeacher
-          ? pagesRoute.teacher.view(data?.profileId?._id)
-          : pagesRoute.student.view(data?.profileId?._id);
+          ? pagesRoute.teacher.view(data?.profileId?.id)
+          : pagesRoute.student.view(data?.profileId?.id);
 
         setUserDetails({
           isAdmin: isAdmin,

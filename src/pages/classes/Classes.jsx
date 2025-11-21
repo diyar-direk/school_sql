@@ -44,7 +44,7 @@ const Classes = () => {
   }, [queryClient, formik]);
 
   const handleUpdate = useMutation({
-    mutationFn: (data) => apiClient.updateData({ data, id: isUpdate?._id }),
+    mutationFn: (data) => apiClient.updateData({ data, id: isUpdate?.id }),
     onSuccess: handleSuccess,
   });
   const handleCreate = useMutation({

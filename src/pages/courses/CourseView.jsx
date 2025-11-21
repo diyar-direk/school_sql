@@ -61,7 +61,7 @@ const CourseView = () => {
             <p>
               {spritObject(data?.teacherId, (e) => (
                 <Link
-                  to={pagesRoute.teacher.view(e._id)}
+                  to={pagesRoute.teacher.view(e.id)}
                   className="visit-text"
                 >
                   {e.firstName} {e.lastName}
@@ -82,7 +82,7 @@ const CourseView = () => {
         <NavLink to={pagesRoute.courses.exams(id)}> {t("navBar.exam")}</NavLink>
         <NavLink to={pagesRoute.courses.quiz(id)}>{t("navBar.quiz")}</NavLink>
         <AllowedTo roles={[roles.admin, roles.teacher]}>
-          {(data?.teacherId?.some((e) => e?._id === profileId?._id) ||
+          {(data?.teacherId?.some((e) => e?.id === profileId?.id) ||
             isAdmin) && (
             <>
               <NavLink to={pagesRoute.courses.students(id)}>

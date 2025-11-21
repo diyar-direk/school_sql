@@ -57,7 +57,7 @@ const AddQuiz = () => {
 
             handleSubmit.mutate({
               ...values,
-              courseId: values?.courseId?._id,
+              courseId: values?.courseId?.id,
               endDate: end.toISOString(),
             });
           }}
@@ -88,7 +88,7 @@ const AddQuiz = () => {
                       errorText={formik.errors?.courseId}
                       params={{
                         teacherId:
-                          role === roles.teacher ? profileId?._id : null,
+                          role === roles.teacher ? profileId?.id : null,
                       }}
                     />
                   )}

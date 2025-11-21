@@ -27,7 +27,7 @@ const column = [
     headerName: "name",
     sort: true,
     getCell: ({ row }) => (
-      <Link className="visit-text" to={pagesRoute.courses.view(row._id)}>
+      <Link className="visit-text" to={pagesRoute.courses.view(row.id)}>
         {row.name}
       </Link>
     ),
@@ -39,7 +39,7 @@ const column = [
     headerName: "teachers",
     getCell: ({ row }) =>
       spritObject(row.teacherId, (e) => (
-        <Link to={pagesRoute.teacher.view(e._id)} className="visit-text">
+        <Link to={pagesRoute.teacher.view(e.id)} className="visit-text">
           {e.firstName}
         </Link>
       )),
@@ -67,12 +67,12 @@ const column = [
     allowedTo: [roles.admin],
     getCell: ({ row }) => (
       <div className="flex gap-10">
-        <Link to={pagesRoute.courses.update(row._id)}>
+        <Link to={pagesRoute.courses.update(row.id)}>
           <Button btnStyleType="outlined">
             <i className="fa-regular fa-pen-to-square" /> update
           </Button>
         </Link>
-        <Link to={pagesRoute.courses.view(row._id)}>
+        <Link to={pagesRoute.courses.view(row.id)}>
           <Button btnType="save" btnStyleType="outlined">
             <i className="fa-solid fa-eye" /> view
           </Button>

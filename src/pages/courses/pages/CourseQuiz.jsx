@@ -96,7 +96,7 @@ const CourseQuiz = () => {
               <Link
                 className="quize-status started"
                 to={
-                  role === roles.student ? pagesRoute.quize.take(row?._id) : ""
+                  role === roles.student ? pagesRoute.quize.take(row?.id) : ""
                 }
               >
                 exam is running now
@@ -111,8 +111,8 @@ const CourseQuiz = () => {
         allowedTo: [roles.admin, roles.teacher],
         getCell: ({ row }) =>
           (role === roles.admin ||
-            row.courseId?.teacherId?.includes(profileId?._id)) && (
-            <Link to={pagesRoute.quize.update(row?._id)}>
+            row.courseId?.teacherId?.includes(profileId?.id)) && (
+            <Link to={pagesRoute.quize.update(row?.id)}>
               <Button> update</Button>
             </Link>
           ),

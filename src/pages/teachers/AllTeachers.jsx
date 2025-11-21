@@ -25,7 +25,7 @@ const column = [
     headerName: "name",
     sort: true,
     getCell: ({ row }) => (
-      <Link className="visit-text" to={pagesRoute.teacher.view(row._id)}>
+      <Link className="visit-text" to={pagesRoute.teacher.view(row.id)}>
         {row.firstName} {row.middleName} {row.lastName}
       </Link>
     ),
@@ -55,10 +55,10 @@ const column = [
     allowedTo: [roles.admin],
     getCell: ({ row }) => (
       <div className="center gap-10">
-        <Link to={pagesRoute.teacher.update(row._id)}>
+        <Link to={pagesRoute.teacher.update(row.id)}>
           <Button> update</Button>
         </Link>
-        <Link to={pagesRoute.teacher.view(row._id)}>
+        <Link to={pagesRoute.teacher.view(row.id)}>
           <Button btnType="save"> view</Button>
         </Link>
       </div>

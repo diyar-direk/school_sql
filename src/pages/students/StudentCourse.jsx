@@ -47,7 +47,7 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
               <div>
                 <span
                   className="delete"
-                  onClick={() => setSelectedItem(data?._id)}
+                  onClick={() => setSelectedItem(data?.id)}
                 >
                   <i className="fa-solid fa-trash" />
                   delete
@@ -61,7 +61,7 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
         </AllowedTo>
         <div>
           <h3>name</h3>
-          <span> {data?.courseId?.name} </span>
+          <span> {data?.course?.name} </span>
         </div>
         <div>
           <h3>status</h3>

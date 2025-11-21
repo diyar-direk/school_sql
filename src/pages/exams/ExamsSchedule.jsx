@@ -67,9 +67,9 @@ const ExamSchedule = () => {
         getCell: ({ row }) => (
           <Link
             className="visit-text"
-            to={pagesRoute.courses.view(row?.courseId?._id)}
+            to={pagesRoute.courses.view(row?.courseId)}
           >
-            {row?.courseId?.name}
+            {row?.course?.name}
           </Link>
         ),
       },
@@ -111,7 +111,7 @@ const ExamSchedule = () => {
         allowedTo: [roles.admin],
         getCell: ({ row }) => (
           <div className="flex gap-10 align-center">
-            <Link to={pagesRoute.exam.update(row?._id)}>
+            <Link to={pagesRoute.exam.update(row?.id)}>
               <Button btnStyleType="outlined"> update</Button>
             </Link>
             {new Date(row.date).getTime() >= Date.now() && (
@@ -132,11 +132,11 @@ const ExamSchedule = () => {
 
   const { data: coursesId } = useQuery({
     queryKey: [
-      profileId?._id,
+      profileId?.id,
       role === roles.teacher ? endPoints.courses : endPoints["student-courses"],
     ],
     queryFn: async () => {
-      const data = await getMyExamsApi(role, profileId?._id);
+      const data = await getMyExamsApi(role, profileId?.id);
       return data || null;
     },
     enabled: getMyExams,
@@ -154,7 +154,7 @@ const ExamSchedule = () => {
     setFilters((prev) => ({
       ...prev,
       courseId_multi: coursesId.map((e) =>
-        role === roles.student ? e?.courseId?._id : e?._id
+        role === roles.student ? e?.courseId?.id : e?.id
       ),
     }));
   }, [coursesId, role, profileId, getMyExams]);
@@ -188,7 +188,7 @@ const ExamSchedule = () => {
                   all courses
                 </h3>
               }
-              params={{ teacherId: isTeacher ? profileId?._id : null }}
+              params={{ teacherId: isTeacher ? profileId?.id : null }}
             />
             <SelectOptionInput
               label="exam type"

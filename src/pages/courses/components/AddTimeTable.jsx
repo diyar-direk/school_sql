@@ -24,7 +24,7 @@ const AddTimeTable = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      classId: isUpdate?.classId || "",
+      classId: isUpdate?.class || "",
       courseId,
       dayOfWeek: day,
       startTime: isUpdate?.startTime || "",
@@ -50,7 +50,7 @@ const AddTimeTable = ({
       isUpdate
         ? apiClient.updateData({
             data: formatInputsData(data),
-            id: isUpdate?._id,
+            id: isUpdate?.id,
           })
         : apiClient.addData(formatInputsData(data)),
     onSuccess: () => {

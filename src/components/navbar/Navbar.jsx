@@ -20,10 +20,10 @@ const Navbar = () => {
   const { isAdmin, isTeacher } = userDetails || {};
 
   const myProfilePath = isAdmin
-    ? pagesRoute.admin.view(userDetails?.profileId?._id)
+    ? pagesRoute.admin.view(userDetails?.profileId?.id)
     : isTeacher
-    ? pagesRoute.teacher.view(userDetails?.profileId?._id)
-    : pagesRoute.student.view(userDetails?.profileId?._id);
+    ? pagesRoute.teacher.view(userDetails?.profileId?.id)
+    : pagesRoute.student.view(userDetails?.profileId?.id);
 
   const location = useLocation();
   const [form, setForm] = useState("");

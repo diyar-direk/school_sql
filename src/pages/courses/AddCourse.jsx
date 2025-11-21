@@ -10,6 +10,7 @@ import SelectInputApi from "../../components/inputs/SelectInputApi";
 import { courseStatus } from "../../constants/enums";
 import axiosInstance from "../../utils/axios";
 import { useTranslation } from "react-i18next";
+import { formatInputsData } from "./../../utils/formatInputsData";
 const apiClient = new APIClient(endPoints.courses);
 
 const AddCourse = () => {
@@ -26,21 +27,21 @@ const AddCourse = () => {
   });
   const queryClient = useQueryClient();
   const handleSubmit = useMutation({
-    mutationFn: (data) => apiClient.addData(data),
+    mutationFn: (data) => apiClient.addData(formatInputsData(data)),
     onSuccess: (data) => {
       queryClient.invalidateQueries([endPoints.courses]);
-      addStudentCourse.mutate(data._id);
+      addStudentCourse.mutate(data.id);
     },
   });
   const addStudentCourse = useMutation({
     mutationFn: async (courseId) => {
       if (formik.values.students?.length > 0) {
         const docs = formik?.values?.students?.map((e) => ({
-          studentId: e._id,
+          studentId: e.id,
           courseId,
           status: courseStatus.Active,
         }));
-        await axiosInstance.patch(
+        await axiosInstance.post(
           `${endPoints["student-courses"]}/${endPoints["create-many"]}`,
           { docs }
         );
@@ -55,8 +56,8 @@ const AddCourse = () => {
 
   const multiSelect = useCallback(
     (value, field) => {
-      const prev = formik.values?.[field]?.map((s) => s?._id);
-      if (!prev.includes(value?._id)) {
+      const prev = formik.values?.[field]?.map((s) => s?.id);
+      if (!prev.includes(value?.id)) {
         const newValues = [...(formik?.values?.[field] || []), value];
         formik.setFieldValue(field, newValues);
       }
@@ -67,7 +68,7 @@ const AddCourse = () => {
   const ignoreSelect = useCallback(
     (value, field) => {
       const filterd = formik.values?.[field]?.filter(
-        (s) => s?._id !== value?._id
+        (s) => s?.id !== value?.id
       );
       formik.setFieldValue(field, filterd);
     },
@@ -121,8 +122,8 @@ const AddCourse = () => {
         <div className="flex wrap" style={{ marginTop: "10px" }}>
           <SelectInputApi
             endPoint={endPoints.students}
-            label={t("students")}
-            placeholder={t("students")}
+            label={t("navBar.students")}
+            placeholder={t("navBar.students")}
             optionLabel={(e) => `${e.firstName} ${e.lastName}`}
             isArray
             onChange={(e) => multiSelect(e, "students")}

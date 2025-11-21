@@ -8,7 +8,7 @@ const TeacherCourse = () => {
   const { data, loadMoreRef, isFetching } = useInfiniteFetch({
     endPoint: endPoints.courses,
     teacherId: id,
-    fields: "name,code,description",
+    fields: "name,code,description,id",
   });
   const courses = data?.pages?.[0]?.data;
   if (courses?.length === 0 && !isFetching) return <h3> no course yet </h3>;
@@ -19,8 +19,8 @@ const TeacherCourse = () => {
         {courses?.map((e) => (
           <Link
             className="teacher-course"
-            key={e?._id}
-            to={pagesRoute.courses.view(e?._id)}
+            key={e?.id}
+            to={pagesRoute.courses.view(e?.id)}
           >
             <div>
               <h3>name</h3>

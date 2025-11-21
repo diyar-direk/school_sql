@@ -88,7 +88,7 @@ const StudentProfile = () => {
           </div>
           <div className="flex">
             <h2>{t("students.phone")} :</h2>
-            <p>{data?.phoneNumber}</p>
+            <p>{data?.phone}</p>
           </div>
 
           <div className="flex">
@@ -126,7 +126,7 @@ const StudentProfile = () => {
       <div className="grid-3" style={{ marginTop: "10px" }}>
         {courses?.map((e) => (
           <StudentCourse
-            key={e?._id}
+            key={e?.id}
             data={e}
             studentId={id}
             setUpdatedCourse={setUpdatedCourse}

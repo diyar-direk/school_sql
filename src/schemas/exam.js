@@ -7,7 +7,7 @@ export const examSchema = yup.object({
     .required("You must choose the test material")
     .test("is-valid-course", "Invalid course value", (value) => {
       if (typeof value === "object" && value !== null) {
-        return !!value._id;
+        return !!value.id;
       }
       if (typeof value === "string") {
         return value.trim() !== "";

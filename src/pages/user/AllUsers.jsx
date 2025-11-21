@@ -40,7 +40,7 @@ const column = [
     name: "actions",
     headerName: "actions",
     getCell: ({ row }) => (
-      <Link className="center" to={pagesRoute.user.password(row?._id)}>
+      <Link className="center" to={pagesRoute.user.password(row?.id)}>
         <Button btnStyleType="outlined">
           <i className="fa-solid fa-key" />
           update password

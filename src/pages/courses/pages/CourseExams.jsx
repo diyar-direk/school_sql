@@ -103,14 +103,14 @@ const CourseExams = () => {
         getCell: ({ row }) => (
           <div className="flex gap-10 align-center">
             <AllowedTo roles={[roles.admin, roles.teacher]}>
-              <Link to={pagesRoute.exam.update(row?._id)}>
+              <Link to={pagesRoute.exam.update(row?.id)}>
                 <Button btnStyleType="outlined"> update</Button>
               </Link>
             </AllowedTo>
             {new Date(row.date).getTime() < Date.now() && (
               <Link
                 to={pagesRoute.examResult.page}
-                state={{ courseId: id, examId: row?._id }}
+                state={{ courseId: id, examId: row?.id }}
               >
                 <Button btnStyleType="outlined" btnType="save">
                   exam results

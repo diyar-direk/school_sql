@@ -25,7 +25,7 @@ const UpdateExamSchedule = () => {
   const formik = useFormik({
     initialValues: {
       title: data?.title || "",
-      courseId: data?.courseId || "",
+      courseId: data?.course || "",
       date: dateFormatter(data?.date || new Date()),
       duration: data?.duration || "",
       totalMarks: data?.totalMarks || "",
@@ -72,7 +72,7 @@ const UpdateExamSchedule = () => {
             optionLabel={(opt) => opt?.name}
             onChange={(opt) => formik.setFieldValue("courseId", opt)}
             errorText={formik.errors?.courseId}
-            params={{ teacherId: isTeacher ? profileId?._id : null }}
+            params={{ teacherId: isTeacher ? profileId?.id : null }}
           />
           <Input
             title={t("exam.date")}

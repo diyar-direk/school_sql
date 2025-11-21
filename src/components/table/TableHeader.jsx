@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 const TableHeader = ({
   selectable,
@@ -52,13 +53,21 @@ const TableHeader = ({
     [column, updateSortStatus, role]
   );
 
+  const location = useLocation();
+
   const selectAll = useCallback(() => {
     if (!data) return;
 
     setSelectedItems((prev) => {
-      const allIds = data
-        .filter((item) => item._id !== userDetails?._id)
-        .map((item) => item._id);
+      let allIds = [];
+      if (
+        location.pathname.includes("user") ||
+        location.pathname.includes("admin")
+      )
+        allIds = data
+          .filter((item) => item.id !== userDetails?.id)
+          .map((item) => item.id);
+      else allIds = data.map((item) => item.id);
 
       if (prev.size === allIds.length) {
         return new Set();
@@ -66,7 +75,7 @@ const TableHeader = ({
 
       return new Set(allIds);
     });
-  }, [data, userDetails, setSelectedItems]);
+  }, [data, userDetails, setSelectedItems, location.pathname]);
 
   return (
     <thead>
