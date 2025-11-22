@@ -20,7 +20,7 @@ const AddQuiz = () => {
   const { userDetails } = useAuth();
   const { profileId, role } = userDetails || {};
   const { state } = useLocation();
-  const { courseId } = state || {};
+  const courseId = state?.courseId ? JSON.parse(state?.courseId) : null;
   const { t } = useTranslation();
 
   const nav = useNavigate();
@@ -171,7 +171,8 @@ const AddQuiz = () => {
                             <SelectOptionInput
                               placeholder={
                                 formik.values?.questions[index]
-                                  ?.correctAnswer || t("quizzes.select_correct_answer")
+                                  ?.correctAnswer ||
+                                t("quizzes.select_correct_answer")
                               }
                               wrapperProps={{
                                 className:

@@ -53,11 +53,15 @@ const UpdateQuiz = () => {
         <Formik
           initialValues={{
             title: data?.title || "",
-            courseId: data?.courseId || "",
+            courseId: data?.Course || "",
             description: data?.description || "",
             date: dateFormatter(data?.date),
             duration: data?.duration || "",
-            questions: data?.questions || [],
+            questions:
+              data?.Questions?.map((q) => ({
+                ...q,
+                choices: q?.choices || q?.Choices || [],
+              })) || [],
           }}
           validationSchema={quizeSchema}
           enableReinitialize

@@ -137,7 +137,7 @@ const AllQuizes = () => {
         allowedTo: [roles.admin, roles.teacher],
         getCell: ({ row }) =>
           (role === roles.admin ||
-            row.courseId?.teacherId?.includes(profileId?.id)) && (
+            row.Course?.teacherId?.includes(profileId?.id)) && (
             <Link to={pagesRoute.quize.update(row?.id)}>
               <Button> update</Button>
             </Link>
@@ -172,7 +172,7 @@ const AllQuizes = () => {
     setFilters((prev) => ({
       ...prev,
       courseId_multi: coursesId.map((e) =>
-        role === roles.student ? e?.courseId?.id : e?.id
+        role === roles.student ? e?.courseId : e?.id
       ),
     }));
   }, [coursesId, role, profileId, getMyExams]);

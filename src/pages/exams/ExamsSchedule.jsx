@@ -114,7 +114,7 @@ const ExamSchedule = () => {
             <Link to={pagesRoute.exam.update(row?.id)}>
               <Button btnStyleType="outlined"> update</Button>
             </Link>
-            {new Date(row.date).getTime() >= Date.now() && (
+            {new Date(row.date).getTime() < Date.now() && (
               <Button
                 btnStyleType="outlined"
                 btnType="save"
@@ -154,7 +154,7 @@ const ExamSchedule = () => {
     setFilters((prev) => ({
       ...prev,
       courseId_multi: coursesId.map((e) =>
-        role === roles.student ? e?.courseId?.id : e?.id
+        role === roles.student ? e?.courseId : e?.id
       ),
     }));
   }, [coursesId, role, profileId, getMyExams]);

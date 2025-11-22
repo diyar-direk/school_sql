@@ -142,10 +142,12 @@ h2.time span {
 }
 
 @media (max-width: 1000px) {
-  .questions-space > div h2 {
+  .questions-space > div h2.true-false,
+  .questions-space > div article > label h4 {
     padding: 7px 20px;
     font-size: 18px;
   }
+
   .questions-space > div i {
     width: 35px;
     height: 35px;
@@ -161,9 +163,13 @@ h2.time span {
   .questions-space > div article > div {
     font-size: 17px;
   }
+  .questions-space > div h2 {
+    font-size: 18px;
+  }
 }
 @media (max-width: 800px) {
-  .questions-space > div h2 {
+  .questions-space > div h2.true-false,
+  .questions-space > div article > label h4 {
     padding: 6px 15px;
     font-size: 16px;
   }
@@ -191,9 +197,17 @@ h2.time span {
   .questions-space > div article > div {
     font-size: 14px;
   }
+  .questions-space > div article > label div::before {
+    width: 8px;
+    height: 8px;
+  }
+  .questions-space > div h2 {
+    font-size: 16px;
+  }
 }
 @media (max-width: 600px) {
-  .questions-space > div h2 {
+  .questions-space > div h2.true-false,
+  .questions-space > div article > label h4 {
     padding: 6px 10px;
     font-size: 15px;
   }
@@ -222,11 +236,17 @@ h2.time span {
   .questions-space > div article > div {
     font-size: 13px;
   }
+  .multi {
+    flex-direction: column;
+  }
+  .questions-space > div h2 {
+    font-size: 15px;
+  }
 }
 @media (max-width: 460px) {
   div.quiz-title > div h2,
   h2.time {
-    font-size: 15px;
+    font-size: 14px;
   }
   div.quiz-title > div h3 {
     font-size: 14px;
@@ -234,9 +254,10 @@ h2.time span {
   .questions-space > div i {
     width: 23px;
     height: 23px;
-    font-size: 10px;
+    font-size: 9px;
   }
-  .questions-space > div h2 {
+  .questions-space > div h2.true-false,
+  .questions-space > div article > label h4 {
     padding: 5px 8px;
     font-size: 13px;
   }
@@ -245,5 +266,12 @@ h2.time span {
   }
   .questions-space > div article > div {
     font-size: 11px;
+  }
+  .questions-space > div article > label div::before {
+    width: 7px;
+    height: 7px;
+  }
+  .questions-space > div h2 {
+    font-size: 14px;
   }
 }

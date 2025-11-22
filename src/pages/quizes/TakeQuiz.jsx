@@ -110,7 +110,7 @@ const TakeQuiz = () => {
     enableReinitialize: true,
     initialValues: {
       studentAnswers:
-        data?.questions?.map((q) => ({
+        data?.Questions?.map((q) => ({
           questionId: q.id,
           answer: "",
         })) || [],
@@ -169,7 +169,7 @@ const TakeQuiz = () => {
 
         <>
           <div className="center between quiz-title">
-            <h1 className="title">{data?.subjectId?.name}</h1>
+            <h1 className="title">{data?.Course?.name}</h1>
             <div>
               <h2 className="text-capitalize">{name}</h2>
               <h3 className="text-capitalize">
@@ -183,7 +183,7 @@ const TakeQuiz = () => {
             <span> {remainingTime} </span>
           </h2>
 
-          {data.questions.map((q, i) => (
+          {data?.Questions?.map((q, i) => (
             <div key={q.id} className="questions-space">
               <h3>{`Q-${i + 1}`}</h3>
 
@@ -191,7 +191,7 @@ const TakeQuiz = () => {
                 <div className="center wrap justify-start gap-10">
                   <h2 className="flex-1 true-false">{q.text}</h2>
                   <div className="flex gap-10">
-                    {Object.values(tofQuestionStatus).map((option) => {
+                    {Object.values(tofQuestionStatus)?.map((option) => {
                       const isActive =
                         formik.values.studentAnswers[i]?.answer === option;
                       return (
@@ -229,7 +229,7 @@ const TakeQuiz = () => {
                 <div className="center wrap justify-start gap-10">
                   <h2 className="flex-1">{q.text}</h2>
                   <article className="w-100 multi">
-                    {q.choices?.map((choice, index) => {
+                    {q?.Choices?.map((choice, index) => {
                       const isActive =
                         formik.values.studentAnswers[i]?.answer === choice.text;
 
