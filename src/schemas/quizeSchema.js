@@ -10,8 +10,8 @@ export const quizeSchema = Yup.object().shape({
       if (typeof value === "object" && value !== null) {
         return !!value.id;
       }
-      if (typeof value === "string") {
-        return value.trim() !== "";
+      if (typeof value === "number") {
+        return value > 0;
       }
       return false;
     }),

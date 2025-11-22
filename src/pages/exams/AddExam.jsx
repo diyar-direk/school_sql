@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 const apiClient = new APIClient(endPoints.exams);
 const AddExam = () => {
   const { state } = useLocation();
-  const courseId = state?.courseId || null;
+  const courseId = state?.courseId ? JSON.parse(state?.courseId) : null;
 
   const formik = useFormik({
     initialValues: {

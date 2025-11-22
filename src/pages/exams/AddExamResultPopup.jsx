@@ -39,9 +39,9 @@ const AddExamResultPopup = ({ examId }) => {
         ? `${formik?.values?.studentId?.firstName} ${formik?.values?.studentId?.lastName}`
         : "select student",
       optionLabel: (opt) => {
-        return `${opt?.studentId?.firstName} ${opt?.studentId?.middleName} ${opt?.studentId?.lastName}`;
+        return `${opt?.student?.firstName} ${opt?.student?.middleName} ${opt?.student?.lastName}`;
       },
-      onChange: (opt) => formik.setFieldValue("studentId", opt.studentId),
+      onChange: (opt) => formik.setFieldValue("studentId", opt.student),
       errorText: formik?.errors?.studentId,
     }),
     [formik]

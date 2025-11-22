@@ -11,7 +11,8 @@ const TeacherCourse = () => {
     fields: "name,code,description,id",
   });
   const courses = data?.pages?.[0]?.data;
-  if (courses?.length === 0 && !isFetching) return <h3> no course yet </h3>;
+  if (courses?.length === 0 && !isFetching)
+    return <h3 className="font-color"> no course yet </h3>;
 
   return (
     <>

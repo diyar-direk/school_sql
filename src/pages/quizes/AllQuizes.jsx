@@ -62,14 +62,14 @@ const AllQuizes = () => {
         hidden: true,
       },
       {
-        name: "courseId",
-        headerName: "courseId",
+        name: "Course",
+        headerName: "Course",
         getCell: ({ row }) => (
           <Link
             className="visit-text"
-            to={pagesRoute.courses.view(row?.courseId)}
+            to={pagesRoute.courses.view(row?.Course?.id)}
           >
-            {row?.courseId?.name}
+            {row?.Course?.name}
           </Link>
         ),
       },

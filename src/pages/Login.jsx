@@ -11,10 +11,18 @@ import { useAuth } from "../context/AuthContext";
 import { pagesRoute } from "./../constants/pagesRoute";
 import { roles } from "../constants/enums";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 const Login = () => {
   const nav = useNavigate();
   const { setUserDetails } = useAuth();
+
+  const token = Cookies.get("accessToken");
+
+  useEffect(() => {
+    if (token) nav("/");
+  }, [token, nav]);
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -62,9 +70,7 @@ const Login = () => {
     },
   });
 
-  const token = Cookies.get("accessToken");
   const { t } = useTranslation();
-  if (token) return nav("/");
 
   return (
     <main className="center section-color">

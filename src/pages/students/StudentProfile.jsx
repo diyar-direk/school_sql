@@ -122,7 +122,9 @@ const StudentProfile = () => {
           setIsUpdate={setUpdatedCourse}
         />
       </AllowedTo>
-      {courses?.length === 0 && !isFetching && <h3> no course yet </h3>}
+      {courses?.length === 0 && !isFetching && (
+        <h3 className="font-color"> no course yet </h3>
+      )}
       <div className="grid-3" style={{ marginTop: "10px" }}>
         {courses?.map((e) => (
           <StudentCourse

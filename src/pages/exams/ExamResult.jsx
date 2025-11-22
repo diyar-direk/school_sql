@@ -24,10 +24,7 @@ const column = [
     name: "studentId",
     headerName: "studentId",
     getCell: ({ row }) => (
-      <Link
-        className="visit-text"
-        to={pagesRoute.student.view(row?.studentId)}
-      >
+      <Link className="visit-text" to={pagesRoute.student.view(row?.studentId)}>
         {row?.student?.firstName} {row?.student?.middleName}
         {row?.student?.lastName}
       </Link>
@@ -129,11 +126,11 @@ const ExamResult = () => {
         : "all students",
       optionLabel: (opt) => {
         if (courseId)
-          return `${opt?.studentId?.firstName} ${opt?.studentId?.middleName} ${opt?.studentId?.lastName}`;
+          return `${opt?.student?.firstName} ${opt?.student?.middleName} ${opt?.student?.lastName}`;
         else return `${opt?.firstName} ${opt?.middleName} ${opt?.lastName}`;
       },
       onChange: (opt) =>
-        setFilters({ ...filters, studentId: courseId ? opt.studentId : opt }),
+        setFilters({ ...filters, studentId: courseId ? opt.student : opt }),
     }),
     [courseId, filters]
   );
@@ -146,12 +143,12 @@ const ExamResult = () => {
           <AllowedTo roles={[roles.teacher, roles.admin]}>
             <div className="flex-1"></div>
             <Delete
-              queryKey={endPoints.exams}
+              queryKey={endPoints["exam-results"]}
               data={data}
               selectedItems={selectedItems}
               setPage={setPage}
               setSelectedItems={setSelectedItems}
-              endPoint={endPoints.exams}
+              endPoint={endPoints["exam-results"]}
             />
             {courseId ? (
               <AddExamResultPopup examId={examId} />

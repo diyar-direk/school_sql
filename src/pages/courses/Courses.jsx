@@ -135,7 +135,7 @@ const Courses = () => {
               <SelectInputApi
                 endPoint={endPoints.teachers}
                 label="teacher"
-                onChange={(e) => setFilter(e)}
+                onChange={(e) => setFilter({ teacherId: e })}
                 optionLabel={(e) =>
                   `${e.firstName} ${e.middleName} ${e.lastName}`
                 }
