@@ -27,7 +27,7 @@ const AddAttendance = ({ selectedData, onClose }) => {
     },
   });
   const handleDelete = useMutation({
-    mutationFn: () => deleteAttendance([id]),
+    mutationFn: () => deleteAttendance(id),
     onSuccess: () => {
       queryClient.invalidateQueries([endPoints.attendances, courseId]);
       onClose();

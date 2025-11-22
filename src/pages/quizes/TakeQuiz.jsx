@@ -9,6 +9,7 @@ import { endPoints } from "../../constants/endPoints";
 import { useFormik } from "formik";
 import {
   courseStatus,
+  examTypes,
   questionTypes,
   tofQuestionStatus,
 } from "../../constants/enums";
@@ -34,10 +35,16 @@ const TakeQuiz = () => {
     },
   });
 
-  const { data: canTake, isLoading: checkingLoading } = useQuery({
-    queryKey: [endPoints["student-courses"], profileId?.id, id],
+  const { data: result, isLoading: checkingLoading } = useQuery({
+    queryKey: [
+      endPoints["student-courses"],
+      profileId?.id,
+      id,
+      endPoints["exam-results"],
+    ],
+
     queryFn: async () => {
-      const { data: res } = await axiosInstance.get(
+      const { data: courseRes } = await axiosInstance.get(
         endPoints["student-courses"],
         {
           params: {
@@ -50,8 +57,30 @@ const TakeQuiz = () => {
         }
       );
 
-      return res?.total > 0 || false;
+      const hasCourse = courseRes?.total > 0;
+
+      const { data: gradeRes } = await axiosInstance.get(
+        endPoints["exam-results"],
+        {
+          params: {
+            studentId: profileId?.id,
+            examId: id,
+            type: examTypes.Quiz,
+            limit: 1,
+            page: 1,
+          },
+        }
+      );
+
+      const hasGrade = gradeRes?.total > 0;
+      const grade = hasGrade ? gradeRes?.data?.[0]?.score : null;
+
+      return {
+        canTake: hasCourse && !hasGrade,
+        grade,
+      };
     },
+
     enabled: Boolean(data),
   });
 
@@ -116,7 +145,7 @@ const TakeQuiz = () => {
         })) || [],
       quizId: id,
     },
-    onSubmit: (v) => canTake && submitQuiz.mutate(v),
+    onSubmit: (v) => result?.canTake && submitQuiz.mutate(v),
   });
 
   if (checkingLoading)
@@ -126,25 +155,21 @@ const TakeQuiz = () => {
       </div>
     );
 
-  if (!canTake)
+  if (result?.grade) {
     return (
-      <div className="container">
-        <h1 className="center text-capitalize font-color">
-          you can not take this quize
-        </h1>
-      </div>
+      <p className="center text-capitalize font-color">
+        علامتك السابقة: {result.grade}
+      </p>
     );
+  }
 
-  if (formik?.errors?.server)
+  if (!result?.canTake && !checkingLoading) {
     return (
-      <h1 className="center text-capitalize font-color">
-        {formik?.errors?.server?.note}
-        <br />
-        {formik?.errors?.server?.message}
-        <br />
-        your score is {formik?.errors?.server?.examResult?.score}
-      </h1>
+      <p className="center text-capitalize font-color">
+        لا يمكنك تقديم هذا الامتحان
+      </p>
     );
+  }
 
   if (isLoading)
     return (

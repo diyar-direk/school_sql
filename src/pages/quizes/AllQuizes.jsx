@@ -137,7 +137,7 @@ const AllQuizes = () => {
         allowedTo: [roles.admin, roles.teacher],
         getCell: ({ row }) =>
           (role === roles.admin ||
-            row.Course?.teacherId?.includes(profileId?.id)) && (
+            row.Course?.teacherId?.some((id) => id.id === profileId?.id)) && (
             <Link to={pagesRoute.quize.update(row?.id)}>
               <Button> update</Button>
             </Link>

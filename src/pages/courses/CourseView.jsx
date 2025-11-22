@@ -60,10 +60,7 @@ const CourseView = () => {
             <h2>{t("students.teachers")} :</h2>
             <p>
               {spritObject(data?.teacherId, (e) => (
-                <Link
-                  to={pagesRoute.teacher.view(e.id)}
-                  className="visit-text"
-                >
+                <Link to={pagesRoute.teacher.view(e.id)} className="visit-text">
                   {e.firstName} {e.lastName}
                 </Link>
               ))}
