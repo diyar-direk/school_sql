@@ -50,6 +50,7 @@ class APIClient {
     const { data } = await axiosInstance.get(this.endPoint, {
       params: paramFilters,
     });
+    console.log(data);
 
     const { total, data: d } = data;
 

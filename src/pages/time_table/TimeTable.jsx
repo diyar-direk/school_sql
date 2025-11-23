@@ -144,9 +144,9 @@ const TimeTable = () => {
       <div className="table-container flex-1">
         <TableToolBar>
           <div className="time-table">
-            <h2 onClick={decrement}>{t("common.prev")}</h2>
+            <h2 onClick={decrement}>{t("timeTable.prev_day")}</h2>
             <h2 className="active">{t(`days.${daysOfWeek[dayNumber]}`)}</h2>
-            <h2 onClick={increment}>{t("common.next")}</h2>
+            <h2 onClick={increment}>{t("timeTable.next_day")}</h2>
           </div>
           <AllowedTo roles={[roles.admin]}>
             <IconButton

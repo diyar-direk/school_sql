@@ -87,7 +87,7 @@ const navbarLinks = [
   },
 
   {
-    title: "navBar.timeTable",
+    title: "navBar.time_table",
     type: "single",
     showIf: [roles.admin, roles.teacher, roles.student],
     icon: <i className="fa-solid fa-table-list" />,
@@ -130,12 +130,12 @@ const navbarLinks = [
     icon: <i className="fa-solid fa-pen-nib" />,
     children: [
       {
-        title: "navBar.courses",
+        title: "navBar.subjects",
         showIf: [roles.admin, roles.teacher, roles.student],
         to: pagesRoute.courses.page,
       },
       {
-        title: "navBar.add_course",
+        title: "navBar.add_subjects",
         showIf: [roles.admin],
         to: pagesRoute.courses.add,
       },

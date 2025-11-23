@@ -275,7 +275,8 @@
     "first_name": "الاسم الأول:",
     "last_name": "اسم العائلة:",
     "role": "الدور:",
-    "email": "البريد الإلكتروني:"
+    "email": "البريد الإلكتروني:",
+    "courses": "المواد "
   },
   "users": {
     "all_users": "جميع المستخدمين",
@@ -427,13 +428,33 @@
     "submit": "إرسال",
     "cancel": "إلغاء"
   },
-  "days":{
-    "Sunday":"الاحد",
-    "Monday":"الاثنين",
-    "Tuesday":"الثلثاء",
-    "Wednesday":"الاربعاء",
-    "Thursday":"الخميس",
-    "Friday":"الجمعة",
-    "Saturday":"السبت"
+  "days": {
+    "Sunday": "الاحد",
+    "Monday": "الاثنين",
+    "Tuesday": "الثلثاء",
+    "Wednesday": "الاربعاء",
+    "Thursday": "الخميس",
+    "Friday": "الجمعة",
+    "Saturday": "السبت"
+  },
+  "data_count": " عدد البيانات ",
+  "filters": {
+    "confirm_deletion": " هل أنت متأكد أنك تريد الحذف؟ ",
+    "yes": "نعم",
+    "NO": "لا",
+    "course": " المادة ",
+    "any_course": " اي مادة ",
+    "class": "  الفصل ",
+    "any_class": "  اي فصل ",
+    "year_level": "   المستوى الدراسي ",
+    "any_year_level": " اي مستوى دراسي ",
+    "gender": " الجنس ",
+    "any_gender": " اي جنس ",
+    "male": " ذكر",
+    "female": " انثى",
+    "all": " الكل ",
+    "apply_filters": " تطبيق الفلاتر ",
+    "reset_filters": " إعادة تعيين الفلاتر ",
+    "search": " بحث "
   }
 }

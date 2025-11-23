@@ -275,6 +275,7 @@
     "first_name": "Navê Destpêkê :",
     "last_name": "Paşnav :",
     "role": "Rol :",
+    "courses": "Courses :",
     "email": "Email :"
   },
   "users": {
@@ -427,13 +428,33 @@
     "submit": "Bişîne",
     "cancel": "Iptal Bike"
   },
-  "days":{
-    "Sunday":"Yekşem",
-    "Monday":"Duşem",
-    "Tuesday":"Sêşem",
-    "Wednesday":"Çarşem",
-    "Thursday":"Pêncşem",
-    "Friday":"În",
-    "Saturday":"Şemî"
+  "days": {
+    "Sunday": "Yekşem",
+    "Monday": "Duşem",
+    "Tuesday": "Sêşem",
+    "Wednesday": "Çarşem",
+    "Thursday": "Pêncşem",
+    "Friday": "În",
+    "Saturday": "Şemî"
+  },
+  "data_count": " Hejmara Daneyan ",
+  "filters": {
+    "confirm_deletion": "Ma Hûn Guman Dikin Ku Hûn Dıxwazin Vê Tiştê Jê Bikin?",
+    "yes": "Erê",
+    "NO": "Na",
+    "course": "",
+    "any_course": "  ",
+    "class": "   ",
+    "any_class": "    ",
+    "year_level": "     ",
+    "any_year_level": "    ",
+    "gender": "  ",
+    "any_gender": "   ",
+    "male": " ",
+    "female": " ",
+    "all": "  ",
+    "apply_filters": "   ",
+    "reset_filters": "    ",
+    "search": "  "
   }
 }

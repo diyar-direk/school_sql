@@ -13,7 +13,6 @@ const Navbar = () => {
   const context = useContext(Context);
   const { userDetails, logout } = useAuth();
   const { t, i18n } = useTranslation();
-
   const name =
     userDetails?.profileId?.firstName + " " + userDetails?.profileId?.lastName;
 

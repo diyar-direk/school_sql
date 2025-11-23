@@ -1,4 +1,5 @@
 import { memo, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "../buttons/Button";
 import { limit } from "../../constants/enums";
@@ -59,6 +60,7 @@ const Paginations = ({
     setSelectedItems(new Set());
   }, [setPage, setSelectedItems]);
 
+  const { t } = useTranslation();
   return (
     <footer className="pagination">
       <div className="page-container">
@@ -99,7 +101,7 @@ const Paginations = ({
       </div>
       {dataLength > 0 && (
         <h2 className="data-count">
-          data length : <span>{dataLength}</span>
+          {t("data_count")} <span>{dataLength}</span>
         </h2>
       )}
     </footer>

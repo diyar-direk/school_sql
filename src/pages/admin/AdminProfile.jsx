@@ -61,7 +61,8 @@ const AdminProfile = () => {
                   (data?.maleStudentCount || 0)
                 }` || "0"}
               </p>
-              {t("dashboard.students")}
+              {console.log(t("dashboard.students"))}
+              {t("dashboard.stundets")}
             </h2>
             <div className="flex gap-20">
               <h3 className="center flex-direction">
