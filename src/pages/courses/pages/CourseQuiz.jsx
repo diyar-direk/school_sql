@@ -115,9 +115,10 @@ const CourseQuiz = () => {
           return (
             <div className="flex gap-10 align-center">
               {(role === roles.admin ||
-                row.Course?.teacherId?.some(
-                  (id) => id.id === profileId?.id
-                )) && (
+                (role === roles.teacher &&
+                  row.Course?.teacherId?.some(
+                    (id) => id.id === profileId?.id
+                  ))) && (
                 <Link to={pagesRoute.quize.update(row?.id)}>
                   <Button> update</Button>
                 </Link>
