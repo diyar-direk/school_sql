@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const TableHeader = ({
   selectable,
@@ -28,6 +29,7 @@ const TableHeader = ({
 
   const { userDetails } = useAuth();
   const role = userDetails?.role;
+  const { t } = useTranslation();
 
   const header = useMemo(
     () =>
@@ -36,9 +38,7 @@ const TableHeader = ({
           !th.hidden &&
           (!th.allowedTo || th?.allowedTo?.includes(role)) && (
             <th key={th.headerName}>
-              {typeof th.headerName === "function"
-                ? th.headerName()
-                : th.headerName}
+              {t(th.headerName)}
               {th.sort && (
                 <i
                   className="fa-solid fa-chevron-right sort"
@@ -50,7 +50,7 @@ const TableHeader = ({
             </th>
           )
       ),
-    [column, updateSortStatus, role]
+    [column, updateSortStatus, role, t]
   );
 
   const location = useLocation();
