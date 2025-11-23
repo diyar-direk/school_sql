@@ -44,20 +44,20 @@ const CourseView = () => {
           )}
 
           <div className="flex">
-            <h2>{t("course.name")} :</h2>
+            <h2>{t("subject.name")} :</h2>
             <p>{data?.name}</p>
           </div>
           <div className="flex">
-            <h2>{t("course.code")} :</h2>
+            <h2>{t("subject.code")} :</h2>
             <p>{data?.code}</p>
           </div>
           <div className="flex">
-            <h2>{t("course.description")} :</h2>
+            <h2>{t("subject.description")} :</h2>
             <p>{data?.description}</p>
           </div>
 
           <div className="flex">
-            <h2>{t("students.teachers")} :</h2>
+            <h2>{t("navBar.teachers")} :</h2>
             <p>
               {spritObject(data?.teacherId, (e) => (
                 <Link to={pagesRoute.teacher.view(e.id)} className="visit-text">
@@ -67,7 +67,7 @@ const CourseView = () => {
             </p>
           </div>
           <div className="flex">
-            <h2>{t("students.created_at")} :</h2>
+            <h2>{t("createdAt")} :</h2>
             <p>{dateFormatter(data?.createdAt, "fullDate")}</p>
           </div>
         </div>

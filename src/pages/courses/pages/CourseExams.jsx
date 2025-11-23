@@ -17,6 +17,7 @@ import SelectOptionInput from "../../../components/inputs/SelectOptionInput";
 import Button from "../../../components/buttons/Button";
 import { useAuth } from "../../../context/AuthContext";
 import { formatInputsData } from "../../../utils/formatInputsData";
+import { useTranslation } from "react-i18next";
 
 const apiClient = new APIClient(endPoints.exams);
 const CourseExams = () => {
@@ -62,23 +63,23 @@ const CourseExams = () => {
     () => [
       {
         name: "title",
-        headerName: "title",
+        headerName: "quizzes.title",
         sort: true,
       },
       {
         name: "date",
-        headerName: "date",
+        headerName: "exams.date",
         sort: true,
         getCell: ({ row }) => dateFormatter(row.date, "fullDate"),
       },
       {
         name: "duration",
-        headerName: "duration",
+        headerName: "exams.duration",
         sort: true,
       },
       {
         name: "totalMarks",
-        headerName: "totalMarks",
+        headerName: "exams.total_marks",
         sort: true,
       },
       {
@@ -124,6 +125,7 @@ const CourseExams = () => {
     [id]
   );
 
+  const { t } = useTranslation();
   return (
     <div className="table-container flex-1">
       <TableToolBar>
@@ -149,13 +151,23 @@ const CourseExams = () => {
         </AllowedTo>
         <Filters>
           <SelectOptionInput
-            label="exam type"
-            addOption={<h3 onClick={() => setFilters({})}>any type</h3>}
+            label={t("filters.exam_type")}
+            addOption={
+              <h3 onClick={() => setFilters({})}>{t("filters.all")}</h3>
+            }
             options={[
-              { text: "finished", value: Date.now(), enum: "date[lt]" },
-              { text: "not finished", value: Date.now(), enum: "date[gte]" },
+              {
+                text: t("filters.finished"),
+                value: Date.now(),
+                enum: "date[lt]",
+              },
+              {
+                text: t("filters.not_finished"),
+                value: Date.now(),
+                enum: "date[gte]",
+              },
             ]}
-            placeholder={dateText || "any type"}
+            placeholder={dateText || t("filters.any")}
             onSelectOption={(opt) => setFilters({ [opt.enum]: opt })}
           />
         </Filters>

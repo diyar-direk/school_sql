@@ -3,6 +3,7 @@ import Button from "../buttons/Button";
 import { useDebounce } from "use-debounce";
 import { useInfiniteFetch } from "../../hooks/useInfiniteFetch";
 import "./inputs.css";
+import { useTranslation } from "react-i18next";
 
 /**
  * @typedef {Object} SelectInputApiProps
@@ -38,7 +39,7 @@ const SelectInputApi = ({
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, delay);
-
+  const { t } = useTranslation();
   const { data, loadMoreRef, isFetching } = useInfiniteFetch({
     endPoint: endPoint,
     limit: 3,
@@ -116,7 +117,7 @@ const SelectInputApi = ({
                 setSearch(e.target.value.toLowerCase());
                 setSelectedIndex(-1);
               }}
-              placeholder="search about ..."
+              placeholder={t("filters.search")}
               onKeyDown={handleKeyDown}
               id="search"
             />
@@ -136,7 +137,9 @@ const SelectInputApi = ({
                 {optionLabel(itm)}
               </h3>
             ))}
-            {isFetching && <p className="font-color">loading...</p>}
+            {isFetching && (
+              <p className="font-color">{t("teachers.loading")}</p>
+            )}
           </article>
         </div>
       </div>

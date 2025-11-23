@@ -57,7 +57,7 @@ const Classes = () => {
 
   const column = useMemo(
     () => [
-      { name: "name", headerName: "name", sort: true },
+      { name: "name", headerName: "class.name", sort: true },
       {
         name: "createdAt",
         headerName: "createdAt",
@@ -104,10 +104,10 @@ const Classes = () => {
               value={formik?.values?.name}
             />
             <div className="actions">
-              <Button>save</Button>
+              <Button> {t("save")}</Button>
               {isUpdate && (
                 <Button btnType="cancel" onClick={() => setIsUpdate(false)}>
-                  cancle
+                  {t("admins.cancel_btn")}
                 </Button>
               )}
             </div>

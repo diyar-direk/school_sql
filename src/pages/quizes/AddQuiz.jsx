@@ -78,10 +78,11 @@ const AddQuiz = () => {
 
                   {!courseId && (
                     <SelectInputApi
-                      label="course"
+                      label={t("quizzes.subject")}
                       optionLabel={(e) => e?.name}
                       placeholder={
-                        formik.values?.courseId?.name || "select course"
+                        formik.values?.courseId?.name ||
+                        t("quizzes.subject_placeholder")
                       }
                       endPoint={endPoints.courses}
                       onChange={(e) => formik.setFieldValue("courseId", e)}
@@ -104,10 +105,10 @@ const AddQuiz = () => {
 
                   <Input
                     errorText={formik.errors?.duration}
-                    title={t("quizzes?.duration")}
+                    title={t("quizzes.duration")}
                     name="duration"
                     onChange={formik.handleChange}
-                    placeholder={t("quizzes?.duration")}
+                    placeholder={t("quizzes.duration_palceholder")}
                     value={formik?.values?.duration}
                     type="number"
                   />
@@ -125,7 +126,7 @@ const AddQuiz = () => {
                 </div>
               </div>
               <h1 style={{ color: "var(--font-color)", marginBottom: "10px" }}>
-                {t("quizzes.questions")}
+                {t("quizzes.add_questions")}
               </h1>
 
               <FieldArray name="questions">
@@ -146,7 +147,9 @@ const AddQuiz = () => {
                           <Input
                             errorText={questionError?.text}
                             title={`${t("quizzes.question")} ${index + 1}`}
-                            placeholder={t("quizzes.enter_question_text")}
+                            placeholder={t(
+                              "quizzes.question_title_placeholder"
+                            )}
                             name={`questions[${index}].text`}
                             onChange={formik.handleChange}
                             value={q.text}
@@ -155,8 +158,10 @@ const AddQuiz = () => {
                           />
 
                           <SelectOptionInput
-                            placeholder={q.type || t("quizzes.select_type")}
-                            label={t("quizzes.select_type")}
+                            placeholder={
+                              q.type || t("quizzes.select_question_type")
+                            }
+                            label={t("quizzes.select_question_type")}
                             options={questionTypeOptions}
                             errorText={questionError?.type}
                             onSelectOption={(e) =>
@@ -322,9 +327,10 @@ const AddQuiz = () => {
                           })
                         }
                       >
-                        <i className="fa-solid fa-plus" /> Add Question
+                        <i className="fa-solid fa-plus" />
+                        {t("quizzes.add_questions")}
                       </Button>
-                      <Button type="submit">submit</Button>
+                      <Button type="submit">{t("quizzes.save")}</Button>
                     </div>
                   </div>
                 )}

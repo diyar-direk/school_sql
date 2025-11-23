@@ -77,31 +77,31 @@ const AddCourse = () => {
 
   return (
     <div className="container relative">
-      <h1 className="title">{t("course.add_course")}</h1>
+      <h1 className="title">{t("navBar.add_subjects")}</h1>
 
       <form onSubmit={formik.handleSubmit} className="relative dashboard-form">
         <h1>{t("exams.please_complete_form")}</h1>
         <div className="flex wrap">
           <Input
-            title={t("course.name")}
+            title={t("subject.name")}
             onInput={formik.handleChange}
             value={formik.values.name}
-            placeholder={t("course.name_placeholder")}
+            placeholder={t("subject.name_placeholder")}
             name="name"
             errorText={formik.errors?.name}
           />
           <Input
-            title={t("course.code")}
+            title={t("subject.code")}
             onInput={formik.handleChange}
             value={formik.values.code}
-            placeholder={t("course.code_placeholder")}
+            placeholder={t("subject.code_placeholder")}
             name="code"
             errorText={formik.errors?.code}
           />
           <SelectInputApi
             endPoint={endPoints.teachers}
-            label="teahcers"
-            placeholder="course teachers"
+            label={t("navBar.teachers")}
+            placeholder={t("navBar.teachers")}
             optionLabel={(e) => `${e.firstName} ${e.lastName}`}
             isArray
             onChange={(e) => multiSelect(e, "teacherId")}
@@ -109,10 +109,10 @@ const AddCourse = () => {
             onIgnore={(e) => ignoreSelect(e, "teacherId")}
           />
           <Input
-            title={t("course.desc")}
+            title={t("subject.description")}
             onInput={formik.handleChange}
             value={formik.values.description}
-            placeholder={t("course.desc_placeholder")}
+            placeholder={t("subject.description_placeholder")}
             name="description"
             errorText={formik.errors?.description}
             elementType="textarea"

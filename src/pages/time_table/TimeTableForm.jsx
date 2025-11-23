@@ -10,9 +10,11 @@ import { useCallback } from "react";
 import APIClient from "../../utils/ApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatInputsData } from "../../utils/formatInputsData";
+import { useTranslation } from "react-i18next";
 const apiClient = new APIClient(endPoints["time-table"]);
 
 const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
+  const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       classId: isUpdate?.class || "",
@@ -54,22 +56,26 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
       <form onSubmit={formik.handleSubmit}>
         <SelectInputApi
           endPoint={endPoints.courses}
-          label="course"
+          label={t("timeTable.subject")}
           optionLabel={(e) => e?.name}
-          placeholder={formik.values?.courseId?.name || "select course"}
+          placeholder={
+            formik.values?.courseId?.name || t("timeTable.subject_placeholder")
+          }
           onChange={(e) => formik.setFieldValue("courseId", e)}
           errorText={formik?.errors?.courseId}
         />
         <SelectInputApi
           endPoint={endPoints.classes}
-          label="class"
+          label={t("error.Class")}
           optionLabel={(e) => e?.name}
-          placeholder={formik.values?.classId?.name || "select class"}
+          placeholder={
+            formik.values?.classId?.name || t("attendance.class_placeholder")
+          }
           onChange={(e) => formik.setFieldValue("classId", e)}
           errorText={formik?.errors?.classId}
         />
         <Input
-          title="start time"
+          title={t("timeTable.start_time")}
           type="time"
           name="startTime"
           onChange={formik.handleChange}
@@ -79,10 +85,10 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
 
         <div className="actions">
           <Button type="submit" isSending={handleConfirm.isPending}>
-            save
+            {t("save")}
           </Button>
           <Button btnType="cancel" type="button" onClick={handleClose}>
-            cancel
+            {t("admins.cancel_btn")}
           </Button>
         </div>
       </form>

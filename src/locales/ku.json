@@ -233,6 +233,8 @@
     "code_placeholder": "Koda Biranş Derbas Bike",
     "year_level": "Asta Xwendinê",
     "year_level_placeholder": "Asta Xwendinê Hilbijêre",
+    "description": "Danasîn",
+    "description_placeholder": "Danasîna Biranş Derbas Bike",
     "create_btn": "Çêkirin",
     "all_subjects": "Hemû Biranş",
     "delete": "Jêbirin",
@@ -368,6 +370,7 @@
     "confirm_delete": "Jêbirinê Tekez Bike",
     "cancel_btn": "Iptal Bike",
     "update": "Nûkirin",
+    "select_question_type": "",
     "delete": "Jêbirin",
     "t_f": "Rast || Şaş",
     "multiple": "Vebijarkên Pirjimar",
@@ -455,6 +458,19 @@
     "all": "  ",
     "apply_filters": "   ",
     "reset_filters": "    ",
+    "finished": "  ",
+    "exam_type": "   ",
+    "any": "   ",
+    "not_finished": "   ",
+    "my_exams": "   ",
+    "my_quizzes": "   ",
     "search": "  "
-  }
+  },
+  "createdAt": " ",
+  "updatedAt": "  ",
+  "actions": "  ",
+  "save": "  ",
+  "view": "  ",
+  "update": "  ",
+  "reset_columns": ""
 }

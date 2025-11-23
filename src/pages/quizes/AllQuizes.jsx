@@ -20,6 +20,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./quiz.css";
 import { getMyExamsApi } from "../exams/api";
 import SelectOptionInput from "../../components/inputs/SelectOptionInput";
+import { useTranslation } from "react-i18next";
 
 const apiClient = new APIClient(endPoints.quizzes);
 const AllQuizes = () => {
@@ -54,16 +55,16 @@ const AllQuizes = () => {
     () => [
       {
         name: "title",
-        headerName: "title",
+        headerName: "quizzes.title",
       },
       {
         name: "description",
-        headerName: "description",
+        headerName: "quizzes.discreption",
         hidden: true,
       },
       {
         name: "Course",
-        headerName: "Course",
+        headerName: "quizzes.subject",
         getCell: ({ row }) => (
           <Link
             className="visit-text"
@@ -75,18 +76,18 @@ const AllQuizes = () => {
       },
       {
         name: "date",
-        headerName: "date",
+        headerName: "quizzes.date",
         sort: true,
         getCell: ({ row }) => dateFormatter(row.date, "fullDate"),
       },
       {
         name: "duration",
-        headerName: "duration",
+        headerName: "quizzes.duration",
         sort: true,
       },
       {
         name: "totalMarks",
-        headerName: "totalMarks",
+        headerName: "exams.total_marks",
         sort: true,
       },
       {
@@ -178,9 +179,10 @@ const AllQuizes = () => {
   }, [coursesId, role, profileId, getMyExams]);
 
   const [selectedItems, setSelectedItems] = useState(new Set());
+  const { t } = useTranslation();
   return (
     <div className="container">
-      <h1 className="title">lang.quizes</h1>
+      <h1 className="title">{t("quizzes.all_quizzes")}</h1>
       <div className="table-container flex-1">
         <TableToolBar>
           <Search setSearch={setSearch} />
@@ -200,13 +202,13 @@ const AllQuizes = () => {
           <Filters>
             <SelectInputApi
               endPoint={endPoints.courses}
-              label="course"
-              placeholder={filters?.courseId?.name || "all courses"}
+              label={t("quizzes.subject")}
+              placeholder={filters?.courseId?.name || t("filters.all")}
               optionLabel={(opt) => opt?.name}
               onChange={(opt) => setFilters({ ...filters, courseId: opt })}
               addOption={
                 <h3 onClick={() => setFilters({ ...filters, courseId: null })}>
-                  all courses
+                  {t("filters.all")}
                 </h3>
               }
               params={{ teacherId: isTeacher ? profileId?.id : null }}
@@ -214,8 +216,10 @@ const AllQuizes = () => {
 
             <AllowedTo roles={[roles.teacher, roles.student]}>
               <SelectOptionInput
-                label="exam"
-                placeholder={getMyExams ? "my exams" : "all"}
+                label={t("navBar.quiz")}
+                placeholder={
+                  getMyExams ? t("filters.my_quizzes") : t("filters.all")
+                }
                 onSelectOption={() => setGetMyExams(true)}
                 options={[{ text: "my exams" }]}
                 addOption={<h3 onClick={() => setGetMyExams(false)}>all</h3>}

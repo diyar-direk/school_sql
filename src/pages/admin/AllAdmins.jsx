@@ -25,20 +25,20 @@ const column = [
   { name: "email", headerName: "admins.email" },
   {
     name: "createdAt",
-    headerName: "admins.createdAt",
+    headerName: "created_at",
     sort: true,
     getCell: ({ row }) => dateFormatter(row.createdAt, "fullDate"),
   },
   {
     name: "updatedAt",
-    headerName: "admins.updatedAt",
+    headerName: "updated_at",
     sort: true,
     hidden: true,
     getCell: ({ row }) => dateFormatter(row.updatedAt, "fullDate"),
   },
   {
     name: "actions",
-    headerName: "admins.actions",
+    headerName: "actions",
     className: "center",
     getCell: ({ row }) => (
       <Link to={pagesRoute.admin.update(row.id)}>

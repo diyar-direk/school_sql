@@ -18,13 +18,14 @@ import { useAuth } from "../../context/AuthContext";
 import Filters from "../../components/table_toolbar/Filters";
 import SelectInputApi from "./../../components/inputs/SelectInputApi";
 import { formatInputsData } from "./../../utils/formatInputsData";
+import { useTranslation } from "react-i18next";
 
 const apiClient = new APIClient(endPoints.courses);
 
 const column = [
   {
     name: "name",
-    headerName: "name",
+    headerName: "subject.name",
     sort: true,
     getCell: ({ row }) => (
       <Link className="visit-text" to={pagesRoute.courses.view(row.id)}>
@@ -32,11 +33,11 @@ const column = [
       </Link>
     ),
   },
-  { name: "code", headerName: "code" },
+  { name: "code", headerName: "subject.code" },
   { name: "description", headerName: "description", hidden: true },
   {
     name: "teacherId",
-    headerName: "teachers",
+    headerName: "navBar.teachers",
     getCell: ({ row }) =>
       spritObject(row.teacherId, (e) => (
         <Link to={pagesRoute.teacher.view(e.id)} className="visit-text">
@@ -115,9 +116,10 @@ const Courses = () => {
 
   const [selectedItems, setSelectedItems] = useState(new Set());
 
+  const { t } = useTranslation();
   return (
     <div className="container">
-      <h1 className="title">subject</h1>
+      <h1 className="title">{t("navBar.subjects")}</h1>
       <div className="table-container flex-1">
         <TableToolBar>
           <Search setSearch={setSearch} />
@@ -134,7 +136,7 @@ const Courses = () => {
             <Filters>
               <SelectInputApi
                 endPoint={endPoints.teachers}
-                label="teacher"
+                label={t("navBar.teachers")}
                 onChange={(e) => setFilter({ teacherId: e })}
                 optionLabel={(e) =>
                   `${e.firstName} ${e.middleName} ${e.lastName}`
@@ -142,7 +144,7 @@ const Courses = () => {
                 placeholder={
                   filter?.teacherId
                     ? `${filter?.teacherId?.firstName} ${filter?.teacherId?.lastName}`
-                    : "any teacher"
+                    : t("filters.all")
                 }
               />
             </Filters>

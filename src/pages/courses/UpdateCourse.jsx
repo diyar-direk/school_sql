@@ -74,25 +74,25 @@ const UpdateCourse = () => {
         <h1>{t("exams.please_complete_form")}</h1>
         <div className="flex wrap">
           <Input
-            title={t("course.name")}
+            title={t("subject.name")}
             onInput={formik.handleChange}
             value={formik.values.name}
-            placeholder={t("course.name")}
+            placeholder={t("subject.name")}
             name="name"
             errorText={formik.errors?.name}
           />
           <Input
-            title={t("course.code")}
+            title={t("subject.code")}
             onInput={formik.handleChange}
             value={formik.values.code}
-            placeholder={t("course.code")}
+            placeholder={t("subject.code")}
             name="code"
             errorText={formik.errors?.code}
           />
           <SelectInputApi
             endPoint={endPoints.teachers}
-            label="teahcers"
-            placeholder="course teachers"
+            label={t("navBar.teachers")}
+            placeholder={t("navBar.teachers")}
             optionLabel={(e) => `${e.firstName} ${e.lastName}`}
             isArray
             onChange={(e) => selectTeachers(e)}
@@ -100,10 +100,10 @@ const UpdateCourse = () => {
             onIgnore={(e) => ignoreTeacher(e)}
           />
           <Input
-            title={t("course.desc")}
+            title={t("subject.description")}
             onInput={formik.handleChange}
             value={formik.values.description}
-            placeholder={t("course.desc")}
+            placeholder={t("subject.description_placeholder")}
             name="description"
             errorText={formik.errors?.description}
             elementType="textarea"

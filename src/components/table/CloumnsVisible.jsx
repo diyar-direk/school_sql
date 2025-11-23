@@ -85,7 +85,7 @@ const CloumnsVisible = ({ columns, setColumns, defaultColumns }) => {
           })}
 
           <Button btnStyleType="outlined" onClick={resetDefaultColumns}>
-            <i className="fa-solid fa-rotate-right" /> reset default columns
+            <i className="fa-solid fa-rotate-right" /> {t("reset_columns")}
           </Button>
         </article>
       )}

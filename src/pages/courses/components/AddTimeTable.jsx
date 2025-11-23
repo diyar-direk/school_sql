@@ -10,8 +10,8 @@ import APIClient from "../../../utils/ApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatInputsData } from "../../../utils/formatInputsData";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 const apiClient = new APIClient(endPoints["time-table"]);
-
 const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
 const AddTimeTable = ({
@@ -22,6 +22,7 @@ const AddTimeTable = ({
   setIsUpdate,
   courseId,
 }) => {
+  const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       classId: isUpdate?.class || "",
@@ -69,14 +70,16 @@ const AddTimeTable = ({
       <form onSubmit={formik.handleSubmit}>
         <SelectInputApi
           endPoint={endPoints.classes}
-          label="class"
+          label={t("error.Class")}
           optionLabel={(e) => e?.name}
-          placeholder={formik.values?.classId?.name || "select class"}
+          placeholder={
+            formik.values?.classId?.name || t("attendance.class_placeholder")
+          }
           onChange={(e) => formik.setFieldValue("classId", e)}
           errorText={formik?.errors?.classId}
         />
         <Input
-          title="start time"
+          title={t("timeTable.start_time")}
           type="time"
           name="startTime"
           onChange={formik.handleChange}
@@ -86,10 +89,10 @@ const AddTimeTable = ({
 
         <div className="actions">
           <Button type="submit" isSending={handleConfirm.isPending}>
-            save
+            {t("save")}
           </Button>
           <Button btnType="cancel" type="button" onClick={handleClose}>
-            cancel
+            {t("admins.cancel_btn")}
           </Button>
         </div>
       </form>

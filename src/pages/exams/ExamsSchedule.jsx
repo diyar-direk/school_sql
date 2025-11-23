@@ -19,6 +19,7 @@ import { formatInputsData } from "./../../utils/formatInputsData";
 import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
 import { getMyExamsApi } from "./api";
+import { useTranslation } from "react-i18next";
 
 const apiClient = new APIClient(endPoints.exams);
 const ExamSchedule = () => {
@@ -58,12 +59,12 @@ const ExamSchedule = () => {
     () => [
       {
         name: "title",
-        headerName: "title",
+        headerName: "quizzes.title",
         sort: true,
       },
       {
         name: "courseId",
-        headerName: "courseId",
+        headerName: "exams.subject",
         getCell: ({ row }) => (
           <Link
             className="visit-text"
@@ -75,18 +76,18 @@ const ExamSchedule = () => {
       },
       {
         name: "date",
-        headerName: "date",
+        headerName: "exams.date",
         sort: true,
         getCell: ({ row }) => dateFormatter(row.date, "fullDate"),
       },
       {
         name: "duration",
-        headerName: "duration",
+        headerName: "exams.duration",
         sort: true,
       },
       {
         name: "totalMarks",
-        headerName: "totalMarks",
+        headerName: "exams.total_marks",
         sort: true,
       },
       {
@@ -159,9 +160,10 @@ const ExamSchedule = () => {
     }));
   }, [coursesId, role, profileId, getMyExams]);
 
+  const { t } = useTranslation();
   return (
     <div className="container">
-      <h1 className="title">exams</h1>
+      <h1 className="title">{t("navBar.exam_schedule")}</h1>
       <div className="table-container flex-1">
         <TableToolBar>
           <Search setSearch={setSearch} />
@@ -179,37 +181,47 @@ const ExamSchedule = () => {
           <Filters>
             <SelectInputApi
               endPoint={endPoints.courses}
-              label="course"
-              placeholder={filters?.courseId?.name || "all courses"}
+              label={t("exams.subject")}
+              placeholder={filters?.courseId?.name || t("filters.all")}
               optionLabel={(opt) => opt?.name}
               onChange={(opt) => setFilters({ ...filters, courseId: opt })}
               addOption={
                 <h3 onClick={() => setFilters({ ...filters, courseId: null })}>
-                  all courses
+                  {t("filters.all")}
                 </h3>
               }
               params={{ teacherId: isTeacher ? profileId?.id : null }}
             />
             <SelectOptionInput
-              label="exam type"
+              label={t("filters.exam_type")}
               addOption={
                 <h3 onClick={() => setFilters({ courseId: filters?.courseId })}>
-                  any type
+                  {t("filters.any")}
                 </h3>
               }
               options={[
-                { text: "finished", value: Date.now(), enum: "date[lt]" },
-                { text: "not finished", value: Date.now(), enum: "date[gte]" },
+                {
+                  text: t("filters.finished"),
+                  value: Date.now(),
+                  enum: "date[lt]",
+                },
+                {
+                  text: t("filters.not_finished"),
+                  value: Date.now(),
+                  enum: "date[gte]",
+                },
               ]}
-              placeholder={dateText || "any type"}
+              placeholder={dateText || t("filters.any")}
               onSelectOption={(opt) =>
                 setFilters({ courseId: filters?.courseId, [opt.enum]: opt })
               }
             />
             <AllowedTo roles={[roles.teacher, roles.student]}>
               <SelectOptionInput
-                label="exam"
-                placeholder={getMyExams ? "my exams" : "all"}
+                label={t("navBar.exam")}
+                placeholder={
+                  getMyExams ? t("filters.my_exams") : t("filters.all")
+                }
                 onSelectOption={() => setGetMyExams(true)}
                 options={[{ text: "my exams" }]}
                 addOption={<h3 onClick={() => setGetMyExams(false)}>all</h3>}

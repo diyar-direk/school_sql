@@ -77,7 +77,7 @@ const TimeTable = () => {
     () => [
       {
         name: "courseId",
-        headerName: "course",
+        headerName: "timeTable.subject",
         getCell: ({ row }) => (
           <Link
             className="visit-text"
@@ -89,12 +89,12 @@ const TimeTable = () => {
       },
       {
         name: "classId",
-        headerName: "class",
+        headerName: "error.Class",
         getCell: ({ row }) => row?.class?.name,
       },
       {
         name: "startTime",
-        headerName: "startTime",
+        headerName: "timeTable.start_time",
         sort: true,
         getCell: ({ row }) => formatTime(row.startTime),
       },
@@ -140,7 +140,7 @@ const TimeTable = () => {
           setIsUpdate={setIsUpdate}
         />
       </AllowedTo>
-      <h1 className="title">time table</h1>
+      <h1 className="title">{t("navBar.time_table")}</h1>
       <div className="table-container flex-1">
         <TableToolBar>
           <div className="time-table">
@@ -160,12 +160,12 @@ const TimeTable = () => {
           <Filters>
             <SelectInputApi
               endPoint={endPoints.courses}
-              label="course"
-              placeholder={filters?.courseId?.name || "any course"}
+              label={t("timeTable.subject")}
+              placeholder={filters?.courseId?.name || t("filters.all")}
               optionLabel={(e) => e?.name}
               addOption={
                 <h3 onClick={() => setFilters({ ...filters, courseId: null })}>
-                  any course
+                  {t("filters.all")}
                 </h3>
               }
               onChange={(e) => setFilters({ ...filters, courseId: e })}
@@ -173,12 +173,12 @@ const TimeTable = () => {
             />
             <SelectInputApi
               endPoint={endPoints.classes}
-              label="class"
-              placeholder={filters?.classId?.name || "any class"}
+              label={t("error.Class")}
+              placeholder={filters?.classId?.name || t("filters.all")}
               optionLabel={(e) => e?.name}
               addOption={
                 <h3 onClick={() => setFilters({ ...filters, classId: null })}>
-                  any class
+                  {t("filters.all")}
                 </h3>
               }
               onChange={(e) => setFilters({ ...filters, classId: e })}

@@ -49,25 +49,27 @@ const AddExam = () => {
         <h1>{t("exams.please_complete_form")}</h1>
         <div className="flex wrap ">
           <Input
-            title={t("exam.title")}
+            title={t("quizzes.title")}
             onInput={formik.handleChange}
             value={formik.values.title}
-            placeholder={t("exam.title")}
+            placeholder={t("quizzes.exam_title_placeholder")}
             name="title"
             errorText={formik.errors?.title}
           />
           {isAdmin && !courseId && (
             <SelectInputApi
               endPoint={endPoints.courses}
-              label="course"
-              placeholder={formik.values?.courseId?.name || "select course "}
+              label={t("exams.subject")}
+              placeholder={
+                formik.values?.courseId?.name || t("exams.subject_placeholder")
+              }
               optionLabel={(opt) => opt?.name}
               onChange={(opt) => formik.setFieldValue("courseId", opt)}
               errorText={formik.errors?.courseId}
             />
           )}
           <Input
-            title={t("exam.date")}
+            title={t("exams.date")}
             onInput={formik.handleChange}
             value={formik.values.date}
             type="datetime-local"
@@ -75,19 +77,19 @@ const AddExam = () => {
             errorText={formik.errors?.date}
           />
           <Input
-            title={t("exam.duration")}
+            title={t("exams.duration")}
             onInput={formik.handleChange}
             value={formik.values.duration}
-            placeholder={t("exam.duration")}
+            placeholder={t("exams.duration_palceholder")}
             name="duration"
             errorText={formik.errors?.duration}
             type="number"
           />
           <Input
-            title={t("exam.totalMarks")}
+            title={t("exams.total_marks")}
             onInput={formik.handleChange}
             value={formik.values.totalMarks}
-            placeholder={t("exam.totalMarks")}
+            placeholder={t("exams.total_marks_placeholder")}
             name="totalMarks"
             errorText={formik.errors?.totalMarks}
             type="number"

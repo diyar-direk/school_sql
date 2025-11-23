@@ -73,12 +73,12 @@ const CourseTimeTable = () => {
     () => [
       {
         name: "classId",
-        headerName: "class",
+        headerName: "error.Class",
         getCell: ({ row }) => row?.class?.name,
       },
       {
         name: "startTime",
-        headerName: "startTime",
+        headerName: "timeTable.start_time",
         sort: true,
         getCell: ({ row }) => formatTime(row.startTime),
       },
@@ -125,11 +125,11 @@ const CourseTimeTable = () => {
       </AllowedTo>
 
       <TableToolBar>
-        <h2>time table</h2>
+        <h2>{t("navBar.time_table")}</h2>
         <div className="time-table">
-          <h2 onClick={decrement}>prev</h2>
+          <h2 onClick={decrement}>{t("timeTable.prev_day")}</h2>
           <h2 className="active">{t(`days.${daysOfWeek[dayNumber]}`)}</h2>
-          <h2 onClick={increment}>next</h2>
+          <h2 onClick={increment}>{t("timeTable.next_day")}</h2>
         </div>
         <AllowedTo roles={[roles.admin]}>
           <IconButton
@@ -143,12 +143,12 @@ const CourseTimeTable = () => {
         <Filters>
           <SelectInputApi
             endPoint={endPoints.classes}
-            label="class"
-            placeholder={filters?.classId?.name || "any class"}
+            label={t("error.Class")}
+            placeholder={filters?.classId?.name || t("filters.all")}
             optionLabel={(e) => e?.name}
             addOption={
               <h3 onClick={() => setFilters({ ...filters, classId: null })}>
-                any class
+                {t("filters.all")}
               </h3>
             }
             onChange={(e) => setFilters({ ...filters, classId: e })}
