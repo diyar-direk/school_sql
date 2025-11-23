@@ -50,7 +50,6 @@ class APIClient {
     const { data } = await axiosInstance.get(this.endPoint, {
       params: paramFilters,
     });
-    console.log(data);
 
     const { total, data: d } = data;
 
@@ -75,8 +74,6 @@ class APIClient {
     await axiosInstance.patch(`${this.endPoint}${id}/`);
   };
   addData = async (data) => {
-    console.log(data);
-
     const res = await axiosInstance.post(this.endPoint, data);
     return res?.data?.data || res?.data;
   };

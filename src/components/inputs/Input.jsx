@@ -1,10 +1,17 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import "./inputs.css";
 
 /**
  * @typedef {Object} utlis
  * @property {string} title
- * @property {"input"|"textarea"} elementType - input style most be input or textarea
+ * @property {"input"|"textarea"} elementType
  * @property {React.HTMLAttributes<HTMLLabelElement>} labelProps
  * @property {string} errorText
  * @property {React.ReactNode} icon
@@ -15,55 +22,66 @@ import "./inputs.css";
 /**
  * @param {React.InputHTMLAttributes<HTMLInputElement> & utlis} props
  */
-const Input = ({
-  title,
-  labelProps,
-  errorText,
-  helperTextProps,
-  containerProps,
-  elementType = "input",
-  icon,
-  ...props
-}) => {
+const Input = (props, ref) => {
+  const {
+    title,
+    labelProps,
+    errorText,
+    helperTextProps,
+    containerProps,
+    elementType = "input",
+    icon,
+    ...rest
+  } = props;
+
   const divContainerClassName = useMemo(() => {
     return `${containerProps?.className || ""} inp`.trim();
   }, [containerProps]);
 
-  const inputRef = useRef(null);
+  const localRef = useRef(null);
+
+  const setRefs = useCallback(
+    (el) => {
+      localRef.current = el;
+      if (typeof ref === "function") ref(el);
+      else if (ref) ref.current = el;
+    },
+    [ref]
+  );
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const isPasswordField = props.type === "password";
+  const isPasswordField = rest.type === "password";
 
   const computedType = isPasswordField
     ? showPassword
       ? "text"
       : "password"
-    : props.type || "text";
+    : rest.type || "text";
 
   const togglePasswordVisibility = useCallback(() => {
     setShowPassword((s) => !s);
-    if (inputRef.current) inputRef.current.focus();
+    if (localRef.current) localRef.current.focus();
   }, []);
 
   return (
     <div {...containerProps} className={divContainerClassName}>
       {title && (
-        <label htmlFor={props.id || props.name} {...labelProps}>
+        <label htmlFor={rest.id || rest.name} {...labelProps}>
           {title}
         </label>
       )}
 
       {elementType === "textarea" ? (
-        <textarea id={props.id || props.name} {...props} />
+        <textarea id={rest.id || rest.name} {...rest} ref={setRefs} />
       ) : (
         <div className="relative input-wrapper">
           {icon && <span className="input-icon">{icon}</span>}
           <input
-            id={props.id || props.name}
-            {...props}
+            id={rest.id || rest.name}
+            {...rest}
             type={computedType}
-            ref={inputRef}
+            ref={setRefs}
           />
           {isPasswordField && (
             <i
@@ -87,4 +105,4 @@ const Input = ({
   );
 };
 
-export default memo(Input);
+export default memo(forwardRef(Input));

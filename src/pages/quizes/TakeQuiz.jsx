@@ -64,7 +64,7 @@ const TakeQuiz = () => {
         {
           params: {
             studentId: profileId?.id,
-            examId: id,
+            quizId: id,
             type: examTypes.Quiz,
             limit: 1,
             page: 1,

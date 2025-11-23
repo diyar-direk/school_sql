@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Table from "../../components/table/Table";
 import TableToolBar from "../../components/table_toolbar/TableToolBar";
@@ -18,6 +18,7 @@ const apiClient = new APIClient(endPoints.classes);
 
 const Classes = () => {
   const { userDetails } = useAuth();
+  const ref = useRef();
   const [page, setPage] = useState(1);
   const isAdmin = userDetails?.isAdmin;
   const [sort, setSort] = useState({});
@@ -78,7 +79,12 @@ const Classes = () => {
         headerName: "actions",
         className: "center",
         getCell: ({ row }) => (
-          <Button onClick={() => setIsUpdate(row)}>
+          <Button
+            onClick={() => {
+              ref?.current?.focus();
+              setIsUpdate(row);
+            }}
+          >
             <i className="fa-regular fa-pen-to-square"></i> update
           </Button>
         ),
@@ -102,6 +108,7 @@ const Classes = () => {
               name="name"
               onChange={formik.handleChange}
               value={formik?.values?.name}
+              ref={ref}
             />
             <div className="actions">
               <Button> {t("save")}</Button>

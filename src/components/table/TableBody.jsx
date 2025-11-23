@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const TableBody = ({
   loading,
@@ -26,6 +27,7 @@ const TableBody = ({
     },
     [setSelectedItems]
   );
+  const { t } = useTranslation();
 
   const renderCell = useCallback(
     (column, row) => {
@@ -35,11 +37,12 @@ const TableBody = ({
           userDetails,
           isCustomPopUpOpen,
           setIsCustomPopUpOpen,
+          t,
         });
       }
       return row[column.name];
     },
-    [userDetails, isCustomPopUpOpen, setIsCustomPopUpOpen]
+    [userDetails, isCustomPopUpOpen, setIsCustomPopUpOpen, t]
   );
   const location = useLocation();
 

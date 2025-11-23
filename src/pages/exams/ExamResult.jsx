@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { endPoints } from "../../constants/endPoints";
-import { examTypes, limit, roles } from "../../constants/enums";
+import { courseStatus, examTypes, limit, roles } from "../../constants/enums";
 import TableToolBar from "../../components/table_toolbar/TableToolBar";
 import Delete from "../../components/table_toolbar/Delete";
 import Add from "../../components/table_toolbar/Add";
@@ -33,7 +33,8 @@ const column = [
   {
     name: "examId",
     headerName: "examId",
-    getCell: ({ row }) => row.exam?.title,
+    getCell: ({ row }) =>
+      row?.[row.type === examTypes.Exam ? "exam" : "quiz"]?.title,
   },
   {
     name: "type",
@@ -77,11 +78,12 @@ const column = [
     headerName: "actions",
     className: "center",
     allowedTo: [roles.admin, roles.teacher],
-    getCell: ({ row }) => (
-      <Link to={pagesRoute.examResult.update(row?.id)}>
-        <Button> update</Button>
-      </Link>
-    ),
+    getCell: ({ row }) =>
+      row.type === examTypes.Exam && (
+        <Link to={pagesRoute.examResult.update(row?.id)}>
+          <Button> update</Button>
+        </Link>
+      ),
   },
 ];
 const apiClient = new APIClient(endPoints["exam-results"]);
@@ -92,10 +94,11 @@ const ExamResult = () => {
   const { isStudent, role, isAdmin } = userDetails || {};
 
   const { state } = useLocation();
-  const { examId, courseId } = state || {};
+  const { examId, courseId, quizId } = state || {};
 
   const [filters, setFilters] = useState({
     examId,
+    quizId,
     studentId: isStudent ? userDetails?.profileId?.id : null,
     type: null,
   });
@@ -131,6 +134,7 @@ const ExamResult = () => {
       },
       onChange: (opt) =>
         setFilters({ ...filters, studentId: courseId ? opt.student : opt }),
+      params: courseId ? { status: courseStatus.Active } : {},
     }),
     [courseId, filters]
   );
@@ -150,7 +154,7 @@ const ExamResult = () => {
               setSelectedItems={setSelectedItems}
               endPoint={endPoints["exam-results"]}
             />
-            {courseId ? (
+            {courseId && !quizId ? (
               <AddExamResultPopup examId={examId} />
             ) : (
               isAdmin && <Add path={pagesRoute.examResult.add} />
@@ -171,9 +175,10 @@ const ExamResult = () => {
                     all students
                   </h3>
                 }
+                params={handleStudentFilter.params}
               />
             </AllowedTo>
-            {!examId && (
+            {!examId && !quizId && (
               <AllowedTo roles={[roles.admin]}>
                 <SelectInputApi
                   endPoint={endPoints.exams}
@@ -191,20 +196,22 @@ const ExamResult = () => {
                 />
               </AllowedTo>
             )}
-            <SelectOptionInput
-              addOption={
-                <h3 onClick={() => setFilters({ ...filters, type: null })}>
-                  any type
-                </h3>
-              }
-              label="type"
-              options={[
-                { text: "exam", value: examTypes.Exam },
-                { text: "quiz", value: examTypes.Quiz },
-              ]}
-              onSelectOption={(opt) => setFilters({ ...filters, type: opt })}
-              placeholder={filters?.type?.text || "any type"}
-            />
+            {!examId && !quizId && (
+              <SelectOptionInput
+                addOption={
+                  <h3 onClick={() => setFilters({ ...filters, type: null })}>
+                    any type
+                  </h3>
+                }
+                label="type"
+                options={[
+                  { text: "exam", value: examTypes.Exam },
+                  { text: "quiz", value: examTypes.Quiz },
+                ]}
+                onSelectOption={(opt) => setFilters({ ...filters, type: opt })}
+                placeholder={filters?.type?.text || "any type"}
+              />
+            )}
           </Filters>
         </TableToolBar>
         <Table

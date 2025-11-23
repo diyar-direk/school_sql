@@ -40,9 +40,9 @@ const column = [
     name: "actions",
     headerName: "actions",
     className: "center",
-    getCell: ({ row }) => (
+    getCell: ({ row, t }) => (
       <Link to={pagesRoute.admin.update(row.id)}>
-        <Button> update</Button>
+        <Button> {t("update")}</Button>
       </Link>
     ),
   },

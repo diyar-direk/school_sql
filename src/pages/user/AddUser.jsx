@@ -106,6 +106,7 @@ const AddUser = () => {
                 : `select ${formik.values.role || "student"} profile`
             }
             onChange={(opt) => formik.setFieldValue("profileId", opt)}
+            errorText={formik.errors?.profileId}
           />
         </div>
         <Button type="submit" isSending={handleSubmit.isPending}>

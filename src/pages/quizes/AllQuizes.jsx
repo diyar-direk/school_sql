@@ -108,7 +108,7 @@ const AllQuizes = () => {
       {
         name: "status",
         headerName: "status",
-        getCell: ({ row }) => {
+        getCell: ({ row, t }) => {
           const now = new Date();
           const start = new Date(row.date);
           const end = new Date(start.getTime() + row.duration * 60000);
@@ -117,7 +117,9 @@ const AllQuizes = () => {
               <div className="quize-status passed"> exam not started yet </div>
             );
           } else if (now > end) {
-            return <div className="quize-status done"> exam finished </div>;
+            return (
+              <div className="quize-status done"> {t("filters.finished")} </div>
+            );
           } else {
             return (
               <Link
@@ -135,18 +137,37 @@ const AllQuizes = () => {
       {
         name: "actions",
         headerName: "actions",
-        allowedTo: [roles.admin, roles.teacher],
-        getCell: ({ row }) =>
-          (role === roles.admin ||
-            row.Course?.teacherId?.some((id) => id.id === profileId?.id)) && (
-            <Link to={pagesRoute.quize.update(row?.id)}>
-              <Button> update</Button>
-            </Link>
-          ),
+        getCell: ({ row }) => {
+          const now = new Date();
+          const start = new Date(row.date);
+          return (
+            <div className="flex gap-10 align-center">
+              {(role === roles.admin ||
+                row.Course?.teacherId?.some(
+                  (id) => id.id === profileId?.id
+                )) && (
+                <Link to={pagesRoute.quize.update(row?.id)}>
+                  <Button> update</Button>
+                </Link>
+              )}
+              {now > start && (
+                <Link
+                  to={pagesRoute.examResult.page}
+                  state={{ courseId: row.courseId, quizId: row?.id }}
+                >
+                  <Button btnStyleType="outlined" btnType="save">
+                    results
+                  </Button>
+                </Link>
+              )}
+            </div>
+          );
+        },
       },
     ],
     [role, profileId]
   );
+
   const [getMyExams, setGetMyExams] = useState(false);
 
   const { data: coursesId } = useQuery({

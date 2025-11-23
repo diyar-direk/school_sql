@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import IconButton from "../../components/buttons/IconButton";
-import { examTypes } from "../../constants/enums";
+import { courseStatus, examTypes } from "../../constants/enums";
 import { examResultSchema } from "../../schemas/examResult";
 import { useCallback, useMemo, useState } from "react";
 import PopUp from "../../components/popup/PopUp";
@@ -77,6 +77,7 @@ const AddExamResultPopup = ({ examId }) => {
             placeholder={handleStudentFilter.placeholder}
             onChange={handleStudentFilter.onChange}
             errorText={handleStudentFilter.errorText}
+            params={{ status: courseStatus.Active }}
           />
           <Input
             title="score"

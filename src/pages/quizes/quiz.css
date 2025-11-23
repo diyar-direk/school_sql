@@ -68,6 +68,7 @@ h2.time span {
 }
 .questions-space > div h2:not(.true-false) {
   color: var(--main-color);
+  white-space: pre-wrap;
 }
 .questions-space > div h2.true-false {
   padding: 10px 20px;
@@ -130,6 +131,7 @@ h2.time span {
   border-radius: 6px;
   padding: 10px;
   color: var(--font-color);
+  white-space: pre-wrap;
 }
 .questions-space > div article > label:hover h4,
 .questions-space > div article > label .active h4 {
