@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Button from "../buttons/Button";
+import { useTranslation } from "react-i18next";
 
 const CloumnsVisible = ({ columns, setColumns, defaultColumns }) => {
   const [search, setSearch] = useState("");
@@ -32,6 +33,7 @@ const CloumnsVisible = ({ columns, setColumns, defaultColumns }) => {
     setIsOpen(false);
     setColumns(defaultColumns);
   }, [setColumns, defaultColumns]);
+  const { t } = useTranslation();
 
   return (
     <article>
@@ -50,10 +52,7 @@ const CloumnsVisible = ({ columns, setColumns, defaultColumns }) => {
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
           />
           {columns?.map((column) => {
-            const headerName =
-              typeof column.headerName === "function"
-                ? column.headerName()
-                : column.headerName;
+            const headerName = t(column.headerName);
 
             return (
               (!column.allowedTo ||

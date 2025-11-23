@@ -18,27 +18,27 @@ import { useTranslation } from "react-i18next";
 const column = [
   {
     name: "firstName",
-    headerName: "name",
+    headerName: "admins.name",
     sort: true,
     getCell: ({ row }) => `${row.firstName} ${row.lastName}`,
   },
-  { name: "email", headerName: "email" },
+  { name: "email", headerName: "admins.email" },
   {
     name: "createdAt",
-    headerName: "createdAt",
+    headerName: "admins.createdAt",
     sort: true,
     getCell: ({ row }) => dateFormatter(row.createdAt, "fullDate"),
   },
   {
     name: "updatedAt",
-    headerName: "updatedAt",
+    headerName: "admins.updatedAt",
     sort: true,
     hidden: true,
     getCell: ({ row }) => dateFormatter(row.updatedAt, "fullDate"),
   },
   {
     name: "actions",
-    headerName: "actions",
+    headerName: "admins.actions",
     className: "center",
     getCell: ({ row }) => (
       <Link to={pagesRoute.admin.update(row.id)}>
