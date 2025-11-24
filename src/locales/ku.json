@@ -136,6 +136,7 @@
     "dropped": "",
     "enrollment_date": "Dîroka Qeydkirinê",
     "enrollment_date_placeholder": "Dîroka Qeydkirinê Derbas Bike",
+    "address": "",
 
     "save_btn": "Hilbigire",
     "cancel_btn": "Iptal Bike",
@@ -292,7 +293,8 @@
     "last_name": "Paşnav :",
     "role": "Rol :",
     "courses": "Courses :",
-    "email": "Email :"
+    "email": "Email :",
+    "no_courses_yet": ""
   },
   "users": {
     "all_users": "Hemû Karhîner",

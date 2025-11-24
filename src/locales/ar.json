@@ -136,6 +136,7 @@
     "active": " نشط ",
     "completed": " مكتمل ",
     "dropped": " مسقط ",
+    "address": "العنوان",
 
     "save_btn": "حفظ",
     "cancel_btn": "إلغاء",
@@ -292,7 +293,8 @@
     "last_name": "اسم العائلة:",
     "role": "الدور:",
     "email": "البريد الإلكتروني:",
-    "courses": "المواد "
+    "courses": "المواد ",
+    "no_courses_yet": "لا توجد مواد بعد"
   },
   "users": {
     "all_users": "جميع المستخدمين",

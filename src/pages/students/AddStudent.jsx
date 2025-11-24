@@ -79,16 +79,16 @@ const AddStudent = () => {
             placeholder={
               formik.values?.gender || t("teachers.gender_placeholder")
             }
-            label="gender"
+            label={t("teachers.gender")}
             options={[
-              { text: "male", value: genders.male },
-              { text: "female", value: genders.female },
+              { text: t("teachers.male"), value: genders.male },
+              { text: t("teachers.female"), value: genders.female },
             ]}
             onSelectOption={(opt) => formik.setFieldValue("gender", opt.value)}
             errorText={t(formik.errors?.gender)}
           />
           <Input
-            title={t("teachers.birth_date")}
+            title={t("students.date_of_birth")}
             onInput={formik.handleChange}
             value={formik.values.dateOfBirth}
             name="dateOfBirth"
@@ -113,15 +113,15 @@ const AddStudent = () => {
             errorText={t(formik.errors?.email)}
           />
           <Input
-            title={t("teachers.address")}
+            title={t("students.address")}
             onInput={formik.handleChange}
             value={formik.values.address}
-            placeholder={t("teachers.address_placeholder")}
+            placeholder={t("students.address")}
             name="address"
             errorText={t(formik.errors?.address)}
           />
           <Input
-            title={t("teachers.birth_date")}
+            title={t("students.enrollment_date")}
             onInput={formik.handleChange}
             value={formik.values.enrollmentDate}
             name="enrollmentDate"
@@ -129,26 +129,26 @@ const AddStudent = () => {
             errorText={t(formik.errors?.enrollmentDate)}
           />
           <Input
-            title={t("teachers.guardianName")}
+            title={t("students.guardian_name")}
             onInput={formik.handleChange}
             value={formik.values.guardianName}
-            placeholder={t("teachers.guardianName_placeholder")}
+            placeholder={t("students.guardian_name_placeholder")}
             name="guardianName"
             errorText={t(formik.errors?.guardianName)}
           />
           <Input
-            title={t("teachers.guardianPhone")}
+            title={t("students.guardian_phone")}
             onInput={formik.handleChange}
             value={formik.values.guardianPhone}
-            placeholder={t("teachers.guardianPhone_placeholder")}
+            placeholder={t("students.guardian_phone_placeholder")}
             name="guardianPhone"
             errorText={t(formik.errors?.guardianPhone)}
           />
           <Input
-            title={t("teachers.guardianRelationship")}
+            title={t("students.relationship")}
             onInput={formik.handleChange}
             value={formik.values.guardianRelationship}
-            placeholder={t("teachers.guardianRelationship_placeholder")}
+            placeholder={t("students.relationship_placeholder")}
             name="guardianRelationship"
             errorText={t(formik.errors?.guardianRelationship)}
           />

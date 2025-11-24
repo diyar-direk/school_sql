@@ -97,24 +97,24 @@ const StudentProfile = () => {
           </div>
 
           <div className="flex">
-            <h2>{"language?.students?.guardianName"} :</h2>
+            <h2>{t("students.guardian_name")} :</h2>
             <p>{data?.guardianName}</p>
           </div>
           <div className="flex">
-            <h2>{"language?.students?.guardianRelationship"} :</h2>
+            <h2>{t("students.relationship")} :</h2>
             <p>{data?.guardianRelationship}</p>
           </div>
           <div className="flex">
-            <h2>{"language?.students?.guardianPhone"} :</h2>
+            <h2>{t("students.guardian_phone")} :</h2>
             <p>{data?.guardianPhone}</p>
           </div>
           <div className="flex">
-            <h2>{"language?.students?.created_at"} :</h2>
+            <h2>{t("createdAt")} :</h2>
             <p>{dateFormatter(data?.createdAt, "fullDate")}</p>
           </div>
         </div>
       </div>
-      <h1 className="title"> courses </h1>
+      <h1 className="title"> {t("dashboard.courses")} </h1>
       <AllowedTo roles={[roles.admin]}>
         <AddStudentCourse
           studentId={id}
@@ -123,7 +123,7 @@ const StudentProfile = () => {
         />
       </AllowedTo>
       {courses?.length === 0 && !isFetching && (
-        <h3 className="font-color"> no course yet </h3>
+        <h3 className="font-color"> {t("dashboard.no_courses_yet")} </h3>
       )}
       <div className="grid-3" style={{ marginTop: "10px" }}>
         {courses?.map((e) => (
@@ -137,7 +137,7 @@ const StudentProfile = () => {
 
         <div ref={loadMoreRef} />
       </div>
-      {isFetching && <h3 className="font-color"> loading... </h3>}
+      {isFetching && <h3 className="font-color"> {t("teachers.loading")} </h3>}
     </div>
   );
 };

@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 const column = [
   {
     name: "firstName",
-    headerName: "name",
+    headerName: "students.name",
     sort: true,
     getCell: ({ row }) => (
       <Link className="visit-text" to={pagesRoute.student.view(row.id)}>
@@ -30,35 +30,35 @@ const column = [
       </Link>
     ),
   },
-  { name: "gender", headerName: "gender" },
+  { name: "gender", headerName: "students.gender" },
   {
     name: "dateOfBirth",
-    headerName: "dateOfBirth",
+    headerName: "students.date_of_birth",
     sort: true,
     getCell: ({ row }) => dateFormatter(row.dateOfBirth),
   },
-  { name: "address", headerName: "address" },
-  { name: "phone", headerName: "phone" },
-  { name: "email", headerName: "email", hidden: true },
+  { name: "address", headerName: "students.address" },
+  { name: "phone", headerName: "students.phone" },
+  { name: "email", headerName: "students.email", hidden: true },
   {
     name: "enrollmentDate",
-    headerName: "enrollmentDate",
+    headerName: "students.enrollment_date",
     sort: true,
     getCell: ({ row }) => dateFormatter(row.enrollmentDate),
   },
   {
     name: "guardianName",
-    headerName: "guardianName",
+    headerName: "students.guardian_name",
     hidden: true,
   },
   {
     name: "guardianRelationship",
-    headerName: "guardianRelationship",
+    headerName: "students.relationship",
     hidden: true,
   },
   {
     name: "guardianPhone",
-    headerName: "guardianPhone",
+    headerName: "students.guardian_phone_input",
     hidden: true,
   },
   {
@@ -141,13 +141,18 @@ const AllStudents = () => {
           </AllowedTo>
           <Filters>
             <SelectOptionInput
-              placeholder={gender?.text || "any gender"}
-              label="geadner"
+              placeholder={gender?.text || t("students.both_genders")}
+              label={t("students.gender")}
               options={[
-                { text: "male", value: genders.male },
-                { text: "female", value: genders.female },
+                { text: t("students.male"), value: genders.male },
+                { text: t("students.female"), value: genders.female },
               ]}
-              addOption={<h3 onClick={() => setGender("")}> any gender </h3>}
+              addOption={
+                <h3 onClick={() => setGender("")}>
+                  {" "}
+                  {t("students.both_genders")}{" "}
+                </h3>
+              }
               onSelectOption={(opt) => setGender(opt)}
             />
           </Filters>
