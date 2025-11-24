@@ -299,6 +299,8 @@
   "users": {
     "all_users": "جميع المستخدمين",
     "add_users": "إضافة مستخدمين",
+    "profile": "الملف الشخصي",
+
     "name": "الاسم",
     "created_at": "تاريخ الإنشاء",
     "please_complete_form": "يرجى إكمال النموذج",

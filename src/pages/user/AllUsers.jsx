@@ -22,10 +22,10 @@ import { rolesStyle } from "../../utils/enumsElements";
 const apiClient = new APIClient(endPoints.users);
 
 const column = [
-  { name: "username", headerName: "username", sort: true },
+  { name: "username", headerName: "login.user_name", sort: true },
   {
     name: "role",
-    headerName: "role",
+    headerName: "users.role",
     getCell: ({ row, t }) => (
       <div className="flex gap-10 align-center">
         {rolesStyle[row.role]?.icon} {t(`enums.${row.role}`)}

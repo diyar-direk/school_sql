@@ -25,13 +25,13 @@ const column = [
   { name: "email", headerName: "admins.email" },
   {
     name: "createdAt",
-    headerName: "created_at",
+    headerName: "createdAt",
     sort: true,
     getCell: ({ row }) => dateFormatter(row.createdAt, "fullDate"),
   },
   {
     name: "updatedAt",
-    headerName: "updated_at",
+    headerName: "updatedAt",
     sort: true,
     hidden: true,
     getCell: ({ row }) => dateFormatter(row.updatedAt, "fullDate"),
