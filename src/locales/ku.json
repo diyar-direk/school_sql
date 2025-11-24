@@ -489,8 +489,10 @@
   "filters": {
     "confirm_deletion": "Ma Hûn Guman Dikin Ku Hûn Dıxwazin Vê Tiştê Jê Bikin?",
     "yes": "Erê",
-    "NO": "Na",
     "course": "",
+    "NO": "Na",
+    "no": "Na",
+
     "any_course": "  ",
     "class": "   ",
     "any_class": "    ",

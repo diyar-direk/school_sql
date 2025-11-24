@@ -487,6 +487,7 @@
     "confirm_deletion": "Are you sure you want to delete this?",
     "yes": "Yes",
     "no": "No",
+    "NO": "No",
     "course": " Course ",
     "any_course": " Any Course ",
     "class": " Class ",
@@ -508,8 +509,8 @@
     "my_quizzes": " My Quizzes ",
     "search": " Search "
   },
-  "created_at": "Created At ",
-  "updated_at": "Updated At ",
+  "createdAt": "Created At ",
+  "updatedAt": "Updated At ",
   "actions": "Actions",
   "save": "Save",
   "view": "View",
