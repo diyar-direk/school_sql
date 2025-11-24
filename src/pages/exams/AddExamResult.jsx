@@ -29,6 +29,7 @@ const AddExamResult = () => {
     validationSchema: examResultSchema,
     onSubmit: (values) => handleSubmit.mutate(formatInputsData(values)),
   });
+
   const queryClient = useQueryClient();
   const handleSubmit = useMutation({
     mutationFn: (data) => apiClient.addData(data),
@@ -48,14 +49,14 @@ const AddExamResult = () => {
         <div className="flex wrap">
           <SelectInputApi
             endPoint={endPoints.students}
-            label={t("student.student")}
+            label={t("students.student")}
             optionLabel={(opt) =>
               `${opt?.firstName} ${opt?.middleName} ${opt?.lastName}`
             }
             placeholder={
               formik.values.studentId
                 ? `${formik.values.studentId?.firstName} ${formik.values.studentId?.middleName} ${formik.values.studentId?.lastName}`
-                : t("student.select_student")
+                : t("students.student_placeholder")
             }
             onChange={(opt) => formik.setFieldValue("studentId", opt)}
             errorText={t(formik?.errors?.studentId)}
@@ -63,9 +64,9 @@ const AddExamResult = () => {
           {!examId && isAdmin && (
             <SelectInputApi
               endPoint={endPoints.exams}
-              label={t("exam.exam")}
+              label={t("navBar.exam")}
               placeholder={
-                formik.values?.examId?.title || t("exam.select_exam")
+                formik.values?.examId?.title || t("examResult.exam_placeholder")
               }
               optionLabel={(opt) => opt?.title}
               onChange={(opt) => formik.setFieldValue("examId", opt)}
@@ -74,10 +75,10 @@ const AddExamResult = () => {
           )}
 
           <Input
-            title={t("exam.score")}
+            title={t("examResult.score")}
             onInput={formik.handleChange}
             value={formik.values.score}
-            placeholder={t("exam.score")}
+            placeholder={t("examResult.score_placeholder")}
             name="score"
             errorText={t(formik?.errors?.score)}
             type="number"
