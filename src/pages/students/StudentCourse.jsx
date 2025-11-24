@@ -63,7 +63,7 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
           </div>
         </AllowedTo>
         <div>
-          <h3>{t("students.course")}</h3>
+          <h3>{t("quizzes.subject")}</h3>
           <span> {data?.course?.name} </span>
         </div>
         <div>

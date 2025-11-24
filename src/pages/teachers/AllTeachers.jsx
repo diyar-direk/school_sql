@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 const column = [
   {
     name: "firstName",
-    headerName: "name",
+    headerName: "teachers.name",
     sort: true,
     getCell: ({ row }) => (
       <Link className="visit-text" to={pagesRoute.teacher.view(row.id)}>
@@ -30,9 +30,9 @@ const column = [
       </Link>
     ),
   },
-  { name: "gender", headerName: "gender" },
-  { name: "phoneNumber", headerName: "phoneNumber" },
-  { name: "email", headerName: "email", hidden: true },
+  { name: "gender", headerName: "teachers.gender" },
+  { name: "phoneNumber", headerName: "teachers.phone_number" },
+  { name: "email", headerName: "teachers.email", hidden: true },
   {
     name: "createdAt",
     headerName: "createdAt",
