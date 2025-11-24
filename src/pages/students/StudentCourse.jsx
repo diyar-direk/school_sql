@@ -6,6 +6,7 @@ import APIClient from "../../utils/ApiClient";
 import { endPoints } from "../../constants/endPoints";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AllowedTo from "../../components/AllowedTo";
+import { useTranslation } from "react-i18next";
 const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const toggleOpenOptions = useCallback((e) => {
@@ -33,6 +34,7 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
       queryClient.invalidateQueries([endPoints["student-courses"], studentId]);
     },
   });
+  const { t } = useTranslation();
 
   return (
     <>
@@ -50,21 +52,22 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
                   onClick={() => setSelectedItem(data?.id)}
                 >
                   <i className="fa-solid fa-trash" />
-                  delete
+                  {t("examResult.delete")}
                 </span>
                 <span className="update" onClick={() => setUpdatedCourse(data)}>
-                  <i className="fa-solid fa-pen-to-square" /> update
+                  <i className="fa-solid fa-pen-to-square" />{" "}
+                  {t("examResult.update")}
                 </span>
               </div>
             )}
           </div>
         </AllowedTo>
         <div>
-          <h3>name</h3>
+          <h3>{t("quizzes.subject")}</h3>
           <span> {data?.course?.name} </span>
         </div>
         <div>
-          <h3>status</h3>
+          <h3>{t("students.course_status")}</h3>
           {data?.status === courseStatus.Dropped ? (
             <span>
               <i className="fa-solid fa-circle-xmark" /> {data?.status}

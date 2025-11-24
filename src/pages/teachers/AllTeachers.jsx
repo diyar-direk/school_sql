@@ -23,7 +23,7 @@ import { gendersStyle } from "../../utils/enumsElements";
 const column = [
   {
     name: "firstName",
-    headerName: "name",
+    headerName: "teachers.name",
     sort: true,
     getCell: ({ row }) => (
       <Link className="visit-text" to={pagesRoute.teacher.view(row.id)}>
@@ -33,15 +33,15 @@ const column = [
   },
   {
     name: "gender",
-    headerName: "gender",
+    headerName: "teachers.gender",
     getCell: ({ row, t }) => (
       <div className="flex gap-10 align-center">
         {gendersStyle[row.gender]?.icon} {t(`enums.${row.gender}`)}
       </div>
     ),
   },
-  { name: "phoneNumber", headerName: "phoneNumber" },
-  { name: "email", headerName: "email", hidden: true },
+  { name: "phoneNumber", headerName: "teachers.phone_number" },
+  { name: "email", headerName: "teachers.email", hidden: true },
   {
     name: "createdAt",
     headerName: "createdAt",
