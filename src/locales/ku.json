@@ -150,6 +150,8 @@
     "room": "Ode",
     "duration": "Dem",
     "mark": "Pile",
+    "status": "  ",
+
     "delete": "Jêbirin",
     "update": "Nûkirin",
     "delete_all_btn": "Hemî Jêbirin",
