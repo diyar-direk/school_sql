@@ -522,6 +522,8 @@
   "enums": {
     "Admin": "",
     "Teacher": "",
-    "Student": ""
+    "Student": "",
+    "Female": "",
+    "Male": ""
   }
 }

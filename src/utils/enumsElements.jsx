@@ -1,4 +1,4 @@
-import { roles } from "../constants/enums";
+import { genders, roles } from "../constants/enums";
 
 export const rolesStyle = {
   [roles.admin]: {
@@ -27,5 +27,23 @@ export const rolesStyle = {
       />
     ),
     color: "orange",
+  },
+};
+
+export const gendersStyle = {
+  [genders.male]: {
+    icon: (
+      <i
+        className="fas fa-female"
+        style={{ color: "violet", fontSize: "14px" }}
+      />
+    ),
+    color: "violet",
+  },
+  [genders.female]: {
+    icon: (
+      <i className="fas fa-male" style={{ color: "blue", fontSize: "14px" }} />
+    ),
+    color: "blue",
   },
 };

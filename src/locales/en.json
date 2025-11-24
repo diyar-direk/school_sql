@@ -519,6 +519,8 @@
   "enums": {
     "Admin": "Admin",
     "Teacher": "Teacher",
-    "Student": "Student"
+    "Student": "Student",
+    "Female": "female",
+    "Male": "male"
   }
 }

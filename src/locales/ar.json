@@ -523,6 +523,8 @@
   "enums": {
     "Admin": "مسؤول",
     "Teacher": "أستاذ",
-    "Student": "طالب"
+    "Student": "طالب",
+    "Female": "ذكر",
+    "Male": "انثى"
   }
 }
