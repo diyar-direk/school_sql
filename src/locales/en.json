@@ -436,7 +436,16 @@
     "at_least_two_options_required": "At least two options are required.",
     "no_more_than_five_options_allowed": "No more than five options allowed.",
     "at_least_one_option_must_be_marked_correct": "At least one option must be marked correct.",
-    "at_least_one_question_required": "At least one question is required."
+    "at_least_one_question_required": "At least one question is required.",
+    "admin": "admin",
+    "user": "user",
+    "teacher": "teacher",
+    "student": "student",
+    "exam": "exam",
+    "Result": "Result",
+    "Class": "Class",
+    "Subject": "Course",
+    "quiz": "quiz"
   },
   "take_quiz": {
     "you_allready_took_and_scored": "You already took the quiz and scored:",

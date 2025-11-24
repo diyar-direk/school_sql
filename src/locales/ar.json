@@ -439,7 +439,16 @@
     "at_least_two_options_required": "مطلوب خياران على الأقل.",
     "no_more_than_five_options_allowed": "لا يسمح بأكثر من خمسة خيارات.",
     "at_least_one_option_must_be_marked_correct": "يجب تعليم خيار واحد على الأقل كخيار صحيح.",
-    "at_least_one_question_required": "مطلوب سؤال واحد على الأقل."
+    "at_least_one_question_required": "مطلوب سؤال واحد على الأقل.",
+    "admin": "مشرف",
+    "user": "مستخدم",
+    "teacher": "معلم",
+    "student": "طالب",
+    "exam": "امتحان",
+    "Result": "نتيجة",
+    "Class": "فصل",
+    "Subject": "مادة",
+    "quiz": "اختبار"
   },
   "take_quiz": {
     "you_allready_took_and_scored": "لقد أجريت الاختبار بالفعل وحصلت على :",

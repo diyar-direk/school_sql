@@ -438,7 +438,16 @@
     "at_least_two_options_required": "Herî kêm du vebijark pêwîst in.",
     "no_more_than_five_options_allowed": "Zêdetir ji pênc vebijark nayê destûr dan.",
     "at_least_one_option_must_be_marked_correct": "Herî kêm yek vebijark divê wekî rast tê nîşandan.",
-    "at_least_one_question_required": "Herî kêm yek pirs pêwîst e."
+    "at_least_one_question_required": "Herî kêm yek pirs pêwîst e.",
+    "admin": "Admin",
+    "user": "Bikarhêner",
+    "teacher": "Mamoste",
+    "student": "Xwendekar",
+    "exam": "Ezmûn",
+    "Result": "Encam",
+    "Class": "Werz",
+    "Subject": "Biranş",
+    "quiz": "Test"
   },
   "take_quiz": {
     "you_allready_took_and_scored": "Te Berê Test kiriye û Encam Ew e:",
