@@ -18,6 +18,7 @@ import { formatInputsData } from "./../../utils/formatInputsData";
 import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
 import { useTranslation } from "react-i18next";
+import { gendersStyle } from "../../utils/enumsElements";
 
 const column = [
   {
@@ -30,7 +31,18 @@ const column = [
       </Link>
     ),
   },
-  { name: "gender", headerName: "students.gender" },
+  {
+    name: "gender",
+    headerName: "students.gender",
+    getCell: ({ row, t }) => (
+      <div
+        className="flex gap-10 align-center"
+        style={{ color: gendersStyle[row.gender]?.color }}
+      >
+        {gendersStyle[row.gender]?.icon} {t(`enums.${row.gender}`)}
+      </div>
+    ),
+  },
   {
     name: "dateOfBirth",
     headerName: "students.date_of_birth",
@@ -141,19 +153,38 @@ const AllStudents = () => {
           </AllowedTo>
           <Filters>
             <SelectOptionInput
-              placeholder={gender?.text || t("students.both_genders")}
-              label={t("students.gender")}
+              placeholder={t(gender ? `enums.${gender}` : "filters.all")}
+              label="geadner"
               options={[
-                { text: t("students.male"), value: genders.male },
-                { text: t("students.female"), value: genders.female },
+                {
+                  text: (
+                    <span
+                      className="flex align-center gap-10"
+                      style={{ color: gendersStyle[genders.female]?.color }}
+                    >
+                      {gendersStyle[genders.female]?.icon}
+                      {t(`enums.${genders.female}`)}
+                    </span>
+                  ),
+                  value: genders.female,
+                },
+                {
+                  text: (
+                    <span
+                      className="flex align-center gap-10"
+                      style={{ color: gendersStyle[genders.male]?.color }}
+                    >
+                      {gendersStyle[genders.male]?.icon}
+                      {t(`enums.${genders.male}`)}
+                    </span>
+                  ),
+                  value: genders.male,
+                },
               ]}
               addOption={
-                <h3 onClick={() => setGender("")}>
-                  {" "}
-                  {t("students.both_genders")}{" "}
-                </h3>
+                <h3 onClick={() => setGender("")}> {t("filters.all")} </h3>
               }
-              onSelectOption={(opt) => setGender(opt)}
+              onSelectOption={(opt) => setGender(opt.value)}
             />
           </Filters>
         </TableToolBar>

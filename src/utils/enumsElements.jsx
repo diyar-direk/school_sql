@@ -35,15 +35,18 @@ export const gendersStyle = {
     icon: (
       <i
         className="fas fa-female"
-        style={{ color: "violet", fontSize: "14px" }}
+        style={{ color: "#b510b5", fontSize: "14px" }}
       />
     ),
-    color: "violet",
+    color: "#b510b5",
   },
   [genders.female]: {
     icon: (
-      <i className="fas fa-male" style={{ color: "blue", fontSize: "14px" }} />
+      <i
+        className="fas fa-male"
+        style={{ color: "#1717a4", fontSize: "14px" }}
+      />
     ),
-    color: "blue",
+    color: "#1717a4",
   },
 };

@@ -11,6 +11,7 @@ import AllowedTo from "../../components/AllowedTo";
 import { roles } from "../../constants/enums";
 import Skeleton from "../../components/skeleton/Skeleton";
 import { useTranslation } from "react-i18next";
+
 const apiClient = new APIClient(endPoints.teachers);
 const TeacherProfile = () => {
   const { id } = useParams();
@@ -67,7 +68,7 @@ const TeacherProfile = () => {
           </div>
           <div className="flex">
             <h2>{t("teachers.gender")}:</h2>
-            <p>{data?.gender}</p>
+            <p>{t(`enums.${data.gender}`)}</p>
           </div>
 
           <div className="flex">

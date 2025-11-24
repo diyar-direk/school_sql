@@ -207,7 +207,7 @@ const Navbar = () => {
               <i className="center photo fa-solid fa-user"></i>
               <article>
                 <h4>{name}</h4>
-                <p>{userDetails?.role}</p>
+                <p>{t(`enums.${userDetails?.role}`)}</p>
               </article>
             </Link>
 

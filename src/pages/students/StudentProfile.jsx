@@ -74,7 +74,7 @@ const StudentProfile = () => {
           </div>
           <div className="flex">
             <h2>{t("students.gender")} :</h2>
-            <p> {data?.gender} </p>
+            <p> {t(`enums.${data.gender}`)} </p>
           </div>
 
           <div className="flex">
