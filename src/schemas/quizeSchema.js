@@ -2,10 +2,10 @@ import * as Yup from "yup";
 import { questionTypes, tofQuestionStatus } from "../constants/enums";
 
 export const quizeSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
+  title: Yup.string().required("error.title_required"),
   description: Yup.string().notRequired(),
   courseId: Yup.mixed()
-    .required("You must choose the test material")
+    .required("error.please_choose_subject")
     .test("is-valid-course", "Invalid course value", (value) => {
       if (typeof value === "object" && value !== null) {
         return !!value.id;
@@ -16,26 +16,28 @@ export const quizeSchema = Yup.object().shape({
       return false;
     }),
   date: Yup.date()
-    .required("Date is required")
-    .min(new Date(), "Date must be in the future"),
+    .required("error.start_time_required")
+    .min(new Date(), "error.date_must_be_in_the_future"),
   duration: Yup.number()
-    .required("quize duration is required")
-    .min(1, "quize duration must be bigger than 0 minutes"),
+    .required("error.write_duration_in_minutes")
+    .min(1, "error.can_not_be_negative_value"),
 
   questions: Yup.array()
     .of(
       Yup.object().shape({
-        text: Yup.string().required("Question text is required"),
+        text: Yup.string().required("error.question_text_required"),
         type: Yup.string()
           .oneOf(Object.values(questionTypes))
-          .required("Question type is required"),
+          .required("error.question_type_required"),
 
         correctAnswer: Yup.string().when("type", {
           is: questionTypes.TOF,
           then: (schema) =>
             schema
               .oneOf(Object.values(tofQuestionStatus))
-              .required("Correct answer is required for true/false questions"),
+              .required(
+                "error.correct_answer_required_for_true_false_questions"
+              ),
           otherwise: (schema) => schema.notRequired(),
         }),
 
@@ -45,20 +47,20 @@ export const quizeSchema = Yup.object().shape({
             schema
               .of(
                 Yup.object().shape({
-                  text: Yup.string().required("Option text is required"),
+                  text: Yup.string().required("error.option_text_required"),
                   isCorrect: Yup.boolean().required(),
                 })
               )
-              .min(2, "At least 2 options are required")
-              .max(5, "No more than 5 options allowed")
+              .min(2, "error.at_least_two_options_required")
+              .max(5, "error.no_more_than_five_options_allowed")
               .test(
                 "at-least-one-correct",
-                "At least one option must be marked correct",
+                "error.at_least_one_option_must_be_marked_correct",
                 (choices) => choices?.some((c) => c.isCorrect === true)
               ),
           otherwise: (schema) => schema.notRequired(),
         }),
       })
     )
-    .min(1, "At least one question is required"),
+    .min(1, "error.at_least_one_question_required"),
 });

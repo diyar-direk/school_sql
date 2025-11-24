@@ -32,11 +32,11 @@ const AddTimeTable = ({
     },
     enableReinitialize: true,
     validationSchema: yup.object({
-      classId: yup.object().required("class is required"),
+      classId: yup.object().required("error.please_choose_subject"),
       startTime: yup
         .string()
-        .required("please select course start time")
-        .matches(timeRegex, "invalid time format, use HH:mm"),
+        .required("error.start_time_required")
+        .matches(timeRegex, "error.invalid_time_format"),
     }),
     onSubmit: (values) => handleConfirm.mutate(values),
   });
@@ -76,7 +76,7 @@ const AddTimeTable = ({
             formik.values?.classId?.name || t("attendance.class_placeholder")
           }
           onChange={(e) => formik.setFieldValue("classId", e)}
-          errorText={formik?.errors?.classId}
+          errorText={t(formik?.errors?.classId)}
         />
         <Input
           title={t("timeTable.start_time")}
@@ -84,7 +84,7 @@ const AddTimeTable = ({
           name="startTime"
           onChange={formik.handleChange}
           value={formik.values?.startTime}
-          errorText={formik.errors?.startTime}
+          errorText={t(formik?.errors?.startTime)}
         />
 
         <div className="actions">

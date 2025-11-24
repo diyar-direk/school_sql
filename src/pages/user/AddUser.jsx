@@ -57,7 +57,7 @@ const AddUser = () => {
             value={formik.values.username}
             placeholder={t("users.user_name_placeholder")}
             name="username"
-            errorText={formik.errors?.username}
+            errorText={t(formik.errors?.username)}
           />
           <Input
             title={t("users.password")}
@@ -65,7 +65,7 @@ const AddUser = () => {
             value={formik.values.password}
             placeholder={t("users.password_placeholder")}
             name="password"
-            errorText={formik.errors?.password}
+            errorText={t(formik.errors?.password)}
             type="password"
           />
           <Input
@@ -74,7 +74,7 @@ const AddUser = () => {
             value={formik.values.confirmPassword}
             placeholder={t("users.password_placeholderConf")}
             name="confirmPassword"
-            errorText={formik.errors?.confirmPassword}
+            errorText={t(formik.errors?.confirmPassword)}
             type="password"
           />
           <SelectOptionInput
@@ -85,7 +85,7 @@ const AddUser = () => {
               { text: "teacher", value: roles.teacher },
               { text: "student", value: roles.student },
             ]}
-            errorText={formik.errors?.role}
+            errorText={t(formik.errors?.role)}
             onSelectOption={(opt) => selectRole(opt.value)}
           />
           <SelectInputApi
@@ -106,7 +106,7 @@ const AddUser = () => {
                 : `select ${formik.values.role || "student"} profile`
             }
             onChange={(opt) => formik.setFieldValue("profileId", opt)}
-            errorText={formik.errors?.profileId}
+            errorText={t(formik.errors?.profileId)}
           />
         </div>
         <Button type="submit" isSending={handleSubmit.isPending}>

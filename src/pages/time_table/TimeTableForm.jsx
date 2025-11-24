@@ -26,6 +26,7 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
     validationSchema: timeTableSchema,
     onSubmit: (values) => handleConfirm.mutate(values),
   });
+
   const handleClose = useCallback(() => {
     setIsOpen(false);
     setIsUpdate(false);
@@ -62,7 +63,7 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
             formik.values?.courseId?.name || t("timeTable.subject_placeholder")
           }
           onChange={(e) => formik.setFieldValue("courseId", e)}
-          errorText={formik?.errors?.courseId}
+          errorText={t(formik?.errors?.courseId)}
         />
         <SelectInputApi
           endPoint={endPoints.classes}
@@ -72,7 +73,7 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
             formik.values?.classId?.name || t("attendance.class_placeholder")
           }
           onChange={(e) => formik.setFieldValue("classId", e)}
-          errorText={formik?.errors?.classId}
+          errorText={t(formik?.errors?.classId)}
         />
         <Input
           title={t("timeTable.start_time")}
@@ -80,7 +81,7 @@ const TimeTableForm = ({ day, setIsOpen, isOpen, isUpdate, setIsUpdate }) => {
           name="startTime"
           onChange={formik.handleChange}
           value={formik.values?.startTime}
-          errorText={formik.errors?.startTime}
+          errorText={t(formik?.errors?.startTime)}
         />
 
         <div className="actions">

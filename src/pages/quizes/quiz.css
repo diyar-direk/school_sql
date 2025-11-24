@@ -10,6 +10,10 @@
   right: 0;
   top: -10px;
 }
+body.arabic .questions-section > div .remove-question {
+  right: unset;
+  left: 0;
+}
 .questions-section > div .true .placeholder {
   background-color: rgba(18, 92, 18, 0.153);
   color: rgb(14, 123, 14);

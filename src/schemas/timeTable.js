@@ -4,14 +4,14 @@ import { dayes } from "../constants/enums";
 const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
 export const timeTableSchema = yup.object({
-  classId: yup.object().required("class is required"),
-  courseId: yup.object().required("course is required"),
+  classId: yup.object().required("error.please_choose_class"),
+  courseId: yup.object().required("error.please_choose_subject"),
   dayOfWeek: yup
     .string()
-    .required("day is required")
+    .required("error.please_choose_day")
     .oneOf(Object.values(dayes)),
   startTime: yup
     .string()
-    .required("please select course start time")
-    .matches(timeRegex, "invalid time format, use HH:mm"),
+    .required("error.start_time_required")
+    .matches(timeRegex, "error.invalid_time_format")
 });

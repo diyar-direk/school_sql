@@ -63,7 +63,7 @@ const UpdateExamSchedule = () => {
             value={formik.values.title}
             placeholder={t("quizzes.exam_title_placeholder")}
             name="title"
-            errorText={formik.errors?.title}
+            errorText={t(formik?.errors?.title)}
           />
           <SelectInputApi
             endPoint={endPoints.courses}
@@ -73,7 +73,7 @@ const UpdateExamSchedule = () => {
             }
             optionLabel={(opt) => opt?.name}
             onChange={(opt) => formik.setFieldValue("courseId", opt)}
-            errorText={formik.errors?.courseId}
+            errorText={t(formik?.errors?.courseId)}
             params={{ teacherId: isTeacher ? profileId?.id : null }}
           />
           <Input
@@ -82,7 +82,7 @@ const UpdateExamSchedule = () => {
             value={formik.values.date}
             type="datetime-local"
             name="date"
-            errorText={formik.errors?.date}
+            errorText={t(formik?.errors?.date)}
           />
           <Input
             title={t("exams.duration")}
@@ -90,7 +90,7 @@ const UpdateExamSchedule = () => {
             value={formik.values.duration}
             placeholder={t("exams.duration_palceholder")}
             name="duration"
-            errorText={formik.errors?.duration}
+            errorText={t(formik?.errors?.duration)}
             type="number"
           />
           <Input
@@ -99,7 +99,7 @@ const UpdateExamSchedule = () => {
             value={formik.values.totalMarks}
             placeholder={t("exams.total_marks_placeholder")}
             name="totalMarks"
-            errorText={formik.errors?.totalMarks}
+            errorText={t(formik?.errors?.totalMarks)}
             type="number"
           />
         </div>

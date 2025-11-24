@@ -67,7 +67,7 @@ const UpdateExamResult = () => {
                   : t("student.select_student")
               }
               onChange={(opt) => formik.setFieldValue("studentId", opt)}
-              errorText={formik.errors?.studentId}
+              errorText={t(formik?.errors?.studentId)}
             />
             <SelectInputApi
               endPoint={endPoints.exams}
@@ -75,7 +75,7 @@ const UpdateExamResult = () => {
               placeholder={formik.values?.examId?.title || "select exam"}
               optionLabel={(opt) => opt?.title}
               onChange={(opt) => formik.setFieldValue("examId", opt)}
-              errorText={formik.errors?.examId}
+              errorText={t(formik?.errors?.examId)}
             />
           </AllowedTo>
 
@@ -85,7 +85,7 @@ const UpdateExamResult = () => {
             value={formik.values.score}
             placeholder={t("exam.score")}
             name="score"
-            errorText={formik.errors?.score}
+            errorText={t(formik?.errors?.score)}
             type="number"
           />
         </div>

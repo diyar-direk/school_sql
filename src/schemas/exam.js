@@ -1,10 +1,10 @@
 import * as yup from "yup";
 export const examSchema = yup.object({
-  title: yup.string().required("exam title is required"),
+  title: yup.string().required("error.title_required"),
 
   courseId: yup
     .mixed()
-    .required("You must choose the test material")
+    .required("error.please_choose_subject")
     .test("is-valid-course", "Invalid course value", (value) => {
       if (typeof value === "object" && value !== null) {
         return !!value.id;
@@ -15,15 +15,15 @@ export const examSchema = yup.object({
       return false;
     }),
 
-  date: yup.date().required("exam date is required"),
+  date: yup.date().required("error.start_time_required"),
 
   duration: yup
     .number()
-    .required("write exam duration in minutes")
-    .min(0, "duration can not be negative value"),
+    .required("error.write_duration_in_minutes")
+    .min(0, "error.can_not_be_negative_value"),
 
   totalMarks: yup
     .number()
-    .required("please write exam total mark")
-    .min(0, "total mark can not be negative value"),
+    .required("error.write_total_mark")
+    .min(0, "error.can_not_be_negative_value"),
 });

@@ -10,6 +10,7 @@ import { endPoints } from "../../../constants/endPoints";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "./../../../utils/ApiClient";
 import { formatInputsData } from "../../../utils/formatInputsData";
+import { useTranslation } from "react-i18next";
 
 const AddStudentsToCourse = ({ courseId }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,10 +22,10 @@ const AddStudentsToCourse = ({ courseId }) => {
       status: "",
     },
     validationSchema: yup.object({
-      studentId: yup.object().required("please select a student"),
+      studentId: yup.object().required("error.please_choose_student"),
       status: yup
         .string()
-        .required("please selecte student course status")
+        .required("error.please_choose_course_status")
         .oneOf(Object.values(courseStatus)),
     }),
     onSubmit: (values) => handleConfirm.mutate(formatInputsData(values)),
@@ -42,6 +43,8 @@ const AddStudentsToCourse = ({ courseId }) => {
   });
 
   const handleClose = useCallback(() => setIsOpen(false), []);
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -62,7 +65,7 @@ const AddStudentsToCourse = ({ courseId }) => {
             optionLabel={(e) =>
               `${e?.firstName} ${e?.middleName} ${e?.lastName}`
             }
-            errorText={formik.errors?.studentId}
+            errorText={t(formik?.errors?.studentId)}
           />
 
           <SelectOptionInput
@@ -89,7 +92,7 @@ const AddStudentsToCourse = ({ courseId }) => {
               },
             ]}
             onSelectOption={(e) => formik.setFieldValue("status", e.value)}
-            errorText={formik.errors?.status}
+            errorText={t(formik?.errors?.status)}
           />
 
           <div className="actions">

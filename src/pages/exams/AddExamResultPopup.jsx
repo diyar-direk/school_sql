@@ -12,6 +12,7 @@ import "../students/student.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import APIClient from "../../utils/ApiClient";
 import { formatInputsData } from "../../utils/formatInputsData";
+import { useTranslation } from "react-i18next";
 
 const apiClient = new APIClient(endPoints["exam-results"]);
 const AddExamResultPopup = ({ examId }) => {
@@ -31,6 +32,8 @@ const AddExamResultPopup = ({ examId }) => {
     setIsOpen(false);
   }, []);
 
+  const { t } = useTranslation();
+
   const handleStudentFilter = useMemo(
     () => ({
       endPoint: endPoints["student-courses"],
@@ -42,9 +45,9 @@ const AddExamResultPopup = ({ examId }) => {
         return `${opt?.student?.firstName} ${opt?.student?.middleName} ${opt?.student?.lastName}`;
       },
       onChange: (opt) => formik.setFieldValue("studentId", opt.student),
-      errorText: formik?.errors?.studentId,
+      errorText: t(formik?.errors?.studentId),
     }),
-    [formik]
+    [formik, t]
   );
 
   const query = useQueryClient();
@@ -86,7 +89,7 @@ const AddExamResultPopup = ({ examId }) => {
             onChange={formik.handleChange}
             placeholder="score"
             value={formik.values?.score}
-            errorText={formik.errors?.score}
+            errorText={t(formik.errors?.score)}
           />
 
           <div className="actions">

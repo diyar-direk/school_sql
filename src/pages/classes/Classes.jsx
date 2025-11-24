@@ -103,7 +103,7 @@ const Classes = () => {
             <h1> {t("class.add_new_class")}</h1>
             <Input
               title={t("class.name")}
-              errorText={formik?.errors?.name}
+              errorText={t(formik?.errors?.name)}
               placeholder={t("class.name_placeholder")}
               name="name"
               onChange={formik.handleChange}

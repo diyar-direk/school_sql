@@ -58,7 +58,7 @@ const AddExamResult = () => {
                 : t("student.select_student")
             }
             onChange={(opt) => formik.setFieldValue("studentId", opt)}
-            errorText={formik.errors?.studentId}
+            errorText={t(formik?.errors?.studentId)}
           />
           {!examId && isAdmin && (
             <SelectInputApi
@@ -69,7 +69,7 @@ const AddExamResult = () => {
               }
               optionLabel={(opt) => opt?.title}
               onChange={(opt) => formik.setFieldValue("examId", opt)}
-              errorText={formik.errors?.examId}
+              errorText={t(formik?.errors?.examId)}
             />
           )}
 
@@ -79,7 +79,7 @@ const AddExamResult = () => {
             value={formik.values.score}
             placeholder={t("exam.score")}
             name="score"
-            errorText={formik.errors?.score}
+            errorText={t(formik?.errors?.score)}
             type="number"
           />
         </div>

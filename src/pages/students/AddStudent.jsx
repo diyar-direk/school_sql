@@ -56,7 +56,7 @@ const AddStudent = () => {
             value={formik.values.firstName}
             placeholder={t("teachers.first_name_placeholder")}
             name="firstName"
-            errorText={formik.errors?.firstName}
+            errorText={t(formik.errors?.firstName)}
           />
           <Input
             title={t("teachers.middle_name")}
@@ -64,7 +64,7 @@ const AddStudent = () => {
             value={formik.values.middleName}
             placeholder={t("teachers.middle_name_placeholder")}
             name="middleName"
-            errorText={formik.errors?.middleName}
+            errorText={t(formik.errors?.middleName)}
           />
           <Input
             title={t("teachers.last_name")}
@@ -72,7 +72,7 @@ const AddStudent = () => {
             value={formik.values.lastName}
             placeholder={t("teachers.last_name_placeholder")}
             name="lastName"
-            errorText={formik.errors?.lastName}
+            errorText={t(formik.errors?.lastName)}
           />
 
           <SelectOptionInput
@@ -85,7 +85,7 @@ const AddStudent = () => {
               { text: "female", value: genders.female },
             ]}
             onSelectOption={(opt) => formik.setFieldValue("gender", opt.value)}
-            errorText={formik?.errors?.gender}
+            errorText={t(formik.errors?.gender)}
           />
           <Input
             title={t("teachers.birth_date")}
@@ -93,7 +93,7 @@ const AddStudent = () => {
             value={formik.values.dateOfBirth}
             name="dateOfBirth"
             type="date"
-            errorText={formik.errors?.dateOfBirth}
+            errorText={t(formik.errors?.dateOfBirth)}
           />
 
           <Input
@@ -102,7 +102,7 @@ const AddStudent = () => {
             value={formik.values?.phone}
             placeholder={t("teachers.phone_number_placeholder")}
             name="phone"
-            errorText={formik.errors?.phone}
+            errorText={t(formik.errors?.phone)}
           />
           <Input
             title={t("teachers.email")}
@@ -110,7 +110,7 @@ const AddStudent = () => {
             value={formik.values.email}
             placeholder={t("teachers.email_placeholder")}
             name="email"
-            errorText={formik.errors?.email}
+            errorText={t(formik.errors?.email)}
           />
           <Input
             title={t("teachers.address")}
@@ -118,7 +118,7 @@ const AddStudent = () => {
             value={formik.values.address}
             placeholder={t("teachers.address_placeholder")}
             name="address"
-            errorText={formik.errors?.address}
+            errorText={t(formik.errors?.address)}
           />
           <Input
             title={t("teachers.birth_date")}
@@ -126,7 +126,7 @@ const AddStudent = () => {
             value={formik.values.enrollmentDate}
             name="enrollmentDate"
             type="date"
-            errorText={formik.errors?.enrollmentDate}
+            errorText={t(formik.errors?.enrollmentDate)}
           />
           <Input
             title={t("teachers.guardianName")}
@@ -134,7 +134,7 @@ const AddStudent = () => {
             value={formik.values.guardianName}
             placeholder={t("teachers.guardianName_placeholder")}
             name="guardianName"
-            errorText={formik.errors?.guardianName}
+            errorText={t(formik.errors?.guardianName)}
           />
           <Input
             title={t("teachers.guardianPhone")}
@@ -142,7 +142,7 @@ const AddStudent = () => {
             value={formik.values.guardianPhone}
             placeholder={t("teachers.guardianPhone_placeholder")}
             name="guardianPhone"
-            errorText={formik.errors?.guardianPhone}
+            errorText={t(formik.errors?.guardianPhone)}
           />
           <Input
             title={t("teachers.guardianRelationship")}
@@ -150,7 +150,7 @@ const AddStudent = () => {
             value={formik.values.guardianRelationship}
             placeholder={t("teachers.guardianRelationship_placeholder")}
             name="guardianRelationship"
-            errorText={formik.errors?.guardianRelationship}
+            errorText={t(formik.errors?.guardianRelationship)}
           />
         </div>
         <Button type="submit" isSending={handleSubmit.isPending}>

@@ -49,7 +49,7 @@ const AddTeacher = () => {
             value={formik.values.firstName}
             placeholder={t("teachers.first_name_placeholder")}
             name="firstName"
-            errorText={formik.errors?.firstName}
+            errorText={t(formik.errors?.firstName)}
           />
           <Input
             title={t("teachers.middle_name")}
@@ -57,7 +57,7 @@ const AddTeacher = () => {
             value={formik.values.middleName}
             placeholder={t("teachers.middle_name_placeholder")}
             name="middleName"
-            errorText={formik.errors?.middleName}
+            errorText={t(formik.errors?.middleName)}
           />
           <Input
             title={t("teachers.last_name")}
@@ -65,7 +65,7 @@ const AddTeacher = () => {
             value={formik.values.lastName}
             placeholder={t("teachers.last_name_placeholder")}
             name="lastName"
-            errorText={formik.errors?.lastName}
+            errorText={t(formik.errors?.lastName)}
           />
 
           <SelectOptionInput
@@ -86,7 +86,7 @@ const AddTeacher = () => {
             value={formik.values.phoneNumber}
             placeholder={t("teachers.phone_number_placeholder")}
             name="phoneNumber"
-            errorText={formik.errors?.phoneNumber}
+            errorText={t(formik.errors?.phoneNumber)}
           />
           <Input
             title={t("teachers.email")}
@@ -94,7 +94,7 @@ const AddTeacher = () => {
             value={formik.values.email}
             placeholder={t("teachers.email_placeholder")}
             name="email"
-            errorText={formik.errors?.email}
+            errorText={t(formik.errors?.email)}
           />
         </div>
         <Button type="submit" isSending={handleSubmit.isPending}>

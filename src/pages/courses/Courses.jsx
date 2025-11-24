@@ -64,15 +64,15 @@ const column = [
   {
     name: "actions",
     headerName: "actions",
-    className: "center",
-    allowedTo: [roles.admin],
     getCell: ({ row }) => (
-      <div className="flex gap-10">
-        <Link to={pagesRoute.courses.update(row.id)}>
-          <Button btnStyleType="outlined">
-            <i className="fa-regular fa-pen-to-square" /> update
-          </Button>
-        </Link>
+      <div className="flex gap-10 center">
+        <AllowedTo roles={[roles.admin]}>
+          <Link to={pagesRoute.courses.update(row.id)}>
+            <Button btnStyleType="outlined">
+              <i className="fa-regular fa-pen-to-square" /> update
+            </Button>
+          </Link>
+        </AllowedTo>
         <Link to={pagesRoute.courses.view(row.id)}>
           <Button btnType="save" btnStyleType="outlined">
             <i className="fa-solid fa-eye" /> view

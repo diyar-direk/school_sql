@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import APIClient from "../../utils/ApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,10 +22,10 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
     },
     validationSchema: yup.object({
       studentId: yup.string().required(),
-      courseId: yup.object().required("please select a course"),
+      courseId: yup.object().required("error.please_choose_subject"),
       status: yup
         .string()
-        .required("please choose a course status")
+        .required("error.please_choose_course_status")
         .oneOf(Object.values(courseStatus)),
     }),
     enableReinitialize: true,
@@ -52,6 +53,8 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
   }, [setIsUpdate]);
 
   const toggleOpen = useCallback(() => setIsOpen((prev) => !prev), []);
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -89,7 +92,7 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
               },
             ]}
             onSelectOption={(e) => formik.setFieldValue("status", e.value)}
-            errorText={formik?.errors?.status}
+            errorText={t(formik?.errors?.status)}
           />
           <SelectInputApi
             endPoint={endPoints.courses}
@@ -97,7 +100,7 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
             placeholder={formik.values.courseId?.name || "select course"}
             optionLabel={(e) => e.name}
             onChange={(e) => formik.setFieldValue("courseId", e)}
-            errorText={formik?.errors?.courseId}
+            errorText={t(formik?.errors?.courseId)}
           />
           <div className="actions">
             <Button type="submit" isSending={handleConfirm.isPending}>

@@ -22,21 +22,18 @@ const UpdatePassword = () => {
     validationSchema: yup.object({
       newPassword: yup
         .string()
-        .required("password is required")
-        .min(6, "password must be more than 5 characters"),
+        .required("error.passwords_must_match")
+        .min(6, "error.minimum_6_characters"),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword"), null], "Passwords must match")
-        .required("Passwords must match"),
+        .oneOf([yup.ref("newPassword"), null], "error.passwords_must_match")
+        .required("error.passwords_must_match"),
     }),
     onSubmit: (values) => handleSubmit.mutate(formatInputsData(values)),
   });
   const handleSubmit = useMutation({
-    mutationFn: async (data) => {
-      try {
-        await axiosInstance.post(endPoints.updatePassword, data);
-      } catch {}
-    },
+    mutationFn: async (data) =>
+      await axiosInstance.post(endPoints.updatePassword, data),
     onSuccess: () => nav(-1),
   });
 
@@ -52,7 +49,7 @@ const UpdatePassword = () => {
             value={formik.values.newPassword}
             placeholder={t("users.password_placeholder")}
             name="newPassword"
-            errorText={formik.errors?.newPassword}
+            errorText={t(formik.errors?.newPassword)}
             type="password"
           />
           <Input
@@ -61,7 +58,7 @@ const UpdatePassword = () => {
             value={formik.values.confirmPassword}
             placeholder={t("users.password_placeholderConf")}
             name="confirmPassword"
-            errorText={formik.errors?.confirmPassword}
+            errorText={t(formik.errors?.confirmPassword)}
             type="password"
           />
         </div>

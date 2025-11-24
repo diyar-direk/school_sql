@@ -79,7 +79,7 @@ const UpdateCourse = () => {
             value={formik.values.name}
             placeholder={t("subject.name")}
             name="name"
-            errorText={formik.errors?.name}
+            errorText={t(formik?.errors?.name)}
           />
           <Input
             title={t("subject.code")}
@@ -87,7 +87,7 @@ const UpdateCourse = () => {
             value={formik.values.code}
             placeholder={t("subject.code")}
             name="code"
-            errorText={formik.errors?.code}
+            errorText={t(formik?.errors?.code)}
           />
           <SelectInputApi
             endPoint={endPoints.teachers}
@@ -105,7 +105,7 @@ const UpdateCourse = () => {
             value={formik.values.description}
             placeholder={t("subject.description_placeholder")}
             name="description"
-            errorText={formik.errors?.description}
+            errorText={t(formik?.errors?.description)}
             elementType="textarea"
             rows={5}
           />

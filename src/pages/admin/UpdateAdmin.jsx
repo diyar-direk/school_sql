@@ -24,11 +24,11 @@ const AddAdmin = () => {
       email: data?.email || "",
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().required("first name is required"),
-      lastName: Yup.string().required("first name is required"),
+      firstName: Yup.string().required("error.first_name_required"),
+      lastName: Yup.string().required("error.last_name_required"),
       email: Yup.string()
-        .required("first name is required")
-        .email("please enter valid email"),
+        .required("error.email_required")
+        .email("error.email_invalid"),
     }),
     onSubmit: (values) => handleSubmit.mutate(values),
     enableReinitialize: true,
@@ -61,7 +61,7 @@ const AddAdmin = () => {
             value={formik.values.firstName}
             placeholder={t("admins.first_name_placeholder")}
             name="firstName"
-            errorText={formik.errors?.firstName}
+            errorText={t(formik.errors?.firstName)}
           />
           <Input
             title={t("admins.last_name")}
@@ -69,7 +69,7 @@ const AddAdmin = () => {
             value={formik.values.lastName}
             placeholder={t("admins.last_name_placeholder")}
             name="lastName"
-            errorText={formik.errors?.lastName}
+            errorText={t(formik.errors?.lastName)}
           />
           <Input
             title={t("admins.email")}
@@ -77,7 +77,7 @@ const AddAdmin = () => {
             value={formik.values.email}
             placeholder={t("admins.email_placeholder")}
             name="email"
-            errorText={formik.errors?.email}
+            errorText={t(formik.errors?.email)}
           />
         </div>
         <Button type="submit" isSending={handleSubmit.isPending}>

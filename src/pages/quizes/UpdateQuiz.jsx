@@ -84,7 +84,7 @@ const UpdateQuiz = () => {
                 <h1>{t("exams.please_complete_form")}</h1>
                 <div className="flex wrap">
                   <Input
-                    errorText={formik.errors?.title}
+                    errorText={t(formik.errors?.title)}
                     title={t("quizzes.exam_title")}
                     placeholder={t("quizzes.exam_title_placeholder")}
                     name="title"
@@ -100,14 +100,14 @@ const UpdateQuiz = () => {
                     }
                     endPoint={endPoints.courses}
                     onChange={(e) => formik.setFieldValue("courseId", e)}
-                    errorText={formik.errors?.courseId}
+                    errorText={t(formik.errors?.courseId)}
                     params={{
                       teacherId: role === roles.teacher ? profileId?.id : null,
                     }}
                   />
 
                   <Input
-                    errorText={formik.errors?.date}
+                    errorText={t(formik.errors?.date)}
                     title={t("quizzes.quiz_date")}
                     name="date"
                     onChange={formik.handleChange}
@@ -116,7 +116,7 @@ const UpdateQuiz = () => {
                   />
 
                   <Input
-                    errorText={formik.errors?.duration}
+                    errorText={t(formik.errors?.duration)}
                     title={t("quizzes?.duration")}
                     name="duration"
                     onChange={formik.handleChange}
@@ -126,7 +126,7 @@ const UpdateQuiz = () => {
                   />
 
                   <Input
-                    errorText={formik.errors?.description}
+                    errorText={t(formik.errors?.description)}
                     title={t("quizzes.exam_discreption")}
                     placeholder={t("quizzes.exam_discreption_placeholder")}
                     name="description"
@@ -147,7 +147,7 @@ const UpdateQuiz = () => {
                     {formik.errors?.questions &&
                       typeof formik.errors?.questions === "string" && (
                         <p className="field-error">
-                          {formik.errors?.questions}
+                          {t(formik.errors?.questions)}
                         </p>
                       )}
 
@@ -157,7 +157,7 @@ const UpdateQuiz = () => {
                       return (
                         <div key={index} className="dashboard-form">
                           <Input
-                            errorText={questionError?.text}
+                            errorText={t(questionError?.text)}
                             title={`${t("quizzes.question")} ${index + 1}`}
                             placeholder={t("quizzes.enter_question_text")}
                             name={`questions[${index}].text`}
@@ -171,7 +171,7 @@ const UpdateQuiz = () => {
                             placeholder={q.type || t("quizzes.select_type")}
                             label={t("quizzes.select_type")}
                             options={questionTypeOptions}
-                            errorText={questionError?.type}
+                            errorText={t(questionError?.type)}
                             onSelectOption={(e) =>
                               formik.setFieldValue(
                                 `questions[${index}].type`,
@@ -194,7 +194,7 @@ const UpdateQuiz = () => {
                               }}
                               label={t("quizzes.correct_answer")}
                               options={tofOptions}
-                              errorText={questionError?.correctAnswer}
+                              errorText={t(questionError?.correctAnswer)}
                               onSelectOption={(e) =>
                                 formik.setFieldValue(
                                   `questions[${index}].correctAnswer`,
@@ -220,7 +220,7 @@ const UpdateQuiz = () => {
                                             title={`Option ${i + 1}`}
                                             value={opt.text}
                                             onChange={formik.handleChange}
-                                            errorText={choiceError?.text}
+                                            errorText={t(choiceError?.text)}
                                             elementType="textarea"
                                             rows={4}
                                           />
@@ -248,7 +248,9 @@ const UpdateQuiz = () => {
                                               { text: "True", value: true },
                                               { text: "False", value: false },
                                             ]}
-                                            errorText={choiceError?.isCorrect}
+                                            errorText={t(
+                                              choiceError?.isCorrect
+                                            )}
                                             onSelectOption={(e) => {
                                               const updatedChoices =
                                                 formik.values.questions[
@@ -285,7 +287,7 @@ const UpdateQuiz = () => {
                                       className="field-error"
                                       style={{ width: "100%" }}
                                     >
-                                      {questionError?.choices}
+                                      {t(questionError?.choices)}
                                     </p>
                                   )}
 
