@@ -391,9 +391,8 @@
     "update": "تحديث",
     "delete": "حذف",
     "select_question_type": "اختر نوع السؤال",
-
-    "t_f": "صح || خطأ",
-    "multiple": "خيارات متعددة",
+    "true-false": "صح || خطأ",
+    "multiple-choice": "خيارات متعددة",
     "question": "السؤال",
     "wrong_ans": "إجابة خاطئة",
     "correct_ans": "إجابة صحيحة",
@@ -403,7 +402,10 @@
     "loading": "جارٍ التحميل...",
     "start": "ابدأ الأختبار",
     "waiting": " انتظر ",
-    "allready_done": "انتهت مدة التقديم"
+    "allready_done": "انتهت مدة التقديم",
+    "option": "الاختيار",
+    "option_placeholder": "ادخل الاختيار",
+    "add_option": "اضافة اختيار"
   },
   "login": {
     "login": "تسجيل الدخول",
@@ -512,7 +514,9 @@
     "not_finished": " غير منتهي ",
     "my_exams": " امتحاناتي ",
     "my_quizzes": " اختباراتي ",
-    "search": " بحث "
+    "search": " بحث ",
+    "not_started": "لم يبدأ بعد",
+    "running": "بدأ التقديم"
   },
   "createdAt": "تاريخ الإنشاء",
   "updatedAt": " تاريخ التحديث",
@@ -528,6 +532,13 @@
     "Teacher": "أستاذ",
     "Student": "طالب",
     "Female": "ذكر",
-    "Male": "انثى"
+    "Male": "انثى",
+    "Present": "حاضر",
+    "Absent": "غائب",
+    "Excused": "مستأذن",
+    "Late": "متأخر",
+    "Active": " نشط ",
+    "Completed": " مكتمل ",
+    "Dropped": " مسقط "
   }
 }

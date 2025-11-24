@@ -1,12 +1,12 @@
 import { questionTypes, tofQuestionStatus } from "../../constants/enums";
 
-export const questionTypeOptions = [
+export const getQuestionTypeOptions = (t) => [
   {
     text: (
       <span className="flex align-center gap-10">
         <i className="fa-solid fa-check" style={{ color: "green" }} />
         <i className="fa-solid fa-xmark" style={{ color: "red" }} />
-        true / false
+        {t(`quizzes.${questionTypes.TOF}`)}
       </span>
     ),
     value: questionTypes.TOF,
@@ -16,7 +16,7 @@ export const questionTypeOptions = [
     text: (
       <span className="flex align-center gap-10">
         <i className="fa-solid fa-list-ol" style={{ color: "blue" }} />
-        multiple choice
+        {t(`quizzes.${questionTypes.MC}`)}
       </span>
     ),
     value: questionTypes.MC,
@@ -24,12 +24,12 @@ export const questionTypeOptions = [
   },
 ];
 
-export const tofOptions = [
+export const getTofOptions = (t) => [
   {
     text: (
       <span className="flex align-center gap-10" style={{ color: "green" }}>
         <i className="fa-solid fa-check" />
-        true
+        {t(`quizzes.${tofQuestionStatus.true}`)}
       </span>
     ),
     value: tofQuestionStatus.true,
@@ -38,7 +38,7 @@ export const tofOptions = [
     text: (
       <span className="flex align-center gap-10" style={{ color: "red" }}>
         <i className="fa-solid fa-xmark" />
-        false
+        {t(`quizzes.${tofQuestionStatus.false}`)}
       </span>
     ),
     value: tofQuestionStatus.false,

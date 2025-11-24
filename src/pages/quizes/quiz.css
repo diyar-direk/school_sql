@@ -5,6 +5,9 @@
   align-items: flex-start;
   position: relative;
 }
+.questions-section .dashboard-form .inp {
+  gap: 5px;
+}
 .questions-section > div .remove-question {
   position: absolute;
   right: 0;
@@ -35,6 +38,10 @@ body.arabic .questions-section > div .remove-question {
 td .quize-status {
   text-transform: capitalize;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 td .quize-status.passed {
   color: #0a15a1;

@@ -390,8 +390,8 @@
     "update": "Nûkirin",
     "select_question_type": "",
     "delete": "Jêbirin",
-    "t_f": "Rast || Şaş",
-    "multiple": "Vebijarkên Pirjimar",
+    "true-false": "Rast || Şaş",
+    "multiple-choice": "Vebijarkên Pirjimar",
     "question": "Pirs",
     "wrong_ans": "Bersivek Şaş e",
     "correct_ans": "Bersivek Rast e",
@@ -401,7 +401,10 @@
     "loading": "Barkirin...",
     "start": "Testê Destpêbike",
     "waiting": "Bende be...",
-    "allready_done": " Dema Serlêdanê Bi Dawî Bû"
+    "allready_done": " Dema Serlêdanê Bi Dawî Bû",
+    "option": "",
+    "option_placeholder": "",
+    "add_option": ""
   },
   "login": {
     "login": "Derbas Be",
@@ -492,7 +495,6 @@
     "course": "",
     "NO": "Na",
     "no": "Na",
-
     "any_course": "  ",
     "class": "   ",
     "any_class": "    ",
@@ -511,7 +513,9 @@
     "not_finished": "   ",
     "my_exams": "   ",
     "my_quizzes": "   ",
-    "search": "  "
+    "search": "  ",
+    "not_started": "",
+    "running": ""
   },
   "createdAt": " ",
   "updatedAt": "  ",
@@ -521,12 +525,19 @@
   "update": "  ",
   "reset_columns": "",
   "delete": "Jêbirin",
-  "results": "Encam",
+  "results": "",
   "enums": {
     "Admin": "",
     "Teacher": "",
     "Student": "",
     "Female": "",
-    "Male": ""
+    "Male": "",
+    "Present": "",
+    "Absent": "",
+    "Excused": "",
+    "Late": "",
+    "Active": " ",
+    "Completed": " ",
+    "Dropped": " "
   }
 }

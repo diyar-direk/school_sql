@@ -28,7 +28,7 @@ const column = [
     headerName: "users.role",
     getCell: ({ row, t }) => (
       <div
-        className="flex gap-10 align-center"
+        className="gap-10 center"
         style={{ color: rolesStyle[row.role]?.color }}
       >
         {rolesStyle[row.role]?.icon} {t(`enums.${row.role}`)}

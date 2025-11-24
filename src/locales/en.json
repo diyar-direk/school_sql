@@ -389,8 +389,8 @@
     "update": "Update",
     "delete": "Delete",
     "select_question_type": " Select Question Type",
-    "t_f": "True || False",
-    "multiple": "multiple choices",
+    "true-false": "True || False",
+    "multiple-choice": "multiple choices",
     "question": "Question",
     "wrong_ans": "Wrong answer",
     "correct_ans": "Correct answer",
@@ -400,7 +400,10 @@
     "loading": "loading...",
     "start": "Start Quiz",
     "waiting": "wait...",
-    "allready_done": " already completed"
+    "allready_done": " already completed",
+    "option": "option",
+    "option_placeholder": "enter option",
+    "add_option": "add option"
   },
   "login": {
     "login": "Login",
@@ -507,7 +510,9 @@
     "not_finished": " Not Finished ",
     "my_exams": " My Exams ",
     "my_quizzes": " My Quizzes ",
-    "search": " Search "
+    "search": " Search ",
+    "not_started": "not started yet",
+    "running": "running"
   },
   "createdAt": "Created At ",
   "updatedAt": "Updated At ",
@@ -523,6 +528,13 @@
     "Teacher": "Teacher",
     "Student": "Student",
     "Female": "female",
-    "Male": "male"
+    "Male": "male",
+    "Present": "Present",
+    "Absent": "Absent",
+    "Excused": "Excused",
+    "Late": "Late",
+    "Active": " Active ",
+    "Completed": " Completed ",
+    "Dropped": " Dropped "
   }
 }

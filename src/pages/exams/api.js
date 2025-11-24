@@ -1,5 +1,5 @@
 import { endPoints } from "../../constants/endPoints";
-import { roles } from "../../constants/enums";
+import { courseStatus, roles } from "../../constants/enums";
 import axiosInstance from "../../utils/axios";
 
 export const getMyExamsApi = async (role, profileId) => {
@@ -12,8 +12,10 @@ export const getMyExamsApi = async (role, profileId) => {
   const url =
     role === roles.teacher ? endPoints.courses : endPoints["student-courses"];
 
-  if (role === roles.student) params.studentId = profileId;
-  else params.teacherId = profileId;
+  if (role === roles.student) {
+    params.studentId = profileId;
+    params.status = courseStatus.Active;
+  } else params.teacherId = profileId;
 
   const { data } = await axiosInstance.get(url, {
     params,

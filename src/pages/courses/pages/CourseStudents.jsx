@@ -47,15 +47,18 @@ const CourseStudents = () => {
               <h3>{t("exams.status")}</h3>
               {data?.status === courseStatus.Dropped ? (
                 <span>
-                  <i className="fa-solid fa-circle-xmark" /> {data?.status}
+                  <i className="fa-solid fa-circle-xmark" />
+                  {t(`enums.${data?.status}`)}
                 </span>
               ) : data?.status === courseStatus.Active ? (
                 <span>
-                  <i className="fa-solid fa-hourglass-half" /> {data?.status}
+                  <i className="fa-solid fa-hourglass-half" />
+                  {t(`enums.${data?.status}`)}
                 </span>
               ) : (
                 <span>
-                  <i className="fa-solid fa-circle-check" /> {data?.status}
+                  <i className="fa-solid fa-circle-check" />
+                  {t(`enums.${data?.status}`)}
                 </span>
               )}
             </div>

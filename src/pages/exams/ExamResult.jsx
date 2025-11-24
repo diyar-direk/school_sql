@@ -161,7 +161,7 @@ const ExamResult = () => {
             {courseId && !quizId ? (
               <AddExamResultPopup examId={examId} />
             ) : (
-              isAdmin && <Add path={pagesRoute.examResult.add} />
+              isAdmin && !quizId && <Add path={pagesRoute.examResult.add} />
             )}
           </AllowedTo>
           <Filters>

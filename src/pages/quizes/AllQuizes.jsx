@@ -114,11 +114,23 @@ const AllQuizes = () => {
           const end = new Date(start.getTime() + row.duration * 60000);
           if (now < start) {
             return (
-              <div className="quize-status passed"> exam not started yet </div>
+              <div className="quize-status passed">
+                <i
+                  className="fa-solid fa-hourglass"
+                  style={{ fontSize: "80%" }}
+                />
+                {t("filters.not_started")}
+              </div>
             );
           } else if (now > end) {
             return (
-              <div className="quize-status done"> {t("filters.finished")} </div>
+              <div className="quize-status done">
+                <i
+                  className="fa-solid fa-hourglass-end"
+                  style={{ fontSize: "80%" }}
+                />
+                {t("filters.finished")}
+              </div>
             );
           } else {
             return (
@@ -128,7 +140,11 @@ const AllQuizes = () => {
                   role === roles.student ? pagesRoute.quize.take(row?.id) : ""
                 }
               >
-                exam is running now
+                <i
+                  className="fa-solid fa-hourglass-start"
+                  style={{ fontSize: "80%" }}
+                />
+                {t("filters.running")}
               </Link>
             );
           }

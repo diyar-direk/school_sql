@@ -73,9 +73,11 @@ const AddStudentsToCourse = ({ courseId }) => {
             wrapperProps={{
               className: `course-status ${formik.values.status}`,
             }}
-            placeholder={
-              formik.values.status || t("students.course_status_placeholder")
-            }
+            placeholder={t(
+              formik.values?.status
+                ? `enums.${formik.values?.status}`
+                : "students.course_status_placeholder"
+            )}
             options={[
               {
                 text: t("students.active"),

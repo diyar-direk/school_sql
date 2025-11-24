@@ -1,13 +1,12 @@
 import "../../components/form.css";
 import { FieldArray, Formik } from "formik";
 import SelectOptionInput from "../../components/inputs/SelectOptionInput";
-import { quizeSchema } from "../../schemas/quizeSchema";
 import Input from "../../components/inputs/Input";
 import dateFormatter from "../../utils/dateFormatter";
 import Button from "../../components/buttons/Button";
 import { questionTypes, roles } from "../../constants/enums";
 import IconButton from "./../../components/buttons/IconButton";
-import { questionTypeOptions, tofOptions } from "./questionTypeOptions";
+import { getQuestionTypeOptions, getTofOptions } from "./questionTypeOptions";
 import SelectInputApi from "../../components/inputs/SelectInputApi";
 import { endPoints } from "../../constants/endPoints";
 import APIClient from "./../../utils/ApiClient";
@@ -16,13 +15,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./quiz.css";
 import { useTranslation } from "react-i18next";
+import { getQuizeSchema } from "../../schemas/quizeSchema";
 const AddQuiz = () => {
   const { userDetails } = useAuth();
   const { profileId, role } = userDetails || {};
   const { state } = useLocation();
   const courseId = state?.courseId ? JSON.parse(state?.courseId) : null;
   const { t } = useTranslation();
-
+  const questionTypeOptions = getQuestionTypeOptions(t);
+  const tofOptions = getTofOptions(t);
   const nav = useNavigate();
   const queryClient = useQueryClient();
   const api = new APIClient(endPoints.quizzes);
@@ -48,7 +49,7 @@ const AddQuiz = () => {
             duration: "",
             questions: [],
           }}
-          validationSchema={quizeSchema}
+          validationSchema={getQuizeSchema()}
           onSubmit={(values) => {
             const start = new Date(values.date);
             const end = new Date(
@@ -158,9 +159,11 @@ const AddQuiz = () => {
                           />
 
                           <SelectOptionInput
-                            placeholder={
-                              q.type || t("quizzes.select_question_type")
-                            }
+                            placeholder={t(
+                              q.type
+                                ? `quizzes.${q.type}`
+                                : "quizzes.select_question_type"
+                            )}
                             label={t("quizzes.select_question_type")}
                             options={questionTypeOptions}
                             errorText={t(questionError?.type)}
@@ -174,17 +177,17 @@ const AddQuiz = () => {
 
                           {q.type === questionTypes.TOF && (
                             <SelectOptionInput
-                              placeholder={
-                                formik.values?.questions[index]
-                                  ?.correctAnswer ||
-                                t("quizzes.select_correct_answer")
-                              }
+                              placeholder={t(
+                                formik.values?.questions[index]?.correctAnswer
+                                  ? `quizzes.${formik.values?.questions[index]?.correctAnswer}`
+                                  : "quizzes.answer_placeholder"
+                              )}
                               wrapperProps={{
                                 className:
                                   formik.values?.questions[index]
                                     ?.correctAnswer,
                               }}
-                              label={t("quizzes.correct_answer")}
+                              label={t("quizzes.answer")}
                               options={tofOptions}
                               errorText={t(questionError?.correctAnswer)}
                               onSelectOption={(e) =>
@@ -208,8 +211,12 @@ const AddQuiz = () => {
                                         <div key={i} className="relative">
                                           <Input
                                             name={`questions[${index}].choices[${i}].text`}
-                                            placeholder={`Option ${i + 1}`}
-                                            title={`Option ${i + 1}`}
+                                            placeholder={t(
+                                              `quizzes.option_placeholder`
+                                            )}
+                                            title={`${t(`quizzes.option`)} ${
+                                              i + 1
+                                            }`}
                                             value={opt.text}
                                             onChange={formik.handleChange}
                                             errorText={t(choiceError?.text)}
@@ -218,7 +225,7 @@ const AddQuiz = () => {
                                           />
 
                                           <SelectOptionInput
-                                            label={t("quizzes.correct_answer")}
+                                            label={t("quizzes.answer")}
                                             wrapperProps={{
                                               className: JSON.stringify(
                                                 formik.values?.questions[index]
@@ -228,17 +235,25 @@ const AddQuiz = () => {
                                             placeholder={
                                               formik.values?.questions[index]
                                                 ?.choices[i]?.isCorrect === true
-                                                ? "True"
+                                                ? t("quizzes.true")
                                                 : formik.values?.questions[
                                                     index
                                                   ]?.choices[i]?.isCorrect ===
                                                   false
-                                                ? "False"
-                                                : "Select answer"
+                                                ? t("quizzes.false")
+                                                : t(
+                                                    "quizzes.answer_placeholder"
+                                                  )
                                             }
                                             options={[
-                                              { text: "True", value: true },
-                                              { text: "False", value: false },
+                                              {
+                                                text: t("quizzes.true"),
+                                                value: true,
+                                              },
+                                              {
+                                                text: t("quizzes.false"),
+                                                value: false,
+                                              },
                                             ]}
                                             errorText={t(
                                               choiceError?.isCorrect
@@ -295,7 +310,7 @@ const AddQuiz = () => {
                                     }
                                   >
                                     <i className="fa-solid fa-plus" />
-                                    add option
+                                    {t("quizzes.add_option")}
                                   </Button>
                                 </div>
                               )}

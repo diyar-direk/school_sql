@@ -48,6 +48,9 @@
   justify-content: center;
   gap: 6px;
 }
+.course-pages a i {
+  font-size: 80%;
+}
 .course-pages a.active,
 .course-pages a:hover {
   font-weight: bold;
@@ -55,6 +58,7 @@
   color: white;
 }
 
+.course-pages a.active i,
 .course-pages a:hover i {
   color: white !important;
 }

@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addAttendance, deleteAttendance, updateAttendance } from "./api";
 import { endPoints } from "../../../constants/endPoints";
 import { useAuth } from "../../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const AddAttendance = ({ selectedData, onClose }) => {
   const { student, date, courseId, isUpdate, id } = selectedData;
@@ -36,6 +37,7 @@ const AddAttendance = ({ selectedData, onClose }) => {
 
   const { userDetails } = useAuth();
   const { isAdmin } = userDetails || {};
+  const { t } = useTranslation();
 
   return (
     <PopUp isOpen={student} onClose={onClose} className="attendace-pop-up">
@@ -53,7 +55,7 @@ const AddAttendance = ({ selectedData, onClose }) => {
             onClick={() => handleSubmit.mutate(e)}
           >
             {attendanceStatusIcon[e].icon}
-            {e}
+            {t(`enums.${e}`)}
           </Button>
         ))}
         {isAdmin && isUpdate && (
@@ -62,7 +64,7 @@ const AddAttendance = ({ selectedData, onClose }) => {
             btnStyleType="contained"
             onClick={handleDelete.mutate}
           >
-            <i className="fa-solid fa-trash" /> delete status
+            <i className="fa-solid fa-trash" /> {t("delete")}
           </Button>
         )}
       </div>

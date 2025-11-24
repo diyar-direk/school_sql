@@ -5,7 +5,7 @@ export const rolesStyle = {
     icon: (
       <i
         className="fa-solid fa-lock"
-        style={{ color: "green", fontSize: "14px" }}
+        style={{ color: "green", fontSize: "80%" }}
       />
     ),
     color: "green",
@@ -14,7 +14,7 @@ export const rolesStyle = {
     icon: (
       <i
         className="fas fa-chalkboard-teacher"
-        style={{ color: "blue", fontSize: "14px" }}
+        style={{ color: "blue", fontSize: "80%" }}
       />
     ),
     color: "blue",
@@ -23,7 +23,7 @@ export const rolesStyle = {
     icon: (
       <i
         className="fas fa-user-graduate"
-        style={{ color: "orange", fontSize: "14px" }}
+        style={{ color: "orange", fontSize: "80%" }}
       />
     ),
     color: "orange",
@@ -35,7 +35,7 @@ export const gendersStyle = {
     icon: (
       <i
         className="fas fa-female"
-        style={{ color: "#b510b5", fontSize: "14px" }}
+        style={{ color: "#b510b5", fontSize: "80%" }}
       />
     ),
     color: "#b510b5",
@@ -44,7 +44,7 @@ export const gendersStyle = {
     icon: (
       <i
         className="fas fa-male"
-        style={{ color: "#1717a4", fontSize: "14px" }}
+        style={{ color: "#1717a4", fontSize: "80%" }}
       />
     ),
     color: "#1717a4",

@@ -36,7 +36,7 @@ const column = [
     headerName: "students.gender",
     getCell: ({ row, t }) => (
       <div
-        className="flex gap-10 align-center"
+        className="gap-10 center"
         style={{ color: gendersStyle[row.gender]?.color }}
       >
         {gendersStyle[row.gender]?.icon} {t(`enums.${row.gender}`)}

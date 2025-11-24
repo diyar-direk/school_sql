@@ -33,7 +33,7 @@ const navbarLinks = [
     title: "navBar.admins",
     type: "multi",
     showIf: [roles.admin],
-    icon: <i className="fa-solid fa-user-group" />,
+    icon: <i className="fa-solid fa-lock" />,
     children: [
       {
         title: "navBar.all_admins",
@@ -52,7 +52,7 @@ const navbarLinks = [
     title: "navBar.teachers",
     type: "multi",
     showIf: [roles.admin],
-    icon: <i className="fa-solid fa-people-group" />,
+    icon: <i className="fas fa-chalkboard-teacher" />,
     children: [
       {
         title: "navBar.all_teachers",
@@ -71,7 +71,7 @@ const navbarLinks = [
     title: "navBar.students",
     type: "multi",
     showIf: [roles.admin],
-    icon: <i className="fa-solid fa-children" />,
+    icon: <i className="fas fa-user-graduate" />,
     children: [
       {
         title: "navBar.all_students",

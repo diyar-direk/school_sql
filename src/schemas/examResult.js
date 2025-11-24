@@ -23,7 +23,6 @@ export const examResultSchema = yup.object({
     .number()
     .required("error.please_write_student_score")
     .min(0, "error.can_not_be_negative_value")
-    // .typeError("error.score_must_be_a_number")
     .when("examId", (examId, schema) => {
       if (examId && typeof examId === "object" && examId !== null) {
         return schema.max(
