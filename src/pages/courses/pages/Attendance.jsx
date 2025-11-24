@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { attendanceStatus } from "../../../constants/enums";
 import AddAttendance from "../components/AddAttendance";
 import { getAllAttendance, getStudentCourse } from "../components/api";
+import { useTranslation } from "react-i18next";
 
 const Attendance = () => {
   const { id } = useParams();
@@ -127,10 +128,13 @@ const Attendance = () => {
     setSelectedData({});
   }, []);
 
-  if (isFetching) return <h3 className="font-color">loading ...</h3>;
+  const { t } = useTranslation();
+
+  if (isFetching)
+    return <h3 className="font-color">{t("students.loading")}</h3>;
 
   if (studentsAttendance.length === 0)
-    return <h3 className="font-color"> لا يوجد طلاب في هذا الكورس </h3>;
+    return <h3 className="font-color">{t("students.no_students")}</h3>;
 
   return (
     <>
@@ -146,7 +150,7 @@ const Attendance = () => {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>{t("students.name")}</th>
               {days.map((day) => (
                 <th key={day}>{day}</th>
               ))}

@@ -18,11 +18,12 @@ import AllowedTo from "../../components/AllowedTo";
 import { useAuth } from "../../context/AuthContext";
 import SelectOptionInput from "../../components/inputs/SelectOptionInput";
 import AddExamResultPopup from "./AddExamResultPopup";
+import { useTranslation } from "react-i18next";
 
 const column = [
   {
     name: "studentId",
-    headerName: "studentId",
+    headerName: "students.student",
     getCell: ({ row }) => (
       <Link className="visit-text" to={pagesRoute.student.view(row?.studentId)}>
         {row?.student?.firstName} {row?.student?.middleName}
@@ -32,13 +33,13 @@ const column = [
   },
   {
     name: "examId",
-    headerName: "examId",
+    headerName: "quizzes.title",
     getCell: ({ row }) =>
       row?.[row.type === examTypes.Exam ? "exam" : "quiz"]?.title,
   },
   {
     name: "type",
-    headerName: "type",
+    headerName: "filters.exam_type",
     getCell: ({ row }) => (
       <span
         className="center gap-10"
@@ -55,7 +56,7 @@ const column = [
   },
   {
     name: "score",
-    headerName: "score",
+    headerName: "examResult.score",
     sort: true,
   },
   {
@@ -122,13 +123,14 @@ const ExamResult = () => {
 
   const [selectedItems, setSelectedItems] = useState(new Set());
 
+  const { t } = useTranslation();
   const handleStudentFilter = useMemo(
     () => ({
       endPoint: courseId ? endPoints["student-courses"] : endPoints.students,
-      label: "student",
+      label: t("students.student"),
       placeholder: filters?.studentId
         ? `${filters?.studentId?.firstName} ${filters?.studentId?.lastName}`
-        : "all students",
+        : t("filters.all"),
       optionLabel: (opt) => {
         if (courseId)
           return `${opt?.student?.firstName} ${opt?.student?.middleName} ${opt?.student?.lastName}`;
@@ -138,12 +140,12 @@ const ExamResult = () => {
         setFilters({ ...filters, studentId: courseId ? opt.student : opt }),
       params: courseId ? { status: courseStatus.Active } : {},
     }),
-    [courseId, filters]
+    [courseId, filters, t]
   );
 
   return (
     <div className="container">
-      <h1 className="title">exams result</h1>
+      <h1 className="title">{t("navBar.exam_results")}</h1>
       <div className="table-container flex-1">
         <TableToolBar>
           <AllowedTo roles={[roles.teacher, roles.admin]}>
@@ -174,7 +176,7 @@ const ExamResult = () => {
                   <h3
                     onClick={() => setFilters({ ...filters, studentId: null })}
                   >
-                    all students
+                    {t("filters.all")}
                   </h3>
                 }
                 params={handleStudentFilter.params}
@@ -184,15 +186,15 @@ const ExamResult = () => {
               <AllowedTo roles={[roles.admin]}>
                 <SelectInputApi
                   endPoint={endPoints.exams}
-                  label="exam"
-                  placeholder={filters?.examId?.title || "any exam"}
+                  label={t("navBar.exam")}
+                  placeholder={filters?.examId?.title || t("filters.any")}
                   optionLabel={(opt) => opt?.title}
                   onChange={(opt) => setFilters({ ...filters, examId: opt })}
                   addOption={
                     <h3
                       onClick={() => setFilters({ ...filters, examId: null })}
                     >
-                      any exam
+                      {t("filters.any")}
                     </h3>
                   }
                 />
@@ -202,16 +204,16 @@ const ExamResult = () => {
               <SelectOptionInput
                 addOption={
                   <h3 onClick={() => setFilters({ ...filters, type: null })}>
-                    any type
+                    {t("filters.any")}
                   </h3>
                 }
-                label="type"
+                label={t("filters.exam_type")}
                 options={[
-                  { text: "exam", value: examTypes.Exam },
-                  { text: "quiz", value: examTypes.Quiz },
+                  { text: t("navBar.exam"), value: examTypes.Exam },
+                  { text: t("navBar.quiz"), value: examTypes.Quiz },
                 ]}
                 onSelectOption={(opt) => setFilters({ ...filters, type: opt })}
-                placeholder={filters?.type?.text || "any type"}
+                placeholder={filters?.type?.text || t("filters.any")}
               />
             )}
           </Filters>

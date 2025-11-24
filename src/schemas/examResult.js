@@ -13,6 +13,7 @@ export const examResultSchema = yup.object({
       if (typeof value === "object" && value !== null) {
         return !!value.id;
       }
+      console.log(value);
       if (typeof value === "number") {
         return value > 0;
       }
@@ -21,5 +22,15 @@ export const examResultSchema = yup.object({
   score: yup
     .number()
     .required("error.please_write_student_score")
-    .min(0, "error.can_not_be_negative_value"),
+    .min(0, "error.can_not_be_negative_value")
+    // .typeError("error.score_must_be_a_number")
+    .when("examId", (examId, schema) => {
+      if (examId && typeof examId === "object" && examId !== null) {
+        return schema.max(
+          examId[0]?.totalMarks,
+          `error.score_cannot_exceed_total_marks_of_${examId[0]?.totalMarks}`
+        );
+      }
+      return schema;
+    }),
 });

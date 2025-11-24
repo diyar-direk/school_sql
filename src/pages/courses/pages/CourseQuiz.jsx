@@ -40,11 +40,11 @@ const CourseQuiz = () => {
     () => [
       {
         name: "title",
-        headerName: "title",
+        headerName: "quizzes.title",
       },
       {
         name: "description",
-        headerName: "description",
+        headerName: "quizzes.discreption",
         hidden: true,
       },
       {
@@ -55,12 +55,12 @@ const CourseQuiz = () => {
       },
       {
         name: "duration",
-        headerName: "duration",
+        headerName: "quizzes.duration",
         sort: true,
       },
       {
         name: "totalMarks",
-        headerName: "totalMarks",
+        headerName: "exams.total_marks",
         sort: true,
       },
       {
@@ -80,7 +80,7 @@ const CourseQuiz = () => {
       },
       {
         name: "status",
-        headerName: "status",
+        headerName: "exams.status",
         getCell: ({ row }) => {
           const now = new Date();
           const start = new Date(row.date);

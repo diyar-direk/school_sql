@@ -127,6 +127,14 @@
     "year_level_placeholder": "Select year level",
     "classes": "Class",
     "classes_placeholder": "Select class",
+    "student": "Student",
+    "student_placeholder": "Select student",
+    "course_status": "Course Status",
+    "active": " Active ",
+    "completed": " Completed ",
+    "dropped": " Dropped ",
+
+    "course_status_placeholder": "Select course status",
     "enrollment_date": "Enrollment Date",
     "enrollment_date_placeholder": "Enter enrollment date",
     "save_btn": "Save",
@@ -136,6 +144,8 @@
     "years_repeated": "year repeated",
     "year": "year",
     "repeated_count": "repeated count",
+    "no_students": "No students in this course",
+
     "edit_btn": "Edit"
   },
   "exams": {
@@ -146,6 +156,7 @@
     "confirm_delete": "Confirm Delete",
     "cancel_btn": "Cancel",
     "no_data": "No data available",
+    "status": " Status ",
     "loading": "loading...",
     "room": "Room",
     "duration": "Duration",
@@ -173,7 +184,7 @@
   "examResult": {
     "subject_name": "Subject Name",
     "please_complete_form": "Please complete the form",
-    "exam": "Exam",
+    "exam": "Exam or Quiz",
     "score": "Score",
     "confirm_delete": "Confirm Delete",
     "delete": "Delete",
@@ -198,6 +209,9 @@
     "select_status": "change status for student :",
     "present": "present",
     "absent": "absent",
+    "excused": "excused",
+    "late": "late",
+
     "none": "none",
     "in_day": "in day : ",
     "class": "Class",
@@ -226,13 +240,13 @@
     "add_btn": "Add a new lesson"
   },
   "subject": {
-    "add_new_subject": "Add New Subject",
+    "add_new_subject": "Add New Course",
     "name": "Name",
-    "name_placeholder": "Enter subject name",
+    "name_placeholder": "Enter course name",
     "code": "Code",
-    "code_placeholder": "Enter subject code",
+    "code_placeholder": "Enter course code",
     "description": "Description",
-    "description_placeholder": "Enter subject description",
+    "description_placeholder": "Enter course description",
     "year_level": "Year Level",
     "year_level_placeholder": "Select year level",
     "create_btn": "Create",

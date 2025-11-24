@@ -107,7 +107,7 @@ const AllQuizes = () => {
       },
       {
         name: "status",
-        headerName: "status",
+        headerName: "exams.status",
         getCell: ({ row, t }) => {
           const now = new Date();
           const start = new Date(row.date);

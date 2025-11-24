@@ -49,18 +49,18 @@ const AddStudentsToCourse = ({ courseId }) => {
   return (
     <>
       <Button onClick={() => setIsOpen(true)}>
-        <i className="fa-solid fa-plus" /> add students
+        <i className="fa-solid fa-plus" /> {t("students.add_student_btn")}
       </Button>
       <PopUp isOpen={isOpen} onClose={handleClose} className="add-course-popup">
         <form onSubmit={formik.handleSubmit}>
           <SelectInputApi
             endPoint={endPoints.students}
-            label="student"
+            label={t("students.student")}
             onChange={(e) => formik.setFieldValue("studentId", e)}
             placeholder={
               formik?.values?.studentId
                 ? `${formik?.values?.studentId?.firstName} ${formik?.values?.studentId?.lastName}`
-                : "select student"
+                : t("students.student_placeholder")
             }
             optionLabel={(e) =>
               `${e?.firstName} ${e?.middleName} ${e?.lastName}`
@@ -69,24 +69,26 @@ const AddStudentsToCourse = ({ courseId }) => {
           />
 
           <SelectOptionInput
-            label="course status"
+            label={t("students.course_status")}
             wrapperProps={{
               className: `course-status ${formik.values.status}`,
             }}
-            placeholder={formik.values.status || "course status"}
+            placeholder={
+              formik.values.status || t("students.course_status_placeholder")
+            }
             options={[
               {
-                text: "Active",
+                text: t("students.active"),
                 value: courseStatus.Active,
                 props: { className: "active" },
               },
               {
-                text: "completed",
+                text: t("students.completed"),
                 value: courseStatus.Completed,
                 props: { className: "completed" },
               },
               {
-                text: "Dropped",
+                text: t("students.dropped"),
                 value: courseStatus.Dropped,
                 props: { className: "dropped" },
               },
@@ -97,10 +99,10 @@ const AddStudentsToCourse = ({ courseId }) => {
 
           <div className="actions">
             <Button type="submit" isSending={handleConfirm.isPending}>
-              save
+              {t("students.save_btn")}
             </Button>
             <Button btnType="cancel" type="button" onClick={handleClose}>
-              cancel
+              {t("students.cancel_btn")}
             </Button>
           </div>
         </form>

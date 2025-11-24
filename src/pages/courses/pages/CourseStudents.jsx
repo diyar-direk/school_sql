@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { pagesRoute } from "../../../constants/pagesRoute";
 import AddStudentsToCourse from "../components/AddStudentsToCourse";
 import AllowedTo from "../../../components/AllowedTo";
+import { useTranslation } from "react-i18next";
 const CourseStudents = () => {
   const { id } = useParams();
   const {
@@ -18,9 +19,12 @@ const CourseStudents = () => {
   });
   const students = student?.pages?.[0]?.data;
 
+  const { t } = useTranslation();
   return (
     <>
-      {students?.length === 0 && !isFetching && <h3> no students yet </h3>}
+      {students?.length === 0 && !isFetching && (
+        <h3> {t("students.no_students")} </h3>
+      )}
 
       <AllowedTo roles={[roles.admin]}>
         <AddStudentsToCourse courseId={id} />
@@ -30,7 +34,7 @@ const CourseStudents = () => {
         {students?.map((data) => (
           <div className={`student-course ${data?.status}`} key={data?.id}>
             <div>
-              <h3>name</h3>
+              <h3>{t("students.name")}</h3>
               <Link
                 className="visit-text"
                 to={pagesRoute.student.view(data?.studentId)}
@@ -40,7 +44,7 @@ const CourseStudents = () => {
               </Link>
             </div>
             <div>
-              <h3>status</h3>
+              <h3>{t("exams.status")}</h3>
               {data?.status === courseStatus.Dropped ? (
                 <span>
                   <i className="fa-solid fa-circle-xmark" /> {data?.status}
