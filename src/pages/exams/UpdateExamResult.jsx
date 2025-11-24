@@ -57,22 +57,24 @@ const UpdateExamResult = () => {
           <AllowedTo roles={[roles.admin]}>
             <SelectInputApi
               endPoint={endPoints.students}
-              label={t("student.student")}
+              label={t("students.student")}
               optionLabel={(opt) =>
                 `${opt?.firstName} ${opt?.middleName} ${opt?.lastName}`
               }
               placeholder={
                 formik.values.studentId
                   ? `${formik.values.studentId?.firstName} ${formik.values.studentId?.middleName} ${formik.values.studentId?.lastName}`
-                  : t("student.select_student")
+                  : t("students.student_placeholder")
               }
               onChange={(opt) => formik.setFieldValue("studentId", opt)}
               errorText={t(formik?.errors?.studentId)}
             />
             <SelectInputApi
               endPoint={endPoints.exams}
-              label="exam"
-              placeholder={formik.values?.examId?.title || "select exam"}
+              label={t("navBar.exam")}
+              placeholder={
+                formik.values?.examId?.title || t("examResult.exam_placeholder")
+              }
               optionLabel={(opt) => opt?.title}
               onChange={(opt) => formik.setFieldValue("examId", opt)}
               errorText={t(formik?.errors?.examId)}
@@ -80,10 +82,10 @@ const UpdateExamResult = () => {
           </AllowedTo>
 
           <Input
-            title={t("exam.score")}
+            title={t("examResult.score")}
             onInput={formik.handleChange}
             value={formik.values.score}
-            placeholder={t("exam.score")}
+            placeholder={t("examResult.score_placeholder")}
             name="score"
             errorText={t(formik?.errors?.score)}
             type="number"

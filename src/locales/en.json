@@ -133,7 +133,7 @@
     "active": " Active ",
     "completed": " Completed ",
     "dropped": " Dropped ",
-
+    "address": "Address",
     "course_status_placeholder": "Select course status",
     "enrollment_date": "Enrollment Date",
     "enrollment_date_placeholder": "Enter enrollment date",
@@ -150,7 +150,7 @@
   },
   "exams": {
     "exam_schedule": "Exam Schedule",
-    "subject": "Subject",
+    "subject": "Course",
     "yearlevel": "Year Level",
     "date": "Date",
     "confirm_delete": "Confirm Delete",
@@ -292,7 +292,8 @@
     "last_name": "Last Name :",
     "role": "Role :",
     "email": "Email :",
-    "courses": "Courses"
+    "courses": "Courses",
+    "no_courses_yet": "No courses yet"
   },
   "users": {
     "all_users": "All Users",

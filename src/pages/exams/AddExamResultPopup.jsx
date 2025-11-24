@@ -37,10 +37,10 @@ const AddExamResultPopup = ({ examId }) => {
   const handleStudentFilter = useMemo(
     () => ({
       endPoint: endPoints["student-courses"],
-      label: "student",
+      label: t("students.student"),
       placeholder: formik?.values?.studentId
         ? `${formik?.values?.studentId?.firstName} ${formik?.values?.studentId?.lastName}`
-        : "select student",
+        : t("students.student_placeholder"),
       optionLabel: (opt) => {
         return `${opt?.student?.firstName} ${opt?.student?.middleName} ${opt?.student?.lastName}`;
       },
@@ -83,21 +83,21 @@ const AddExamResultPopup = ({ examId }) => {
             params={{ status: courseStatus.Active }}
           />
           <Input
-            title="score"
+            title={t("examResult.score")}
             type="number"
             name="score"
             onChange={formik.handleChange}
-            placeholder="score"
+            placeholder={t("examResult.score_placeholder")}
             value={formik.values?.score}
             errorText={t(formik.errors?.score)}
           />
 
           <div className="actions">
             <Button type="submit" isSending={handleConfirm.isPending}>
-              save
+              {t("exams.save_btn")}
             </Button>
             <Button btnType="cancel" type="button" onClick={handleClose}>
-              cancel
+              {t("exams.cancel_btn")}
             </Button>
           </div>
         </form>

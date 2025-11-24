@@ -60,7 +60,7 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
     <>
       <Button onClick={toggleOpen}>
         <i className="fa-solid fa-plus" />
-        add course
+        {t("navBar.add_subjects")}
       </Button>
       <PopUp
         isOpen={isOpen || isUpdate}
@@ -69,11 +69,11 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
       >
         <form onSubmit={formik.handleSubmit}>
           <SelectOptionInput
-            label="course status"
+            label={t("students.course_status")}
             wrapperProps={{
               className: `course-status ${formik.values.status}`,
             }}
-            placeholder={formik.values.status || "course status"}
+            placeholder={formik.values.status || t("students.course_status")}
             options={[
               {
                 text: "Active",
@@ -96,18 +96,20 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
           />
           <SelectInputApi
             endPoint={endPoints.courses}
-            label="course"
-            placeholder={formik.values.courseId?.name || "select course"}
+            label={t("exams.subject_input")}
+            placeholder={
+              formik.values.courseId?.name || t("exams.subject_placeholder")
+            }
             optionLabel={(e) => e.name}
             onChange={(e) => formik.setFieldValue("courseId", e)}
             errorText={t(formik?.errors?.courseId)}
           />
           <div className="actions">
             <Button type="submit" isSending={handleConfirm.isPending}>
-              save
+              {t("exams.save_btn")}
             </Button>
             <Button btnType="cancel" type="button" onClick={handleClose}>
-              cancel
+              {t("exams.cancel_btn")}
             </Button>
           </div>
         </form>
