@@ -70,10 +70,10 @@ const AddUser = () => {
             type="password"
           />
           <Input
-            title={t("users.passwordConf")}
+            title={t("users.conf_password")}
             onInput={formik.handleChange}
             value={formik.values.confirmPassword}
-            placeholder={t("users.password_placeholderConf")}
+            placeholder={t("users.conf_password_placeholder")}
             name="confirmPassword"
             errorText={t(formik.errors?.confirmPassword)}
             type="password"
@@ -136,7 +136,7 @@ const AddUser = () => {
                   : "students"
               ]
             }
-            label="profile"
+            label={t("users.profile")}
             optionLabel={(opt) => `${opt.firstName} ${opt.lastName}`}
             placeholder={
               formik.values?.profileId

@@ -298,6 +298,7 @@
   "users": {
     "all_users": "All Users",
     "add_users": "Add Users",
+    "profile": "Profile",
     "name": "Name",
     "created_at": "Created At",
     "please_complete_form": "Please complete the form",
