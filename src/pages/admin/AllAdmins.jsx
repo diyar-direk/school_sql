@@ -42,7 +42,9 @@ const column = [
     className: "center",
     getCell: ({ row, t }) => (
       <Link to={pagesRoute.admin.update(row.id)}>
-        <Button> {t("update")}</Button>
+        <Button btnStyleType="outlined">
+          <i className="fa-regular fa-pen-to-square" /> {t("update")}
+        </Button>
       </Link>
     ),
   },

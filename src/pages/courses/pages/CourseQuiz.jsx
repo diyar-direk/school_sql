@@ -109,7 +109,7 @@ const CourseQuiz = () => {
         name: "actions",
         headerName: "actions",
         allowedTo: [roles.admin, roles.teacher],
-        getCell: ({ row }) => {
+        getCell: ({ row, t }) => {
           const now = new Date();
           const start = new Date(row.date);
           return (
@@ -120,7 +120,9 @@ const CourseQuiz = () => {
                     (id) => id.id === profileId?.id
                   ))) && (
                 <Link to={pagesRoute.quize.update(row?.id)}>
-                  <Button> update</Button>
+                  <Button btnStyleType="outlined">
+                    <i className="fa-regular fa-pen-to-square" /> {t("update")}
+                  </Button>
                 </Link>
               )}
               {now > start && (
@@ -129,7 +131,7 @@ const CourseQuiz = () => {
                   state={{ courseId: row.courseId, quizId: row?.id }}
                 >
                   <Button btnStyleType="outlined" btnType="save">
-                    results
+                    <i className="fa-solid fa-clipboard-list" /> {t("results")}
                   </Button>
                 </Link>
               )}

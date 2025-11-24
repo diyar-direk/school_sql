@@ -74,19 +74,37 @@ const CourseView = () => {
       </div>
       <div className="course-pages">
         <NavLink to={pagesRoute.courses.timeTable(id)}>
+          <i
+            className="fa-solid fa-table-list"
+            style={{ color: "var(--main-color)" }}
+          />
           {t("navBar.time_table")}
         </NavLink>
-        <NavLink to={pagesRoute.courses.exams(id)}> {t("navBar.exam")}</NavLink>
-        <NavLink to={pagesRoute.courses.quiz(id)}>{t("navBar.quiz")}</NavLink>
+        <NavLink to={pagesRoute.courses.exams(id)}>
+          <i className="fa-solid fa-list-check" style={{ color: "red" }} />
+          {t("navBar.exam")}
+        </NavLink>
+        <NavLink to={pagesRoute.courses.quiz(id)}>
+          <i className="fa-solid fa-pencil" style={{ color: "blue" }} />
+          {t("navBar.quiz")}
+        </NavLink>
         <AllowedTo roles={[roles.admin, roles.teacher]}>
           {((isTeacher &&
             data?.teacherId?.some((e) => e?.id === profileId?.id)) ||
             isAdmin) && (
             <>
               <NavLink to={pagesRoute.courses.students(id)}>
+                <i
+                  className="fa-solid fa-user-group"
+                  style={{ color: "green" }}
+                />
                 {t("navBar.students")}
               </NavLink>
               <NavLink to={pagesRoute.courses.attendance(id)}>
+                <i
+                  className="fa-regular fa-calendar-check"
+                  style={{ color: "orange" }}
+                />
                 {t("navBar.attendance")}
               </NavLink>
             </>

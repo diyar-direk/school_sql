@@ -39,11 +39,11 @@ const column = [
   {
     name: "actions",
     headerName: "actions",
-    getCell: ({ row }) => (
+    getCell: ({ row, t }) => (
       <Link className="center" to={pagesRoute.user.password(row?.id)}>
         <Button btnStyleType="outlined">
           <i className="fa-solid fa-key" />
-          update password
+          {t("users.update_password")}
         </Button>
       </Link>
     ),

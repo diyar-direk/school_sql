@@ -64,18 +64,18 @@ const column = [
   {
     name: "actions",
     headerName: "actions",
-    getCell: ({ row }) => (
+    getCell: ({ row, t }) => (
       <div className="flex gap-10 center">
         <AllowedTo roles={[roles.admin]}>
           <Link to={pagesRoute.courses.update(row.id)}>
             <Button btnStyleType="outlined">
-              <i className="fa-regular fa-pen-to-square" /> update
+              <i className="fa-regular fa-pen-to-square" /> {t("update")}
             </Button>
           </Link>
         </AllowedTo>
         <Link to={pagesRoute.courses.view(row.id)}>
           <Button btnType="save" btnStyleType="outlined">
-            <i className="fa-solid fa-eye" /> view
+            <i className="fa-solid fa-eye" /> {t("view")}
           </Button>
         </Link>
       </div>

@@ -310,7 +310,8 @@
     "confirm_delete": "Jêbirinê Tekez Bike",
     "cancel_btn": "Iptal Bike",
     "no_data": "Tu Agahiyên Pêwîst Nînin",
-    "loading": "Barkirin..."
+    "loading": "Barkirin...",
+    "update_password": "Nûvekirina Password"
   },
   "admins": {
     "all_admins": "Hemî Admin",
@@ -499,5 +500,7 @@
   "save": "  ",
   "view": "  ",
   "update": "  ",
-  "reset_columns": ""
+  "reset_columns": "",
+  "delete": "Jêbirin",
+  "results": "Encam"
 }

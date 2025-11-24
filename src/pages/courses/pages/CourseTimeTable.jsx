@@ -87,17 +87,17 @@ const CourseTimeTable = () => {
         name: "actions",
         headerName: "actions",
         allowedTo: roles.admin,
-        getCell: ({ row }) => (
+        getCell: ({ row, t }) => (
           <div className="center gap-10">
             <Button
               btnType="delete"
               btnStyleType="outlined"
               onClick={() => setSelectedItems(row?.id)}
             >
-              <i className="fa-solid fa-trash-can" /> delete
+              <i className="fa-solid fa-trash-can" /> {t("delete")}
             </Button>
             <Button btnStyleType="outlined" onClick={() => setIsUpdate(row)}>
-              <i className="fa-solid fa-pen-to-square" /> update
+              <i className="fa-solid fa-pen-to-square" /> {t("update")}
             </Button>
           </div>
         ),

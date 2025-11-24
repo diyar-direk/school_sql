@@ -43,13 +43,20 @@
   background-color: var(--body-color);
   border-radius: 4px;
   flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .course-pages a.active,
 .course-pages a:hover {
   font-weight: bold;
   background-color: var(--main-color);
   color: white;
+}
+
+.course-pages a:hover i {
+  color: white !important;
 }
 
 .attendace-table {

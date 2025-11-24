@@ -78,10 +78,12 @@ const column = [
     headerName: "actions",
     className: "center",
     allowedTo: [roles.admin, roles.teacher],
-    getCell: ({ row }) =>
+    getCell: ({ row, t }) =>
       row.type === examTypes.Exam && (
         <Link to={pagesRoute.examResult.update(row?.id)}>
-          <Button> update</Button>
+          <Button btnStyleType="outlined">
+            <i className="fa-regular fa-pen-to-square" /> {t("update")}
+          </Button>
         </Link>
       ),
   },

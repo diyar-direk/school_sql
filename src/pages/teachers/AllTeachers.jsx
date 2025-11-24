@@ -53,13 +53,13 @@ const column = [
     headerName: "actions",
     className: "center",
     allowedTo: [roles.admin],
-    getCell: ({ row }) => (
+    getCell: ({ row, t }) => (
       <div className="center gap-10">
         <Link to={pagesRoute.teacher.update(row.id)}>
-          <Button> update</Button>
+          <Button> {t("update")}</Button>
         </Link>
         <Link to={pagesRoute.teacher.view(row.id)}>
-          <Button btnType="save"> view</Button>
+          <Button btnType="save"> {t("view")}</Button>
         </Link>
       </div>
     ),

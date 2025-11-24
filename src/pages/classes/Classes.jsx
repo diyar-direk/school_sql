@@ -78,14 +78,15 @@ const Classes = () => {
         name: "actions",
         headerName: "actions",
         className: "center",
-        getCell: ({ row }) => (
+        getCell: ({ row, t }) => (
           <Button
             onClick={() => {
               ref?.current?.focus();
               setIsUpdate(row);
             }}
+            btnStyleType="outlined"
           >
-            <i className="fa-regular fa-pen-to-square"></i> update
+            <i className="fa-regular fa-pen-to-square" /> {t("update")}
           </Button>
         ),
         allowedTo: [roles.admin],

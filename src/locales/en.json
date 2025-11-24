@@ -310,7 +310,8 @@
     "confirm_delete": "Confirm Delete",
     "cancel_btn": "Cancel",
     "no_data": "No data available",
-    "loading": "loading..."
+    "loading": "loading...",
+    "update_password": "Update Password"
   },
   "admins": {
     "all_admins": "All Admins",
@@ -497,5 +498,7 @@
   "save": "Save",
   "view": "View",
   "update": "Update",
-  "reset_columns": "Reset Columns"
+  "reset_columns": "Reset Columns",
+  "delete": "Delete",
+  "results": "Results"
 }

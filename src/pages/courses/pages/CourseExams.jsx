@@ -101,11 +101,13 @@ const CourseExams = () => {
         name: "actions",
         headerName: "actions",
         className: "center",
-        getCell: ({ row }) => (
+        getCell: ({ row, t }) => (
           <div className="flex gap-10 align-center">
             <AllowedTo roles={[roles.admin, roles.teacher]}>
               <Link to={pagesRoute.exam.update(row?.id)}>
-                <Button btnStyleType="outlined"> update</Button>
+                <Button btnStyleType="outlined">
+                  <i className="fa-regular fa-pen-to-square" /> {t("update")}
+                </Button>
               </Link>
             </AllowedTo>
             {new Date(row.date).getTime() < Date.now() && (
@@ -114,7 +116,7 @@ const CourseExams = () => {
                 state={{ courseId: id, examId: row?.id }}
               >
                 <Button btnStyleType="outlined" btnType="save">
-                  exam results
+                  <i className="fa-solid fa-clipboard-list" /> {t("results")}
                 </Button>
               </Link>
             )}

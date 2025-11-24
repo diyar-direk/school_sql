@@ -310,7 +310,8 @@
     "confirm_delete": "تأكيد الحذف",
     "cancel_btn": "إلغاء",
     "no_data": "لا توجد بيانات متوفرة",
-    "loading": "جارٍ التحميل..."
+    "loading": "جارٍ التحميل...",
+    "update_password": "تحديث كلمة المرور"
   },
   "admins": {
     "all_admins": "جميع المسؤولين",
@@ -500,5 +501,7 @@
   "save": " حفظ ",
   "view": " عرض ",
   "update": " تحديث ",
-  "reset_columns": "إعادة تعيين الأعمدة"
+  "reset_columns": "إعادة تعيين الأعمدة",
+  "delete": "حذف",
+  "results": "النتائج"
 }

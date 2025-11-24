@@ -277,6 +277,9 @@ aside > div > div > .links > .center i {
 aside.closed > div > div > .links > .center i.arrow {
   display: none;
 }
+body.arabic .center i.arrow {
+  rotate: 180deg;
+}
 aside > div > div > .links > .center i:not(.arrow),
 aside > div > div > a i {
   margin-right: 10px;
