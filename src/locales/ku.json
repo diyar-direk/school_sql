@@ -516,5 +516,10 @@
   "update": "  ",
   "reset_columns": "",
   "delete": "Jêbirin",
-  "results": "Encam"
+  "results": "Encam",
+  "enums": {
+    "Admin": "",
+    "Teacher": "",
+    "Student": ""
+  }
 }

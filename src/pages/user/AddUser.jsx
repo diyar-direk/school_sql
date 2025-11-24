@@ -11,6 +11,7 @@ import { roles } from "../../constants/enums";
 import SelectInputApi from "./../../components/inputs/SelectInputApi";
 import { formatInputsData } from "../../utils/formatInputsData";
 import { useTranslation } from "react-i18next";
+import { rolesStyle } from "../../utils/enumsElements";
 const apiClient = new APIClient(endPoints.users);
 const AddUser = () => {
   const formik = useFormik({
@@ -78,12 +79,49 @@ const AddUser = () => {
             type="password"
           />
           <SelectOptionInput
-            placeholder={formik.values?.role || "select role"}
+            placeholder={t(
+              formik.values?.role
+                ? `enums.${formik.values?.role}`
+                : "users.role_placeholder"
+            )}
             label={t("users.role")}
             options={[
-              { text: "admin", value: roles.admin },
-              { text: "teacher", value: roles.teacher },
-              { text: "student", value: roles.student },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: rolesStyle[roles.admin]?.color }}
+                  >
+                    {rolesStyle[roles.admin]?.icon}
+                    {t(`enums.${roles.admin}`)}
+                  </span>
+                ),
+                value: roles.admin,
+              },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: rolesStyle[roles.teacher]?.color }}
+                  >
+                    {rolesStyle[roles.teacher]?.icon}
+                    {t(`enums.${roles.teacher}`)}
+                  </span>
+                ),
+                value: roles.teacher,
+              },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: rolesStyle[roles.student]?.color }}
+                  >
+                    {rolesStyle[roles.student]?.icon}
+                    {t(`enums.${roles.student}`)}
+                  </span>
+                ),
+                value: roles.student,
+              },
             ]}
             errorText={t(formik.errors?.role)}
             onSelectOption={(opt) => selectRole(opt.value)}
@@ -103,7 +141,7 @@ const AddUser = () => {
             placeholder={
               formik.values?.profileId
                 ? `${formik.values?.profileId?.firstName} ${formik.values?.profileId?.lastName}`
-                : `select ${formik.values.role || "student"} profile`
+                : t(`users.please_select`)
             }
             onChange={(opt) => formik.setFieldValue("profileId", opt)}
             errorText={t(formik.errors?.profileId)}

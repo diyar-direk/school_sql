@@ -17,12 +17,21 @@ import AllowedTo from "../../components/AllowedTo";
 import { Link } from "react-router-dom";
 import Button from "../../components/buttons/Button";
 import { useTranslation } from "react-i18next";
+import { rolesStyle } from "../../utils/enumsElements";
 
 const apiClient = new APIClient(endPoints.users);
 
 const column = [
   { name: "username", headerName: "username", sort: true },
-  { name: "role", headerName: "role" },
+  {
+    name: "role",
+    headerName: "role",
+    getCell: ({ row, t }) => (
+      <div className="flex gap-10 align-center">
+        {rolesStyle[row.role]?.icon} {t(`enums.${row.role}`)}
+      </div>
+    ),
+  },
   {
     name: "createdAt",
     headerName: "createdAt",
@@ -86,15 +95,50 @@ const AllUsers = () => {
           </AllowedTo>
           <Filters>
             <SelectOptionInput
-              placeholder={role?.text || "all roles"}
+              placeholder={t(role ? `enums.${role}` : "filters.all")}
               label="role"
               options={[
-                { text: "admin", value: roles.admin },
-                { text: "teacher", value: roles.teacher },
-                { text: "student", value: roles.student },
+                {
+                  text: (
+                    <span
+                      className="flex align-center gap-10"
+                      style={{ color: rolesStyle[roles.admin]?.color }}
+                    >
+                      {rolesStyle[roles.admin]?.icon}
+                      {t(`enums.${roles.admin}`)}
+                    </span>
+                  ),
+                  value: roles.admin,
+                },
+                {
+                  text: (
+                    <span
+                      className="flex align-center gap-10"
+                      style={{ color: rolesStyle[roles.teacher]?.color }}
+                    >
+                      {rolesStyle[roles.teacher]?.icon}
+                      {t(`enums.${roles.teacher}`)}
+                    </span>
+                  ),
+                  value: roles.teacher,
+                },
+                {
+                  text: (
+                    <span
+                      className="flex align-center gap-10"
+                      style={{ color: rolesStyle[roles.student]?.color }}
+                    >
+                      {rolesStyle[roles.student]?.icon}
+                      {t(`enums.${roles.student}`)}
+                    </span>
+                  ),
+                  value: roles.student,
+                },
               ]}
-              addOption={<h3 onClick={() => setRole("")}> all roles </h3>}
-              onSelectOption={(opt) => setRole(opt)}
+              addOption={
+                <h3 onClick={() => setRole("")}>{t("filters.all")}</h3>
+              }
+              onSelectOption={(opt) => setRole(opt.value)}
             />
           </Filters>
         </TableToolBar>

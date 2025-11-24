@@ -514,5 +514,10 @@
   "update": "Update",
   "reset_columns": "Reset Columns",
   "delete": "Delete",
-  "results": "Results"
+  "results": "Results",
+  "enums": {
+    "Admin": "Admin",
+    "Teacher": "Teacher",
+    "Student": "Student"
+  }
 }

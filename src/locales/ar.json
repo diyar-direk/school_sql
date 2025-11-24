@@ -517,5 +517,10 @@
   "update": " تحديث ",
   "reset_columns": "إعادة تعيين الأعمدة",
   "delete": "حذف",
-  "results": "النتائج"
+  "results": "النتائج",
+  "enums": {
+    "Admin": "مسؤول",
+    "Teacher": "أستاذ",
+    "Student": "طالب"
+  }
 }

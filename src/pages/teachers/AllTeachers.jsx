@@ -56,10 +56,14 @@ const column = [
     getCell: ({ row, t }) => (
       <div className="center gap-10">
         <Link to={pagesRoute.teacher.update(row.id)}>
-          <Button> {t("update")}</Button>
+          <Button btnStyleType="outlined">
+            <i className="fa-regular fa-pen-to-square" /> {t("update")}
+          </Button>
         </Link>
         <Link to={pagesRoute.teacher.view(row.id)}>
-          <Button btnType="save"> {t("view")}</Button>
+          <Button btnType="save" btnStyleType="outlined">
+            <i className="fa-solid fa-eye" /> {t("view")}
+          </Button>
         </Link>
       </div>
     ),
