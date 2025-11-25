@@ -47,7 +47,7 @@ const CloumnsVisible = ({ columns, setColumns, defaultColumns }) => {
           <input
             type="text"
             className="search"
-            placeholder="search for cloumn..."
+            placeholder={t("filters.search")}
             value={search}
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
           />

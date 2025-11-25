@@ -14,6 +14,8 @@ import { pagesRoute } from "./../../constants/pagesRoute";
 import Add from "../../components/table_toolbar/Add";
 import AllowedTo from "../../components/AllowedTo";
 import { useTranslation } from "react-i18next";
+import Filters from "../../components/table_toolbar/Filters";
+import { formatInputsData } from "../../utils/formatInputsData";
 
 const column = [
   {
@@ -51,12 +53,20 @@ const column = [
 ];
 const apiClient = new APIClient(endPoints.admins);
 const AllAdmins = () => {
+  const [filters, setFilters] = useState({});
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
   const { data, isFetching } = useQuery({
-    queryKey: [endPoints.admins, page, search, sort],
-    queryFn: () => apiClient.getAll({ page, search, sort, limit }),
+    queryKey: [endPoints.admins, page, search, sort, formatInputsData(filters)],
+    queryFn: () =>
+      apiClient.getAll({
+        page,
+        search,
+        sort,
+        limit,
+        ...formatInputsData(filters),
+      }),
   });
   const [selectedItems, setSelectedItems] = useState(new Set());
 
@@ -79,6 +89,7 @@ const AllAdmins = () => {
             />
             <Add path={pagesRoute.admin.add} />
           </AllowedTo>
+          <Filters filters={filters} setFilters={setFilters} />
         </TableToolBar>
         <Table
           colmuns={column}

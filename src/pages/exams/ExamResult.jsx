@@ -40,7 +40,7 @@ const column = [
   {
     name: "type",
     headerName: "filters.exam_type",
-    getCell: ({ row }) => (
+    getCell: ({ row, t }) => (
       <span
         className="center gap-10"
         style={{ color: row.type === examTypes.Exam ? "green" : "orange" }}
@@ -50,7 +50,7 @@ const column = [
         ) : (
           <i className="fa-solid fa-pencil" style={{ fontSize: "13px" }} />
         )}
-        {row.type}
+        {t(`enums.${row.type}`)}
       </span>
     ),
   },
@@ -77,11 +77,10 @@ const column = [
   {
     name: "actions",
     headerName: "actions",
-    className: "center",
     allowedTo: [roles.admin, roles.teacher],
     getCell: ({ row, t }) =>
       row.type === examTypes.Exam && (
-        <Link to={pagesRoute.examResult.update(row?.id)}>
+        <Link to={pagesRoute.examResult.update(row?.id)} className="center">
           <Button btnStyleType="outlined">
             <i className="fa-regular fa-pen-to-square" /> {t("update")}
           </Button>
@@ -164,7 +163,7 @@ const ExamResult = () => {
               isAdmin && !quizId && <Add path={pagesRoute.examResult.add} />
             )}
           </AllowedTo>
-          <Filters>
+          <Filters filters={filters} setFilters={setFilters}>
             <AllowedTo roles={[roles.admin, roles.teacher]}>
               <SelectInputApi
                 endPoint={handleStudentFilter.endPoint}

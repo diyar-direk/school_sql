@@ -12,14 +12,14 @@ import APIClient from "./../../../utils/ApiClient";
 import { formatInputsData } from "../../../utils/formatInputsData";
 import { useTranslation } from "react-i18next";
 
-const AddStudentsToCourse = ({ courseId }) => {
+const AddStudentsToCourse = ({ courseId, isUpdate, setIsUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const api = new APIClient(endPoints["student-courses"]);
   const formik = useFormik({
     initialValues: {
       courseId,
-      studentId: "",
-      status: "",
+      studentId: isUpdate?.student || "",
+      status: isUpdate?.status || "",
     },
     validationSchema: yup.object({
       studentId: yup.object().required("error.please_choose_student"),
@@ -29,12 +29,14 @@ const AddStudentsToCourse = ({ courseId }) => {
         .oneOf(Object.values(courseStatus)),
     }),
     onSubmit: (values) => handleConfirm.mutate(formatInputsData(values)),
+    enableReinitialize: true,
   });
 
   const queryClient = useQueryClient();
 
   const handleConfirm = useMutation({
-    mutationFn: (data) => api.addData(data),
+    mutationFn: (data) =>
+      isUpdate ? api.updateData({ data, id: isUpdate.id }) : api.addData(data),
     onSuccess: () => {
       handleClose();
       formik.resetForm();
@@ -42,7 +44,10 @@ const AddStudentsToCourse = ({ courseId }) => {
     },
   });
 
-  const handleClose = useCallback(() => setIsOpen(false), []);
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+    setIsUpdate(false);
+  }, [setIsUpdate]);
 
   const { t } = useTranslation();
 
@@ -51,7 +56,11 @@ const AddStudentsToCourse = ({ courseId }) => {
       <Button onClick={() => setIsOpen(true)}>
         <i className="fa-solid fa-plus" /> {t("students.add_student_btn")}
       </Button>
-      <PopUp isOpen={isOpen} onClose={handleClose} className="add-course-popup">
+      <PopUp
+        isOpen={isOpen || isUpdate}
+        onClose={handleClose}
+        className="add-course-popup"
+      >
         <form onSubmit={formik.handleSubmit}>
           <SelectInputApi
             endPoint={endPoints.students}

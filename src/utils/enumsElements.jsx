@@ -31,7 +31,7 @@ export const rolesStyle = {
 };
 
 export const gendersStyle = {
-  [genders.male]: {
+  [genders.female]: {
     icon: (
       <i
         className="fas fa-female"
@@ -40,7 +40,7 @@ export const gendersStyle = {
     ),
     color: "#b510b5",
   },
-  [genders.female]: {
+  [genders.male]: {
     icon: (
       <i
         className="fas fa-male"

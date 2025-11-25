@@ -86,16 +86,22 @@ const AllTeachers = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState({});
-  const [gender, setGender] = useState("");
+  const [filters, setFilters] = useState({ gender: "" });
   const { data, isFetching } = useQuery({
-    queryKey: [endPoints.teachers, page, search, sort, gender],
+    queryKey: [
+      endPoints.teachers,
+      page,
+      search,
+      sort,
+      formatInputsData(filters),
+    ],
     queryFn: () =>
       apiClient.getAll({
         page,
         search,
         sort,
         limit,
-        ...formatInputsData({ gender }),
+        ...formatInputsData(filters),
       }),
   });
   const [selectedItems, setSelectedItems] = useState(new Set());
@@ -120,10 +126,12 @@ const AllTeachers = () => {
             />
             <Add path={pagesRoute.teacher.add} />
           </AllowedTo>
-          <Filters>
+          <Filters setFilters={setFilters} filters={filters}>
             <SelectOptionInput
-              placeholder={t(gender ? `enums.${gender}` : "filters.all")}
-              label="geadner"
+              placeholder={t(
+                filters?.gender ? `enums.${filters?.gender}` : "filters.all"
+              )}
+              label={t("teachers.gender")}
               options={[
                 {
                   text: (
@@ -151,9 +159,13 @@ const AllTeachers = () => {
                 },
               ]}
               addOption={
-                <h3 onClick={() => setGender("")}> {t("filters.all")} </h3>
+                <h3 onClick={() => setFilters({ ...filters, gender: "" })}>
+                  {t("filters.all")}
+                </h3>
               }
-              onSelectOption={(opt) => setGender(opt.value)}
+              onSelectOption={(opt) =>
+                setFilters({ ...filters, gender: opt.value })
+              }
             />
           </Filters>
         </TableToolBar>

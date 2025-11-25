@@ -151,7 +151,11 @@ const CourseExams = () => {
             <i className="fa-solid fa-plus" />
           </IconButton>
         </AllowedTo>
-        <Filters>
+        <Filters
+          dateFields={[{ name: "date", title: "date" }]}
+          filters={filters}
+          setFilters={setFilters}
+        >
           <SelectOptionInput
             label={t("filters.exam_type")}
             addOption={

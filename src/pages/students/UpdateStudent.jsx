@@ -11,7 +11,7 @@ import { studentSchema } from "./../../schemas/student";
 import dateFormatter from "./../../utils/dateFormatter";
 import Skeleton from "./../../components/skeleton/Skeleton";
 import { useTranslation } from "react-i18next";
-
+import { gendersStyle } from "../../utils/enumsElements";
 const apiClient = new APIClient(endPoints.students);
 
 const UpdateStudent = () => {
@@ -89,16 +89,40 @@ const UpdateStudent = () => {
           />
 
           <SelectOptionInput
-            placeholder={
-              formik.values?.gender || t("teachers.gender_placeholder")
-            }
-            label={t("teachers.gender_placeholder")}
+            placeholder={t(
+              formik.values?.gender
+                ? `enums.${formik.values?.gender}`
+                : "teachers.gender_placeholder"
+            )}
+            label={t("teachers.gender")}
             options={[
-              { text: t("teachers.male"), value: genders.male },
-              { text: t("teachers.female"), value: genders.female },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: gendersStyle[genders.female]?.color }}
+                  >
+                    {gendersStyle[genders.female]?.icon}
+                    {t(`enums.${genders.female}`)}
+                  </span>
+                ),
+                value: genders.female,
+              },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: gendersStyle[genders.male]?.color }}
+                  >
+                    {gendersStyle[genders.male]?.icon}
+                    {t(`enums.${genders.male}`)}
+                  </span>
+                ),
+                value: genders.male,
+              },
             ]}
             onSelectOption={(opt) => formik.setFieldValue("gender", opt.value)}
-            errorText={t(formik.errors?.gender)}
+            errorText={formik?.errors?.gender}
           />
           <Input
             title={t("students.date_of_birth")}

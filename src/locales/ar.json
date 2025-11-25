@@ -478,7 +478,8 @@
     "finish_this_quiz": "إتمام هذا الامتحان",
     "confirm_sending": "هل أنت متأكد أنك تريد إنهاء الاختبار؟",
     "submit": "إرسال",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "cant_take_this_quiz": "لا يمكنك التقديم لانك لست هذه الدورة"
   },
   "days": {
     "Sunday": "الاحد",
@@ -531,14 +532,16 @@
     "Admin": "مسؤول",
     "Teacher": "أستاذ",
     "Student": "طالب",
-    "Female": "ذكر",
-    "Male": "انثى",
+    "Female": "انثى",
+    "Male": "ذكر",
     "Present": "حاضر",
     "Absent": "غائب",
     "Excused": "مستأذن",
     "Late": "متأخر",
     "Active": " نشط ",
     "Completed": " مكتمل ",
-    "Dropped": " مسقط "
+    "Dropped": " مسقط ",
+    "Quiz": "اختبار",
+    "Exam": "امتحان"
   }
 }

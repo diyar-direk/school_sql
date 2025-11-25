@@ -34,7 +34,7 @@ const column = [
     ),
   },
   { name: "code", headerName: "subject.code" },
-  { name: "description", headerName: "description", hidden: true },
+  { name: "description", headerName: "subject.description", hidden: true },
   {
     name: "teacherId",
     headerName: "navBar.teachers",
@@ -133,7 +133,7 @@ const Courses = () => {
               endPoint={endPoints.courses}
             />
             <Add path={pagesRoute.courses.add} />
-            <Filters>
+            <Filters filters={filter} setFilters={setFilter}>
               <SelectInputApi
                 endPoint={endPoints.teachers}
                 label={t("navBar.teachers")}

@@ -98,7 +98,7 @@ const column = [
 const ExamSchedule = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState({});
+  const [sort, setSort] = useState({ createdAt: "-createdAt" });
   const [filters, setFilters] = useState({
     courseId: null,
     courseId_multi: [],
@@ -170,7 +170,11 @@ const ExamSchedule = () => {
             />
             <Add path={pagesRoute.exam.add} />
           </AllowedTo>
-          <Filters>
+          <Filters
+            dateFields={[{ name: "date", title: "date" }]}
+            filters={filters}
+            setFilters={setFilters}
+          >
             <SelectInputApi
               endPoint={endPoints.courses}
               label={t("exams.subject")}
@@ -215,8 +219,12 @@ const ExamSchedule = () => {
                   getMyExams ? t("filters.my_exams") : t("filters.all")
                 }
                 onSelectOption={() => setGetMyExams(true)}
-                options={[{ text: "my exams" }]}
-                addOption={<h3 onClick={() => setGetMyExams(false)}>all</h3>}
+                options={[{ text: t("filters.my_exams") }]}
+                addOption={
+                  <h3 onClick={() => setGetMyExams(false)}>
+                    {t("filters.all")}
+                  </h3>
+                }
               />
             </AllowedTo>
           </Filters>

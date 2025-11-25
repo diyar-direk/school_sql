@@ -15,6 +15,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../context/AuthContext";
 import APIClient from "../../../utils/ApiClient";
 import "../../quizes/quiz.css";
+import Filters from "../../../components/table_toolbar/Filters";
+import { formatInputsData } from "./../../../utils/formatInputsData";
 const apiClient = new APIClient(endPoints.quizzes);
 
 const CourseQuiz = () => {
@@ -24,8 +26,18 @@ const CourseQuiz = () => {
   const [sort, setSort] = useState({});
   const { userDetails } = useAuth();
   const { role, profileId } = userDetails || {};
+
+  const [filters, setFilters] = useState({});
+
   const { data, isFetching } = useQuery({
-    queryKey: [endPoints.quizzes, page, search, sort, id],
+    queryKey: [
+      endPoints.quizzes,
+      page,
+      search,
+      sort,
+      id,
+      formatInputsData(filters),
+    ],
     queryFn: () =>
       apiClient.getAll({
         page,
@@ -33,6 +45,7 @@ const CourseQuiz = () => {
         sort,
         limit,
         courseId: id,
+        ...formatInputsData(filters),
       }),
   });
 
@@ -49,7 +62,7 @@ const CourseQuiz = () => {
       },
       {
         name: "date",
-        headerName: "date",
+        headerName: "quizzes.date",
         sort: true,
         getCell: ({ row }) => dateFormatter(row.date, "fullDate"),
       },
@@ -180,6 +193,11 @@ const CourseQuiz = () => {
         <AllowedTo roles={[roles.admin, roles.teacher]}>
           <Add path={pagesRoute.quize.add} state={{ courseId: id }} />
         </AllowedTo>
+        <Filters
+          dateFields={[{ name: "date", title: "date" }]}
+          filters={filters}
+          setFilters={setFilters}
+        />
       </TableToolBar>
       <Table
         colmuns={column}

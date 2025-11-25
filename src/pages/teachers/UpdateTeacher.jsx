@@ -10,6 +10,7 @@ import { genders } from "../../constants/enums";
 import { useNavigate, useParams } from "react-router-dom";
 import Skeleton from "../../components/skeleton/Skeleton";
 import { useTranslation } from "react-i18next";
+import { gendersStyle } from "../../utils/enumsElements";
 
 const apiClient = new APIClient(endPoints.teachers);
 const UpdateTeacher = () => {
@@ -81,13 +82,37 @@ const UpdateTeacher = () => {
           />
 
           <SelectOptionInput
-            placeholder={
-              formik.values?.gender || t("teachers.gender_placeholder")
-            }
-            label="gender"
+            placeholder={t(
+              formik.values?.gender
+                ? `enums.${formik.values?.gender}`
+                : "teachers.gender_placeholder"
+            )}
+            label={t("teachers.gender")}
             options={[
-              { text: "male", value: genders.male },
-              { text: "female", value: genders.female },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: gendersStyle[genders.female]?.color }}
+                  >
+                    {gendersStyle[genders.female]?.icon}
+                    {t(`enums.${genders.female}`)}
+                  </span>
+                ),
+                value: genders.female,
+              },
+              {
+                text: (
+                  <span
+                    className="flex align-center gap-10"
+                    style={{ color: gendersStyle[genders.male]?.color }}
+                  >
+                    {gendersStyle[genders.male]?.icon}
+                    {t(`enums.${genders.male}`)}
+                  </span>
+                ),
+                value: genders.male,
+              },
             ]}
             onSelectOption={(opt) => formik.setFieldValue("gender", opt.value)}
             errorText={formik?.errors?.gender}

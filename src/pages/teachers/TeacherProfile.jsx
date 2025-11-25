@@ -82,13 +82,15 @@ const TeacherProfile = () => {
           </div>
           <AllowedTo roles={[roles.admin]}>
             <div className="flex">
-              <h2>{t("teachers.created_at")}:</h2>
+              <h2>{t("users.created_at")}:</h2>
               <p>{dateFormatter(data?.createdAt, "fullDate")}</p>
             </div>
           </AllowedTo>
         </div>
       </div>
-      <h1 className="title"> {t("teachers.courses")} </h1>
+      <h1 className="title" style={{ marginTop: "20px" }}>
+        {t("navBar.subjects")}
+      </h1>
       <TeacherCourse />
     </div>
   );

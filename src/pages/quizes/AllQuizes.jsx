@@ -26,7 +26,7 @@ const apiClient = new APIClient(endPoints.quizzes);
 const AllQuizes = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState({});
+  const [sort, setSort] = useState({ createdAt: "-createdAt" });
   const { userDetails } = useAuth();
   const { role, profileId, isTeacher } = userDetails || {};
   const [filters, setFilters] = useState({
@@ -239,7 +239,11 @@ const AllQuizes = () => {
           <AllowedTo roles={[roles.admin, roles.teacher]}>
             <Add path={pagesRoute.quize.add} />
           </AllowedTo>
-          <Filters>
+          <Filters
+            dateFields={[{ name: "date", title: "date" }]}
+            filters={filters}
+            setFilters={setFilters}
+          >
             <SelectInputApi
               endPoint={endPoints.courses}
               label={t("quizzes.subject")}
@@ -261,8 +265,12 @@ const AllQuizes = () => {
                   getMyExams ? t("filters.my_quizzes") : t("filters.all")
                 }
                 onSelectOption={() => setGetMyExams(true)}
-                options={[{ text: "my exams" }]}
-                addOption={<h3 onClick={() => setGetMyExams(false)}>all</h3>}
+                options={[{ text: t("filters.my_quizzes") }]}
+                addOption={
+                  <h3 onClick={() => setGetMyExams(false)}>
+                    {t("filters.all")}
+                  </h3>
+                }
               />
             </AllowedTo>
           </Filters>

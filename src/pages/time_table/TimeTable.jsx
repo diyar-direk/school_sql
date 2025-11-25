@@ -157,7 +157,18 @@ const TimeTable = () => {
               <i className="fa-solid fa-plus" />
             </IconButton>
           </AllowedTo>
-          <Filters>
+          <Filters
+            hideCreatedAtInputs
+            dateFields={[
+              {
+                name: "startTime",
+                title: "start time",
+                type: "time",
+              },
+            ]}
+            filters={filters}
+            setFilters={setFilters}
+          >
             <SelectInputApi
               endPoint={endPoints.courses}
               label={t("timeTable.subject")}

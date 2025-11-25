@@ -7,6 +7,15 @@ import { pagesRoute } from "../../../constants/pagesRoute";
 import AddStudentsToCourse from "../components/AddStudentsToCourse";
 import AllowedTo from "../../../components/AllowedTo";
 import { useTranslation } from "react-i18next";
+import { useCallback, useEffect, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import APIClient from "../../../utils/ApiClient";
+import ConfirmPopUp from "../../../components/popup/ConfirmPopUp";
+
+const apiClient = new APIClient(
+  `${endPoints["student-courses"]}/${endPoints["delete-many"]}`
+);
+
 const CourseStudents = () => {
   const { id } = useParams();
   const {
@@ -20,6 +29,33 @@ const CourseStudents = () => {
   const students = student?.pages?.[0]?.data;
 
   const { t } = useTranslation();
+
+  const [isOptionOpen, setIsOptionOpen] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isUpdate, setIsUpdate] = useState(null);
+
+  const toggleOpenOptions = useCallback((e) => {
+    e.stopPropagation();
+    setIsOptionOpen((s) => !s);
+  }, []);
+
+  useEffect(() => {
+    const handleClick = () => isOptionOpen && setIsOptionOpen(false);
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick);
+  }, [isOptionOpen]);
+  const queryClient = useQueryClient();
+
+  const handleConfirm = useMutation({
+    mutationFn: (data) => apiClient.deleteAll([data]),
+    onSuccess: () => {
+      setSelectedItem(null);
+      setIsOptionOpen(false);
+      queryClient.invalidateQueries([endPoints["student-courses"]]);
+    },
+  });
+
   return (
     <>
       {students?.length === 0 && !isFetching && (
@@ -27,12 +63,40 @@ const CourseStudents = () => {
       )}
 
       <AllowedTo roles={[roles.admin]}>
-        <AddStudentsToCourse courseId={id} />
+        <AddStudentsToCourse
+          courseId={id}
+          isUpdate={isUpdate}
+          setIsUpdate={setIsUpdate}
+        />
       </AllowedTo>
 
       <div className="grid-3" style={{ marginTop: "10px" }}>
         {students?.map((data) => (
           <div className={`student-course ${data?.status}`} key={data?.id}>
+            <AllowedTo roles={[roles.admin]}>
+              <div className="options">
+                <i
+                  className="fa-solid fa-ellipsis-vertical"
+                  onClick={toggleOpenOptions}
+                />
+                {isOptionOpen && (
+                  <div>
+                    <span
+                      className="delete"
+                      onClick={() => setSelectedItem(data?.id)}
+                    >
+                      <i className="fa-solid fa-trash" />
+                      {t("examResult.delete")}
+                    </span>
+                    <span className="update" onClick={() => setIsUpdate(data)}>
+                      <i className="fa-solid fa-pen-to-square" />
+                      {t("examResult.update")}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </AllowedTo>
+
             <div>
               <h3>{t("students.name")}</h3>
               <Link
@@ -67,7 +131,19 @@ const CourseStudents = () => {
 
         <div ref={loadMoreRef} />
       </div>
-      {isFetching && <h3 className="font-color"> loading... </h3>}
+      {isFetching && <h3 className="font-color"> {t("subject.loading")} </h3>}
+
+      <AllowedTo roles={[roles.admin]}>
+        <ConfirmPopUp
+          isOpen={selectedItem}
+          onClose={() => setSelectedItem(null)}
+          onConfirm={() => handleConfirm.mutate(selectedItem)}
+          confirmButtonProps={{
+            isSending: handleConfirm.isPending,
+            isSendingText: "deleting",
+          }}
+        />
+      </AllowedTo>
     </>
   );
 };

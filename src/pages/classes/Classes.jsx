@@ -14,18 +14,35 @@ import { useFormik } from "formik";
 import { classesSchema } from "../../schemas/classes";
 import Input from "../../components/inputs/Input";
 import { useTranslation } from "react-i18next";
+import { formatInputsData } from "../../utils/formatInputsData";
+import Filters from "../../components/table_toolbar/Filters";
 const apiClient = new APIClient(endPoints.classes);
 
 const Classes = () => {
   const { userDetails } = useAuth();
+  const [filters, setFilters] = useState({});
   const ref = useRef();
   const [page, setPage] = useState(1);
   const isAdmin = userDetails?.isAdmin;
   const [sort, setSort] = useState({});
   const [search, setSearch] = useState("");
   const { data, isFetching } = useQuery({
-    queryKey: [endPoints.classes, page, limit, sort, search],
-    queryFn: () => apiClient.getAll({ limit, page, sort, search }),
+    queryKey: [
+      endPoints.classes,
+      page,
+      limit,
+      sort,
+      search,
+      formatInputsData(filters),
+    ],
+    queryFn: () =>
+      apiClient.getAll({
+        limit,
+        page,
+        sort,
+        search,
+        ...formatInputsData(filters),
+      }),
   });
   const [isUpdate, setIsUpdate] = useState(false);
   const queryClient = useQueryClient();
@@ -126,14 +143,17 @@ const Classes = () => {
           <TableToolBar>
             <Search setSearch={setSearch} />
             {isAdmin && (
-              <Delete
-                queryKey={endPoints.classes}
-                data={data}
-                selectedItems={selectedItems}
-                setPage={setPage}
-                setSelectedItems={setSelectedItems}
-                endPoint={endPoints.classes}
-              />
+              <>
+                <Delete
+                  queryKey={endPoints.classes}
+                  data={data}
+                  selectedItems={selectedItems}
+                  setPage={setPage}
+                  setSelectedItems={setSelectedItems}
+                  endPoint={endPoints.classes}
+                />
+                <Filters filters={filters} setFilters={setFilters} />
+              </>
             )}
           </TableToolBar>
           <Table

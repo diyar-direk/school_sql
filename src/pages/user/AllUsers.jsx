@@ -99,7 +99,7 @@ const AllUsers = () => {
           <Filters>
             <SelectOptionInput
               placeholder={t(role ? `enums.${role}` : "filters.all")}
-              label="role"
+              label={t("users.role")}
               options={[
                 {
                   text: (

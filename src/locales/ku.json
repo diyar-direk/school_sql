@@ -477,7 +477,8 @@
     "finish_this_quiz": "Vê Ezmûnê Temam Bikin",
     "confirm_sending": "Ma Hûn Guman Dikin Ku Hûn Dıxwazin Testê Biqedînin?",
     "submit": "Bişîne",
-    "cancel": "Iptal Bike"
+    "cancel": "Iptal Bike",
+    "cant_take_this_quiz": ""
   },
   "days": {
     "Sunday": "Yekşem",
@@ -538,6 +539,8 @@
     "Late": "",
     "Active": " ",
     "Completed": " ",
-    "Dropped": " "
+    "Dropped": " ",
+    "Quiz": "",
+    "Exam": ""
   }
 }

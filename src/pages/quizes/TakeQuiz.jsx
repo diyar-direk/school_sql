@@ -124,14 +124,13 @@ const TakeQuiz = () => {
       await axiosInstance.post(endPoints.submitQuize, values);
     },
     onSuccess: () => {
-      nav(pagesRoute?.examResult?.page);
+      nav(pagesRoute?.examResult?.page, {
+        state: { quizId: id, courseId: data?.courseId?.id },
+      });
       query.invalidateQueries([endPoints.quizzes, endPoints["exam-results"]]);
     },
-    onError: (e) => {
+    onError: () => {
       setIsOpen(false);
-      if (e.status === 400) {
-        formik.setErrors({ server: e?.response?.data });
-      }
     },
   });
 
@@ -148,17 +147,17 @@ const TakeQuiz = () => {
     onSubmit: (v) => result?.canTake && submitQuiz.mutate(v),
   });
 
-  if (checkingLoading)
+  if (checkingLoading || isLoading)
     return (
       <div className="container">
         <Skeleton height="200px" />
       </div>
     );
 
-  if (result?.grade) {
+  if (result?.grade >= 0) {
     return (
       <p className="center text-capitalize font-color">
-        علامتك السابقة: {result.grade}
+        {t("take_quiz.you_allready_took_and_scored")} {result.grade}
       </p>
     );
   }
@@ -166,19 +165,10 @@ const TakeQuiz = () => {
   if (!result?.canTake && !checkingLoading) {
     return (
       <p className="center text-capitalize font-color">
-        لا يمكنك تقديم هذا الامتحان
+        {t("take_quiz.cant_take_this_quiz")}
       </p>
     );
   }
-
-  if (isLoading)
-    return (
-      <div className="container">
-        <h1 className="center text-capitalize font-color">
-          loading questions ...
-        </h1>
-      </div>
-    );
 
   return (
     <>

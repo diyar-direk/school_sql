@@ -29,8 +29,8 @@ const Login = () => {
       password: "",
     },
     validationSchema: yup.object({
-      username: yup.string().required("username is required"),
-      password: yup.string().required("password is required"),
+      username: yup.string().required("error.username_required"),
+      password: yup.string().required("error.password_required"),
     }),
     onSubmit: async (values) => {
       try {
@@ -85,7 +85,7 @@ const Login = () => {
               name="username"
               icon={<i className="fa-solid fa-user" />}
               onChange={formik.handleChange}
-              errorText={formik.errors?.username}
+              errorText={t(formik.errors?.username)}
             />
             <Input
               placeholder={t("login.password_placeholder")}
@@ -94,7 +94,7 @@ const Login = () => {
               name="password"
               icon={<i className="fa-solid fa-key" />}
               onChange={formik.handleChange}
-              errorText={formik.errors?.password}
+              errorText={t(formik.errors?.password)}
             />
             <Button type="submit"> {t("login.submit_btn")} </Button>
           </div>

@@ -145,7 +145,6 @@
     "year": "year",
     "repeated_count": "repeated count",
     "no_students": "No students in this course",
-
     "edit_btn": "Edit"
   },
   "exams": {
@@ -474,7 +473,8 @@
     "finish_this_quiz": "Finish this quiz",
     "confirm_sending": "Are you sure you want to finish this quiz?",
     "submit": "Submit",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "cant_take_this_quiz": "you are not enrolled in this course"
   },
   "days": {
     "Sunday": "Sunday",
@@ -535,6 +535,8 @@
     "Late": "Late",
     "Active": " Active ",
     "Completed": " Completed ",
-    "Dropped": " Dropped "
+    "Dropped": " Dropped ",
+    "Quiz": "quiz",
+    "Exam": "exam"
   }
 }

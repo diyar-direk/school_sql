@@ -82,7 +82,7 @@ const AddStudent = () => {
                 ? `enums.${formik.values?.gender}`
                 : "teachers.gender_placeholder"
             )}
-            label="gender"
+            label={t("teachers.gender")}
             options={[
               {
                 text: (
