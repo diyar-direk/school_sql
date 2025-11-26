@@ -7,6 +7,8 @@ import { endPoints } from "../../constants/endPoints";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AllowedTo from "../../components/AllowedTo";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { pagesRoute } from "../../constants/pagesRoute";
 const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const toggleOpenOptions = useCallback((e) => {
@@ -64,7 +66,12 @@ const StudentCourse = ({ data, studentId, setUpdatedCourse }) => {
         </AllowedTo>
         <div>
           <h3>{t("quizzes.subject")}</h3>
-          <span> {data?.course?.name} </span>
+          <Link
+            className="visit-text"
+            to={pagesRoute.courses.view(data?.course.id)}
+          >
+            {data?.course?.name}
+          </Link>
         </div>
         <div>
           <h3>{t("students.course_status")}</h3>

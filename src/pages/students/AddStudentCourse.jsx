@@ -73,20 +73,24 @@ const AddStudentCourse = ({ studentId, isUpdate, setIsUpdate }) => {
             wrapperProps={{
               className: `course-status ${formik.values.status}`,
             }}
-            placeholder={formik.values.status || t("students.course_status")}
+            placeholder={t(
+              formik.values.status
+                ? `enums.${formik.values.status}`
+                : "students.course_status"
+            )}
             options={[
               {
-                text: "Active",
+                text: t(`enums.${courseStatus.Active}`),
                 value: courseStatus.Active,
                 props: { className: "active" },
               },
               {
-                text: "completed",
+                text: t(`enums.${courseStatus.Completed}`),
                 value: courseStatus.Completed,
                 props: { className: "completed" },
               },
               {
-                text: "Dropped",
+                text: t(`enums.${courseStatus.Dropped}`),
                 value: courseStatus.Dropped,
                 props: { className: "dropped" },
               },

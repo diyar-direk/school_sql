@@ -484,7 +484,7 @@
   "days": {
     "Sunday": "الاحد",
     "Monday": "الاثنين",
-    "Tuesday": "الثلثاء",
+    "Tuesday": "الثلاثاء",
     "Wednesday": "الاربعاء",
     "Thursday": "الخميس",
     "Friday": "الجمعة",
@@ -517,7 +517,9 @@
     "my_quizzes": " اختباراتي ",
     "search": " بحث ",
     "not_started": "لم يبدأ بعد",
-    "running": "بدأ التقديم"
+    "running": "بدأ التقديم",
+    "from": "من",
+    "to": "الى"
   },
   "createdAt": "تاريخ الإنشاء",
   "updatedAt": " تاريخ التحديث",

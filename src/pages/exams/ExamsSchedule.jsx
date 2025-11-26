@@ -171,7 +171,7 @@ const ExamSchedule = () => {
             <Add path={pagesRoute.exam.add} />
           </AllowedTo>
           <Filters
-            dateFields={[{ name: "date", title: "date" }]}
+            dateFields={[{ name: "date", title: "exams.date" }]}
             filters={filters}
             setFilters={setFilters}
           >

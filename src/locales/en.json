@@ -512,7 +512,9 @@
     "my_quizzes": " My Quizzes ",
     "search": " Search ",
     "not_started": "not started yet",
-    "running": "running"
+    "running": "running",
+    "from": "from",
+    "to": "to"
   },
   "createdAt": "Created At ",
   "updatedAt": "Updated At ",

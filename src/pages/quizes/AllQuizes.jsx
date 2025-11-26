@@ -240,7 +240,7 @@ const AllQuizes = () => {
             <Add path={pagesRoute.quize.add} />
           </AllowedTo>
           <Filters
-            dateFields={[{ name: "date", title: "date" }]}
+            dateFields={[{ name: "date", title: "exams.date" }]}
             filters={filters}
             setFilters={setFilters}
           >

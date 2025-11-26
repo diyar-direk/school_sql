@@ -154,7 +154,7 @@ const TakeQuiz = () => {
       </div>
     );
 
-  if (result?.grade >= 0) {
+  if (result?.grade >= 0 && result?.grade !== null) {
     return (
       <p className="center text-capitalize font-color">
         {t("take_quiz.you_allready_took_and_scored")} {result.grade}

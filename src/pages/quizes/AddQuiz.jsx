@@ -127,7 +127,7 @@ const AddQuiz = () => {
                 </div>
               </div>
               <h1 style={{ color: "var(--font-color)", marginBottom: "10px" }}>
-                {t("quizzes.add_questions")}
+                {t("quizzes.question")}
               </h1>
 
               <FieldArray name="questions">

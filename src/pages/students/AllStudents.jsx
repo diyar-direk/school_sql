@@ -161,7 +161,7 @@ const AllStudents = () => {
             dateFields={[
               {
                 name: "enrollmentDate",
-                title: "enrollmentDate",
+                title: "students.enrollment_date",
                 roles: [roles.admin],
               },
             ]}

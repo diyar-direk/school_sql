@@ -6,6 +6,7 @@ import Input from "../inputs/Input";
 import AllowedTo from "../AllowedTo";
 import { roles } from "../../constants/enums";
 import { useAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 /**
  * @typedef {Object} dateFieldsProps
@@ -47,6 +48,8 @@ const Filters = ({
   const { userDetails } = useAuth();
   const { role } = userDetails || {};
 
+  const { t } = useTranslation();
+
   return (
     <>
       <IconButton title="filters" color="secondry-color" onClick={toggleOpen}>
@@ -56,14 +59,14 @@ const Filters = ({
         {!hideCreatedAtInputs && (
           <AllowedTo roles={[roles.admin]}>
             <Input
-              title="created at from"
+              title={`${t("createdAt")} ${t("filters.from")}`}
               type="date"
               value={filters?.["createdAt[gte]"]}
               name="createdAt[gte]"
               onInput={handleChange}
             />
             <Input
-              title="created at to"
+              title={`${t("createdAt")} ${t("filters.to")}`}
               type="date"
               value={filters?.["createdAt[lte]"]}
               name="createdAt[lte]"
@@ -78,7 +81,7 @@ const Filters = ({
               <Fragment key={i}>
                 <Input
                   {...e}
-                  title={`${e.title} from`}
+                  title={`${t(e.title)} ${t("filters.from")}`}
                   type={e.type || "date"}
                   value={filters?.[`${e.name}[gte]`]}
                   name={`${e.name}[gte]`}
@@ -86,7 +89,7 @@ const Filters = ({
                 />
                 <Input
                   {...e}
-                  title={`${e.title} to`}
+                  title={`${t(e.title)} ${t("filters.to")}`}
                   type={e.type || "date"}
                   value={filters?.[`${e.name}[lte]`]}
                   name={`${e.name}[lte]`}

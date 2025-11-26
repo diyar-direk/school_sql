@@ -146,7 +146,7 @@ const CourseTimeTable = () => {
           dateFields={[
             {
               name: "startTime",
-              title: "start time",
+              title: "timeTable.start_time",
               type: "time",
             },
           ]}
